@@ -166,41 +166,132 @@ struct SuggestionCard: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            // Estimated savings
-            if let savings = suggestion.estimatedSavings {
+            // Current and target state
+            if isExpanded {
+                Divider()
+
+                VStack(alignment: .leading, spacing: 8) {
+                    // Current state
+                    HStack(alignment: .top, spacing: 8) {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .font(.system(size: 12))
+                            .foregroundColor(.orange)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Current State:")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                            Text(suggestion.currentState)
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                        }
+                    }
+
+                    // Target state
+                    if let targetState = suggestion.targetState {
+                        HStack(alignment: .top, spacing: 8) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 12))
+                                .foregroundColor(.green)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Target State:")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.secondary)
+                                Text(targetState)
+                                    .font(.caption)
+                                    .foregroundColor(.primary)
+                            }
+                        }
+                    }
+
+                    // Estimated savings (more prominent when expanded)
+                    if let savings = suggestion.estimatedSavings {
+                        HStack(alignment: .top, spacing: 8) {
+                            Image(systemName: "chart.line.downtrend.xyaxis")
+                                .font(.system(size: 12))
+                                .foregroundColor(.green)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Estimated Savings:")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.secondary)
+                                Text(savings)
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                                    .fontWeight(.medium)
+                            }
+                        }
+                    }
+                }
+            } else if let savings = suggestion.estimatedSavings {
+                // Collapsed state - show brief savings
                 HStack {
                     Image(systemName: "chart.line.downtrend.xyaxis")
                         .font(.system(size: 10))
                         .foregroundColor(.green)
-                    Text(savings)
+                    Text(savings.components(separatedBy: ".").first ?? savings)
                         .font(.caption)
                         .foregroundColor(.green)
                         .fontWeight(.medium)
+                        .lineLimit(1)
                 }
             }
 
-            // Expanded details
+            // Expanded resource details
             if isExpanded && !suggestion.affectedResources.isEmpty {
                 Divider()
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text("Affected Resources (\(suggestion.affectedResources.count)):")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .fontWeight(.semibold)
 
-                    ForEach(suggestion.affectedResources.prefix(10), id: \.self) { resource in
-                        Text("• \(shortURL(resource))")
-                            .font(.system(size: 10, design: .monospaced))
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
+                    ForEach(Array(suggestion.affectedResources.prefix(15).enumerated()), id: \.offset) { index, resource in
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack(spacing: 6) {
+                                ResourceTypeIcon(type: resource.type)
+
+                                Text(shortURL(resource.url))
+                                    .font(.system(size: 10, design: .monospaced))
+                                    .lineLimit(1)
+
+                                Spacer()
+
+                                Text(formatSize(resource.size))
+                                    .font(.system(size: 9, design: .monospaced))
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 2)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(3)
+
+                                Text(formatDuration(resource.duration))
+                                    .font(.system(size: 9, design: .monospaced))
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 2)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(3)
+                            }
+
+                            if let issue = resource.specificIssue {
+                                Text("→ \(issue)")
+                                    .font(.system(size: 9))
+                                    .foregroundColor(.orange)
+                                    .padding(.leading, 22)
+                            }
+                        }
+                        .padding(.vertical, 2)
                     }
 
-                    if suggestion.affectedResources.count > 10 {
-                        Text("... and \(suggestion.affectedResources.count - 10) more")
+                    if suggestion.affectedResources.count > 15 {
+                        Text("... and \(suggestion.affectedResources.count - 15) more resources")
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .italic()
+                            .padding(.top, 4)
                     }
                 }
             }
@@ -217,7 +308,26 @@ struct SuggestionCard: View {
     private func shortURL(_ urlString: String) -> String {
         guard let url = URL(string: urlString) else { return urlString }
         let path = url.path.isEmpty ? "/" : url.path
-        return (url.host ?? "") + path
+        let combined = (url.host ?? "") + path
+        return combined.count > 60 ? String(combined.prefix(57)) + "..." : combined
+    }
+
+    private func formatSize(_ size: Int64) -> String {
+        if size < 1024 {
+            return "\(size) B"
+        } else if size < 1024 * 1024 {
+            return String(format: "%.1f KB", Double(size) / 1024)
+        } else {
+            return String(format: "%.1f MB", Double(size) / (1024 * 1024))
+        }
+    }
+
+    private func formatDuration(_ duration: TimeInterval) -> String {
+        if duration < 1 {
+            return String(format: "%.0f ms", duration * 1000)
+        } else {
+            return String(format: "%.2f s", duration)
+        }
     }
 }
 
