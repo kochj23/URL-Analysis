@@ -79,8 +79,19 @@ struct ContentView: View {
                         // Budget alert banner
                         BudgetAlertBanner(budgetManager: budgetManager)
 
-                        Button("Export HAR") {
-                            exportHAR()
+                        Menu {
+                            Button("Export HAR (JSON)") {
+                                exportHAR()
+                            }
+
+                            Button("Export PDF Report") {
+                                exportPDF()
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "square.and.arrow.up")
+                                Text("Export")
+                            }
                         }
                         .buttonStyle(.bordered)
 
@@ -287,7 +298,43 @@ struct ContentView: View {
             }
         }
     }
+
+    private func exportPDF() {
+        // Generate PDF report
+        guard let pdfDocument = PDFReportGenerator.generateReport(
+            url: activeSession.url,
+            monitor: activeSession.monitor,
+            webVitals: activeSession.monitor.webVitals,
+            performanceScore: activeSession.monitor.performanceScore,
+            optimizationSuggestions: optimizationAnalyzer.suggestions,
+            thirdPartyDomains: thirdPartyAnalyzer.domains,
+            budgetViolations: budgetManager.violations,
+            screenshots: activeSession.timeline.frames
+        ) else {
+            // Show error alert
+            let alert = NSAlert()
+            alert.messageText = "Failed to Generate PDF"
+            alert.informativeText = "Unable to create PDF report. Please try again."
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+            return
+        }
+
+        // Save panel
+        let savePanel = NSSavePanel()
+        savePanel.allowedContentTypes = [.pdf]
+        let host = URL(string: activeSession.url)?.host ?? "report"
+        savePanel.nameFieldStringValue = "performance-report-\(host).pdf"
+
+        savePanel.begin { response in
+            if response == .OK, let url = savePanel.url {
+                pdfDocument.write(to: url)
+            }
+        }
+    }
 }
+
 
 #Preview {
     ContentView()
