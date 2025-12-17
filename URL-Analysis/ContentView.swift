@@ -213,12 +213,46 @@ struct ContentView: View {
                         .tag(2)
 
                         // Optimization Suggestions tab
-                        OptimizationSuggestionsView(analyzer: optimizationAnalyzer)
+                        if activeSession.monitor.resources.isEmpty {
+                            VStack(spacing: 12) {
+                                Image(systemName: "lightbulb.fill")
+                                    .font(.system(size: 48))
+                                    .foregroundColor(.yellow)
+                                Text("No optimization data yet")
+                                    .font(.headline)
+                                    .foregroundColor(.secondary)
+                                Text("Load a page to get automatic optimization suggestions")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .tag(4)
+                        } else {
+                            OptimizationSuggestionsView(analyzer: optimizationAnalyzer)
+                                .tag(4)
+                        }
 
                         // Third-Party Analysis tab
-                        ThirdPartyAnalysisView(analyzer: thirdPartyAnalyzer)
+                        if activeSession.monitor.resources.isEmpty {
+                            VStack(spacing: 12) {
+                                Image(systemName: "globe")
+                                    .font(.system(size: 48))
+                                    .foregroundColor(.blue)
+                                Text("No third-party data yet")
+                                    .font(.headline)
+                                    .foregroundColor(.secondary)
+                                Text("Load a page to analyze external dependencies")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .tag(5)
+                        } else {
+                            ThirdPartyAnalysisView(analyzer: thirdPartyAnalyzer)
+                                .tag(5)
+                        }
 
                         // Performance Budgets tab
                         PerformanceBudgetView(budgetManager: budgetManager)
