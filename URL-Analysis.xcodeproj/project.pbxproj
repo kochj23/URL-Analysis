@@ -17,6 +17,13 @@
 		A1000008000000000000001 /* WaterfallToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000008000000000000001 /* WaterfallToolbar.swift */; };
 		A1000009000000000000001 /* ResourceInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000009000000000000001 /* ResourceInspector.swift */; };
 		A100000A000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A200000A000000000000001 /* Assets.xcassets */; };
+		A100000B000000000000001 /* PerformanceScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000B000000000000001 /* PerformanceScore.swift */; };
+		A100000C000000000000001 /* WebVitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000C000000000000001 /* WebVitals.swift */; };
+		A100000D000000000000001 /* PerformanceScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000D000000000000001 /* PerformanceScoreView.swift */; };
+		A100000E000000000000001 /* RequestBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000E000000000000001 /* RequestBlocking.swift */; };
+		A100000F000000000000001 /* RequestBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000F000000000000001 /* RequestBlockingView.swift */; };
+		A1000010000000000000001 /* ScreenshotTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000001 /* ScreenshotTimeline.swift */; };
+		A1000011000000000000001 /* URLComparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000001 /* URLComparison.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +38,15 @@
 		A2000008000000000000001 /* WaterfallToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallToolbar.swift; sourceTree = "<group>"; };
 		A2000009000000000000001 /* ResourceInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInspector.swift; sourceTree = "<group>"; };
 		A200000A000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A200000B000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A200000C000000000000001 /* URL_Analysis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis.entitlements; sourceTree = "<group>"; };
+		A200000B000000000000001 /* PerformanceScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceScore.swift; sourceTree = "<group>"; };
+		A200000C000000000000001 /* WebVitals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVitals.swift; sourceTree = "<group>"; };
+		A200000D000000000000001 /* PerformanceScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceScoreView.swift; sourceTree = "<group>"; };
+		A200000E000000000000001 /* RequestBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBlocking.swift; sourceTree = "<group>"; };
+		A200000F000000000000001 /* RequestBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBlockingView.swift; sourceTree = "<group>"; };
+		A2000010000000000000001 /* ScreenshotTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTimeline.swift; sourceTree = "<group>"; };
+		A2000011000000000000001 /* URLComparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComparison.swift; sourceTree = "<group>"; };
+		A2000012000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2000013000000000000001 /* URL_Analysis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +80,16 @@
 				A2000007000000000000001 /* WaterfallView.swift */,
 				A2000008000000000000001 /* WaterfallToolbar.swift */,
 				A2000009000000000000001 /* ResourceInspector.swift */,
+				A200000B000000000000001 /* PerformanceScore.swift */,
+				A200000C000000000000001 /* WebVitals.swift */,
+				A200000D000000000000001 /* PerformanceScoreView.swift */,
+				A200000E000000000000001 /* RequestBlocking.swift */,
+				A200000F000000000000001 /* RequestBlockingView.swift */,
+				A2000010000000000000001 /* ScreenshotTimeline.swift */,
+				A2000011000000000000001 /* URLComparison.swift */,
 				A200000A000000000000001 /* Assets.xcassets */,
-				A200000B000000000000001 /* Info.plist */,
-				A200000C000000000000001 /* URL_Analysis.entitlements */,
+				A2000012000000000000001 /* Info.plist */,
+				A2000013000000000000001 /* URL_Analysis.entitlements */,
 			);
 			path = "URL-Analysis";
 			sourceTree = "<group>";
@@ -159,6 +180,13 @@
 				A1000007000000000000001 /* WaterfallView.swift in Sources */,
 				A1000008000000000000001 /* WaterfallToolbar.swift in Sources */,
 				A1000009000000000000001 /* ResourceInspector.swift in Sources */,
+				A100000B000000000000001 /* PerformanceScore.swift in Sources */,
+				A100000C000000000000001 /* WebVitals.swift in Sources */,
+				A100000D000000000000001 /* PerformanceScoreView.swift in Sources */,
+				A100000E000000000000001 /* RequestBlocking.swift in Sources */,
+				A100000F000000000000001 /* RequestBlockingView.swift in Sources */,
+				A1000010000000000000001 /* ScreenshotTimeline.swift in Sources */,
+				A1000011000000000000001 /* URLComparison.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

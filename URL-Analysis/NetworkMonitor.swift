@@ -155,6 +155,8 @@ class NetworkMonitor: ObservableObject {
     @Published var throttle: NetworkThrottle = .none
     @Published var isLoading = false
     @Published var sessionStartTime: Date?
+    @Published var webVitals: WebVitals?
+    @Published var performanceScore: PerformanceScore?
 
     private var activeRequests: [UUID: NetworkRequestState] = [:]
 
@@ -184,6 +186,19 @@ class NetworkMonitor: ObservableObject {
 
     func addResource(_ resource: NetworkResource) {
         resources.append(resource)
+        updatePerformanceScore()
+    }
+
+    func updateWebVitals(_ vitals: WebVitals) {
+        webVitals = vitals
+        updatePerformanceScore()
+    }
+
+    private func updatePerformanceScore() {
+        // Only calculate if we have resources
+        if !resources.isEmpty {
+            performanceScore = PerformanceScore.calculate(from: self, webVitals: webVitals)
+        }
     }
 
     func clearResources() {
@@ -191,6 +206,8 @@ class NetworkMonitor: ObservableObject {
         activeRequests.removeAll()
         sessionStartTime = nil
         isLoading = false
+        webVitals = nil
+        performanceScore = nil
     }
 
     func exportHAR(to url: URL) {

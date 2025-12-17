@@ -40,87 +40,10 @@ class NetworkInterceptor: URLProtocol {
     }
 
     override func startLoading() {
-        guard let url = request.url else {
-            client?.urlProtocolDidFinishLoading(self)
-            return
-        }
-
-        // Create request state
-        let state = NetworkRequestState(
-            url: url.absoluteString,
-            method: request.httpMethod ?? "GET"
-        )
-        state.requestHeaders = request.allHTTPHeaderFields ?? [:]
-        state.requestBody = request.httpBody
-        state.requestSize = Int64(request.httpBody?.count ?? 0)
-        self.requestState = state
-
-        // Mark request as handled
-        let mutableRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
-        NetworkInterceptor.setProperty(true, forKey: NetworkInterceptor.requestStateKey, in: mutableRequest)
-
-        // Create session configuration
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 60
-        config.timeoutIntervalForResource = 300
-
-        // FIX: Use completion handler instead of delegate to avoid retain cycle
-        // URLSession with delegate creates: self → dataTask → session → delegate (self) ♻️
-        let session = URLSession(configuration: config)
-
-        // Start timing
-        state.dnsStart = Date()
-
-        // Create data task with completion handler (breaks retain cycle)
-        dataTask = session.dataTask(with: mutableRequest as URLRequest) { [weak self] data, response, error in
-            guard let self = self else { return }
-
-            if let error = error {
-                self.client?.urlProtocol(self, didFailWithError: error)
-                return
-            }
-
-            // Handle response
-            if let response = response {
-                self.requestState?.dnsEnd = Date()
-                self.requestState?.connectStart = Date()
-                self.requestState?.connectEnd = Date()
-                self.requestState?.responseStart = Date()
-
-                if let httpResponse = response as? HTTPURLResponse {
-                    self.requestState?.statusCode = httpResponse.statusCode
-                    self.requestState?.responseHeaders = httpResponse.allHeaderFields.reduce(into: [:]) { result, pair in
-                        if let key = pair.key as? String, let value = pair.value as? String {
-                            result[key] = value
-                        }
-                    }
-                }
-
-                self.requestState?.mimeType = response.mimeType
-                self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .allowed)
-            }
-
-            // Handle data
-            if let data = data {
-                self.receivedData = data
-                self.requestState?.responseSize = Int64(data.count)
-                self.requestState?.responseBody = data
-                self.client?.urlProtocol(self, didLoad: data)
-            }
-
-            // Complete the request
-            self.requestState?.responseEnd = Date()
-
-            if let resource = self.requestState?.toResource() {
-                Task { @MainActor in
-                    NetworkInterceptor.sharedMonitor?.addResource(resource)
-                }
-            }
-
-            self.client?.urlProtocolDidFinishLoading(self)
-        }
-
-        dataTask?.resume()
+        // This URLProtocol is not used with WKWebView
+        // WKWebView has its own networking stack
+        // Network monitoring is handled via JavaScript Performance API
+        client?.urlProtocolDidFinishLoading(self)
     }
 
     override func stopLoading() {

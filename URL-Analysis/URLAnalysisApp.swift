@@ -26,8 +26,7 @@ struct URLAnalysisApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Register custom URL protocol for network interception
-        URLProtocol.registerClass(NetworkInterceptor.self)
+        // NetworkInterceptor not used with WKWebView - monitoring handled via JavaScript
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

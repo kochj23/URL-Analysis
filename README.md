@@ -1,12 +1,47 @@
 # URL Analysis
 
-A native macOS application for analyzing web page performance with detailed network waterfall visualization. Built with Swift and SwiftUI.
+A professional-grade native macOS application for analyzing web page performance with detailed network waterfall visualization, Core Web Vitals tracking, and comprehensive performance scoring. Built with Swift and SwiftUI.
 
 ![Platform](https://img.shields.io/badge/platform-macOS%2013.0%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/badge/version-1.1.0-brightgreen)
 
 ## Features
+
+### 📊 Performance Score Card (NEW in v1.1.0)
+- **0-100 Performance Score**: Single metric summarizing overall page performance
+- **Category Breakdown**: Load time, resource count, size, and Web Vitals
+- **Color-Coded Ratings**: Green (excellent), Orange (needs improvement), Red (poor)
+- **Actionable Recommendations**: Specific advice for each category
+- **Real-time Updates**: Score recalculates as resources load
+
+### 🚀 Core Web Vitals (NEW in v1.1.0)
+- **LCP (Largest Contentful Paint)**: Loading performance metric
+- **CLS (Cumulative Layout Shift)**: Visual stability metric
+- **FID (First Input Delay)**: Interactivity metric
+- **Google Standards**: Thresholds aligned with Google Search ranking factors
+- **Automatic Capture**: Uses browser's native Performance Observer API
+
+### 🚫 Request Blocking (NEW in v1.1.0)
+- **Quick Profiles**: One-click blocking for ads/trackers, images, or scripts
+- **Custom Blocking**: Block specific domains or resource types
+- **Performance Impact**: See how page performs without blocked resources
+- **WKContentRuleList**: Native WebKit blocking (efficient and fast)
+
+### 📸 Screenshot Timeline (NEW in v1.1.0)
+- **Visual Filmstrip**: Automatic screenshots at 0s, 0.5s, 1s, 2s, 3s, 5s
+- **Rendering Progress**: See exactly when content appears
+- **Timeline Correlation**: Match visual changes with network activity
+- **User Experience**: Understand what users actually see during load
+
+### 🔄 Multiple URL Comparison (NEW in v1.1.0)
+- **Up to 4 URLs**: Load and compare multiple sites simultaneously
+- **Tab Interface**: Easy switching between URLs
+- **Comparison View**: Side-by-side metrics table
+- **Benchmarking**: Compare against competitors or test variants
+
+## Core Features
 
 ### 🌊 Waterfall Visualization
 - **Detailed Timing Breakdown**: DNS lookup, TCP connection, SSL/TLS handshake, TTFB, and content download
@@ -154,22 +189,29 @@ The position of each bar shows when the request started relative to page load.
 
 ## Limitations
 
-- **Single Session**: Currently supports one URL analysis at a time
-- **macOS Only**: Not available for iOS/iPadOS
+- **macOS Only**: Not available for iOS/iPadOS (intentional - desktop tool)
 - **Throttling Accuracy**: Simulated throttling is approximate, not hardware-level
 - **WebSocket Inspection**: Limited support for WebSocket connections
+- **FID Measurement**: Requires user interaction to capture (click or keyboard input)
+
+## What's New in v1.1.0
+
+- ✅ Performance Score Card (0-100 scoring system)
+- ✅ Core Web Vitals tracking (LCP, CLS, FID)
+- ✅ Request blocking (ads, trackers, resource types)
+- ✅ Screenshot timeline (visual rendering progress)
+- ✅ Multiple URL comparison (up to 4 sites)
 
 ## Roadmap
 
-- [ ] Support for multiple tabs/sessions
-- [ ] Performance score calculation
-- [ ] Custom throttling profiles
-- [ ] Request replay functionality
+- [ ] Custom throttling profiles with presets
+- [ ] Request replay from HAR files
 - [ ] WebSocket detailed inspection
-- [ ] Screenshot capture during page load
-- [ ] Compare multiple page loads
+- [ ] Historical performance tracking
 - [ ] Dark mode support
 - [ ] Keyboard shortcuts for common actions
+- [ ] Export performance reports to PDF
+- [ ] API/CLI mode for automation
 
 ## Contributing
 

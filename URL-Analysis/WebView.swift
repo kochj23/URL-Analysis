@@ -13,6 +13,8 @@ import WebKit
 struct WebView: NSViewRepresentable {
     @Binding var url: String
     @ObservedObject var networkMonitor: NetworkMonitor
+    @ObservedObject var screenshotTimeline: ScreenshotTimeline
+    @ObservedObject var blockingManager: BlockingManager
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -21,6 +23,7 @@ struct WebView: NSViewRepresentable {
     class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         let parent: WebView
         var lastLoadedURL: String = ""
+        weak var webView: WKWebView?
 
         init(parent: WebView) {
             self.parent = parent
@@ -30,6 +33,11 @@ struct WebView: NSViewRepresentable {
             Task { @MainActor in
                 parent.networkMonitor.startNewSession()
                 parent.networkMonitor.isLoading = true
+
+                // Start screenshot capture
+                if let sessionStart = parent.networkMonitor.sessionStartTime {
+                    parent.screenshotTimeline.startCapture(webView: webView, sessionStart: sessionStart)
+                }
             }
         }
 
@@ -54,11 +62,23 @@ struct WebView: NSViewRepresentable {
 
         // WKScriptMessageHandler - receives messages from JavaScript
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            guard message.name == "performanceMonitor" else { return }
-            guard let dataArray = message.body as? [[String: Any]] else { return }
+            if message.name == "performanceMonitor" {
+                guard let dataArray = message.body as? [[String: Any]] else { return }
+                Task { @MainActor in
+                    processPerformanceData(dataArray)
+                }
+            } else if message.name == "webVitals" {
+                guard let vitalsData = message.body as? [String: Any] else { return }
+                Task { @MainActor in
+                    processWebVitals(vitalsData)
+                }
+            }
+        }
 
-            Task { @MainActor in
-                processPerformanceData(dataArray)
+        @MainActor
+        private func processWebVitals(_ data: [String: Any]) {
+            if let vitals = WebVitals.from(data: data) {
+                parent.networkMonitor.updateWebVitals(vitals)
             }
         }
 
@@ -215,29 +235,110 @@ struct WebView: NSViewRepresentable {
     })();
     """
 
+    // JavaScript to capture Core Web Vitals (LCP, CLS, FID)
+    static let webVitalsScript = """
+    (function() {
+        let lcp = 0;
+        let cls = 0;
+        let fid = 0;
+
+        // Capture LCP (Largest Contentful Paint)
+        try {
+            const lcpObserver = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                lcp = lastEntry.renderTime || lastEntry.loadTime;
+                sendVitals();
+            });
+            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+        } catch (e) {
+            // LCP not supported
+        }
+
+        // Capture CLS (Cumulative Layout Shift)
+        try {
+            const clsObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (!entry.hadRecentInput) {
+                        cls += entry.value;
+                        sendVitals();
+                    }
+                }
+            });
+            clsObserver.observe({ entryTypes: ['layout-shift'] });
+        } catch (e) {
+            // CLS not supported
+        }
+
+        // Capture FID (First Input Delay)
+        try {
+            const fidObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    fid = entry.processingStart - entry.startTime;
+                    sendVitals();
+                }
+            });
+            fidObserver.observe({ entryTypes: ['first-input'] });
+        } catch (e) {
+            // FID not supported
+        }
+
+        // Send vitals to Swift
+        function sendVitals() {
+            try {
+                window.webkit.messageHandlers.webVitals.postMessage({
+                    lcp: lcp,
+                    cls: cls,
+                    fid: fid
+                });
+            } catch (error) {
+                // Silent fail
+            }
+        }
+
+        // Send initial values after page load
+        window.addEventListener('load', function() {
+            setTimeout(sendVitals, 2000);  // Wait 2 seconds for metrics to settle
+            setTimeout(sendVitals, 5000);  // Check again after 5 seconds
+        });
+    })();
+    """
+
     func makeNSView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
 
         // Enable developer extras for debugging
         config.preferences.setValue(true, forKey: "developerExtrasEnabled")
 
-        // Add message handler for performance data
+        // Add message handlers
         config.userContentController.add(context.coordinator, name: "performanceMonitor")
+        config.userContentController.add(context.coordinator, name: "webVitals")
+
+        // Apply blocking rules
+        blockingManager.applyRules(to: config) { }
 
         // Inject JavaScript to capture network timing
-        let script = WKUserScript(
+        let perfScript = WKUserScript(
             source: Self.performanceMonitorScript,
             injectionTime: .atDocumentEnd,
             forMainFrameOnly: false
         )
-        config.userContentController.addUserScript(script)
+        config.userContentController.addUserScript(perfScript)
+
+        // Inject JavaScript to capture Web Vitals
+        let vitalsScript = WKUserScript(
+            source: Self.webVitalsScript,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+        config.userContentController.addUserScript(vitalsScript)
 
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
 
-        // Set the shared monitor for NetworkInterceptor
-        NetworkInterceptor.sharedMonitor = networkMonitor
+        // Store webView reference for screenshots
+        context.coordinator.webView = webView
 
         return webView
     }
