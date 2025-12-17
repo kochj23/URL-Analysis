@@ -31,28 +31,63 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     // URL Bar
                     HStack {
-                        TextField("Enter URL", text: Binding(
-                            get: { activeSession.url },
-                            set: { activeSession.url = $0 }
-                        ))
-                            .textFieldStyle(.roundedBorder)
-                            .onSubmit {
-                                loadURL()
+                        HStack {
+                            TextField("Enter URL", text: Binding(
+                                get: { activeSession.url },
+                                set: { activeSession.url = $0 }
+                            ))
+                                .textFieldStyle(.plain)
+                                .onSubmit {
+                                    loadURL()
+                                }
+
+                            if !activeSession.url.isEmpty {
+                                Button(action: {
+                                    activeSession.url = ""
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(.plain)
                             }
+                        }
+                        .padding(8)
+                        .background(Color(nsColor: .textBackgroundColor))
+                        .cornerRadius(6)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
 
                         Button("Load") {
                             loadURL()
                         }
                         .keyboardShortcut(.return)
+                        .buttonStyle(.borderedProminent)
 
-                        Button("Clear") {
+                        Button("Clear All") {
+                            activeSession.url = ""
                             activeSession.monitor.clearResources()
                             activeSession.timeline.stopCapture()
                         }
+                        .buttonStyle(.bordered)
 
                         Button("Export HAR") {
                             exportHAR()
                         }
+                        .buttonStyle(.bordered)
+
+                        Menu {
+                            Button("Apple.com") { activeSession.url = "https://www.apple.com" }
+                            Button("Google.com") { activeSession.url = "https://www.google.com" }
+                            Button("GitHub.com") { activeSession.url = "https://www.github.com" }
+                            Button("Amazon.com") { activeSession.url = "https://www.amazon.com" }
+                            Button("CNN.com") { activeSession.url = "https://www.cnn.com" }
+                        } label: {
+                            Image(systemName: "star.fill")
+                        }
+                        .buttonStyle(.bordered)
+                        .help("Quick URLs")
 
                         if comparisonManager.sessions.count == 1 {
                             Button(action: { comparisonManager.addSession() }) {
