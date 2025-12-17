@@ -60,13 +60,62 @@ class NetworkInterceptor: URLProtocol {
         config.timeoutIntervalForRequest = 60
         config.timeoutIntervalForResource = 300
 
-        let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+        // FIX: Use completion handler instead of delegate to avoid retain cycle
+        // URLSession with delegate creates: self → dataTask → session → delegate (self) ♻️
+        let session = URLSession(configuration: config)
 
         // Start timing
         state.dnsStart = Date()
 
-        // Create and start data task
-        dataTask = session.dataTask(with: mutableRequest as URLRequest)
+        // Create data task with completion handler (breaks retain cycle)
+        dataTask = session.dataTask(with: mutableRequest as URLRequest) { [weak self] data, response, error in
+            guard let self = self else { return }
+
+            if let error = error {
+                self.client?.urlProtocol(self, didFailWithError: error)
+                return
+            }
+
+            // Handle response
+            if let response = response {
+                self.requestState?.dnsEnd = Date()
+                self.requestState?.connectStart = Date()
+                self.requestState?.connectEnd = Date()
+                self.requestState?.responseStart = Date()
+
+                if let httpResponse = response as? HTTPURLResponse {
+                    self.requestState?.statusCode = httpResponse.statusCode
+                    self.requestState?.responseHeaders = httpResponse.allHeaderFields.reduce(into: [:]) { result, pair in
+                        if let key = pair.key as? String, let value = pair.value as? String {
+                            result[key] = value
+                        }
+                    }
+                }
+
+                self.requestState?.mimeType = response.mimeType
+                self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .allowed)
+            }
+
+            // Handle data
+            if let data = data {
+                self.receivedData = data
+                self.requestState?.responseSize = Int64(data.count)
+                self.requestState?.responseBody = data
+                self.client?.urlProtocol(self, didLoad: data)
+            }
+
+            // Complete the request
+            self.requestState?.responseEnd = Date()
+
+            if let resource = self.requestState?.toResource() {
+                Task { @MainActor in
+                    NetworkInterceptor.sharedMonitor?.addResource(resource)
+                }
+            }
+
+            self.client?.urlProtocolDidFinishLoading(self)
+        }
+
         dataTask?.resume()
     }
 
@@ -77,57 +126,11 @@ class NetworkInterceptor: URLProtocol {
 
 }
 
-// MARK: - URLSessionTaskDelegate
-
-extension NetworkInterceptor: URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let error = error {
-            client?.urlProtocol(self, didFailWithError: error)
-        } else {
-            // Complete the request state
-            requestState?.responseEnd = Date()
-
-            if let resource = requestState?.toResource() {
-                Task { @MainActor in
-                    NetworkInterceptor.sharedMonitor?.addResource(resource)
-                }
-            }
-
-            client?.urlProtocolDidFinishLoading(self)
-        }
-    }
-}
-
-// MARK: - URLSessionDataDelegate
-
-extension NetworkInterceptor: URLSessionDataDelegate {
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        requestState?.dnsEnd = Date()
-        requestState?.connectStart = Date()
-        requestState?.connectEnd = Date()
-        requestState?.responseStart = Date()
-
-        // Extract response information
-        if let httpResponse = response as? HTTPURLResponse {
-            requestState?.statusCode = httpResponse.statusCode
-            requestState?.responseHeaders = httpResponse.allHeaderFields.reduce(into: [:]) { result, pair in
-                if let key = pair.key as? String, let value = pair.value as? String {
-                    result[key] = value
-                }
-            }
-        }
-
-        requestState?.mimeType = response.mimeType
-
-        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .allowed)
-        completionHandler(.allow)
-    }
-
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        receivedData.append(data)
-        requestState?.responseSize = Int64(receivedData.count)
-        requestState?.responseBody = receivedData
-
-        client?.urlProtocol(self, didLoad: data)
-    }
-}
+// MARK: - Memory Safety Notes
+//
+// This implementation uses completion handlers instead of URLSession delegates
+// to prevent retain cycles. The pattern [weak self] in the completion handler
+// ensures that NetworkInterceptor instances can be deallocated properly.
+//
+// Previous implementation had: self → dataTask → session → delegate (self) ♻️
+// Current implementation breaks the cycle by removing the delegate reference.
