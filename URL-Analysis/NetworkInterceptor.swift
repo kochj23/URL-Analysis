@@ -5,12 +5,16 @@
 //  Created by Jordan Koch on 2025-12-17.
 //  Copyright © 2025 Jordan Koch. All rights reserved.
 //
-//  Custom URLProtocol for intercepting and timing network requests
+//  NOTE: This URLProtocol approach does NOT work with WKWebView.
+//  WKWebView uses its own networking stack and bypasses URLProtocol.
+//  Network monitoring is now handled via JavaScript Resource Timing API in WebView.swift.
+//  This file is kept for reference and potential future use with URLSession-based networking.
 //
 
 import Foundation
 
 /// Custom URLProtocol that intercepts all network requests to capture timing data
+/// WARNING: Not used by WKWebView - see note above
 class NetworkInterceptor: URLProtocol {
     private static let requestStateKey = "URLAnalysisRequestState"
     private var dataTask: URLSessionDataTask?

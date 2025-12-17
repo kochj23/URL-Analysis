@@ -72,8 +72,7 @@ struct ContentView: View {
     }
 
     private func loadURL() {
-        networkMonitor.startNewSession()
-        // The WebView will automatically trigger loading
+        // The WebView will automatically start a new session when navigation begins
     }
 
     private func exportHAR() {
