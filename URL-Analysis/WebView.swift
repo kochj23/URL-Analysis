@@ -15,6 +15,9 @@ struct WebView: NSViewRepresentable {
     @ObservedObject var networkMonitor: NetworkMonitor
     @ObservedObject var screenshotTimeline: ScreenshotTimeline
     @ObservedObject var blockingManager: BlockingManager
+    @ObservedObject var budgetManager: BudgetManager
+    @ObservedObject var optimizationAnalyzer: OptimizationAnalyzer
+    @ObservedObject var thirdPartyAnalyzer: ThirdPartyAnalyzer
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -45,6 +48,12 @@ struct WebView: NSViewRepresentable {
             lastLoadedURL = webView.url?.absoluteString ?? ""
             Task { @MainActor in
                 parent.networkMonitor.isLoading = false
+
+                // Run analyzers after page finishes loading (with delay for resource collection)
+                try? await Task.sleep(nanoseconds: 4_000_000_000)  // 4 seconds
+                parent.optimizationAnalyzer.analyze(monitor: parent.networkMonitor)
+                parent.thirdPartyAnalyzer.analyze(monitor: parent.networkMonitor)
+                parent.budgetManager.checkBudget(monitor: parent.networkMonitor)
             }
         }
 

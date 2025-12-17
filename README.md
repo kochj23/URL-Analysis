@@ -5,9 +5,36 @@ A professional-grade native macOS application for analyzing web page performance
 ![Platform](https://img.shields.io/badge/platform-macOS%2013.0%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-1.1.0-brightgreen)
+![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)
 
 ## Features
+
+### 📊 Performance Budgets (NEW in v1.2.0)
+- **Automatic Budget Enforcement**: Set thresholds and get instant alerts
+- **Visual Alerts**: Red/orange banners when budgets exceeded
+- **7 Metrics Tracked**: Load time, size, requests, score, LCP, CLS, FID
+- **Quick Presets**: Mobile Fast, Desktop Standard, PWA
+- **Severity Levels**: Critical, Warning, Minor with color-coding
+- **Real-time Checking**: Violations detected immediately after load
+
+### 💡 Optimization Suggestions (NEW in v1.2.0)
+- **Automatic Analysis**: Detects 8 categories of performance issues
+- **Prioritized List**: Sorted by impact (critical first) and difficulty
+- **Estimated Savings**: Quantified potential improvements
+- **Actionable Recommendations**: Specific steps to fix each issue
+- **Categories**: Compression, Images, Caching, Render Blocking, JavaScript, CSS, Fonts, Connections
+- **Impact + Difficulty**: Know what to fix first (high impact + easy = quick wins)
+
+### 🌐 Third-Party Analysis (NEW in v1.2.0)
+- **Domain Grouping**: All resources organized by domain
+- **Provider Identification**: Auto-detects 20+ common third-party providers
+- **Impact Calculation**: High/Medium/Low rating per domain
+- **Category Tags**: Analytics, Advertising, Social Media, CDN, Fonts, Maps, Video, Tag Management
+- **Cost Breakdown**: See duration, size, and request count per provider
+- **Sorting Options**: By duration, size, or requests
+- **First-Party Filtering**: Toggle to show only third-party resources
+
+## Core Features
 
 ### 📊 Performance Score Card (NEW in v1.1.0)
 - **0-100 Performance Score**: Single metric summarizing overall page performance
@@ -121,11 +148,28 @@ A professional-grade native macOS application for analyzing web page performance
 
 ### Basic Workflow
 
-1. **Enter a URL**: Type or paste the URL you want to analyze in the top address bar
+1. **Enter a URL**: Type or paste URL, or click ⭐ for quick presets
 2. **Load the page**: Click "Load" or press Return
-3. **Analyze the waterfall**: View all network resources in the waterfall panel on the right
-4. **Inspect resources**: Click any resource to see detailed information in the inspector panel
-5. **Export results**: Click "Export HAR" to save the analysis for later review or sharing
+3. **Wait 5-7 seconds**: For complete analysis (resources, vitals, suggestions)
+4. **Review Results**:
+   - **Toolbar**: Check for red/orange budget alerts
+   - **Waterfall tab**: Network timing visualization
+   - **Performance tab**: Overall score (0-100)
+   - **Web Vitals tab**: LCP, CLS, FID metrics
+   - **Optimize tab**: Prioritized fix suggestions
+   - **3rd Party tab**: External dependency costs
+   - **Budgets tab**: Budget compliance details
+5. **Export**: Click "Export HAR" to save analysis
+
+### Optimization Workflow
+
+1. **Load your site** → Note budget violations in toolbar
+2. **Click "Optimize" tab** → See prioritized suggestions
+3. **Start with Critical/Easy** → Quick wins first
+4. **Check "3rd Party" tab** → Identify external bottlenecks
+5. **Implement fixes** → Make changes to your site
+6. **Reload and verify** → Confirm improvements
+7. **Adjust budgets** → Set targets for your team
 
 ### Filtering Resources
 
@@ -193,6 +237,15 @@ The position of each bar shows when the request started relative to page load.
 - **Throttling Accuracy**: Simulated throttling is approximate, not hardware-level
 - **WebSocket Inspection**: Limited support for WebSocket connections
 - **FID Measurement**: Requires user interaction to capture (click or keyboard input)
+
+## What's New in v1.2.0
+
+- ✅ **Performance Budgets** with automatic violation detection
+- ✅ **Optimization Suggestions** (8 categories, auto-prioritized)
+- ✅ **Third-Party Analysis** with provider identification
+- ✅ Budget alert banner in toolbar
+- ✅ Quick URL presets menu (⭐)
+- ✅ Improved URL field with X button
 
 ## What's New in v1.1.0
 

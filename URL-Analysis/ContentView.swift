@@ -11,9 +11,12 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var comparisonManager = ComparisonManager()
     @StateObject private var blockingManager = BlockingManager()
+    @StateObject private var budgetManager = BudgetManager()
+    @StateObject private var optimizationAnalyzer = OptimizationAnalyzer()
+    @StateObject private var thirdPartyAnalyzer = ThirdPartyAnalyzer()
     @State private var selectedResource: NetworkResource?
     @State private var showInspector = false
-    @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking
+    @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking, 4: Optimization, 5: Third-Party, 6: Budgets
 
     private var activeSession: AnalysisSession {
         comparisonManager.activeSession
@@ -72,6 +75,9 @@ struct ContentView: View {
                         }
                         .buttonStyle(.bordered)
 
+                        // Budget alert banner
+                        BudgetAlertBanner(budgetManager: budgetManager)
+
                         Button("Export HAR") {
                             exportHAR()
                         }
@@ -109,7 +115,10 @@ struct ContentView: View {
                         ),
                         networkMonitor: activeSession.monitor,
                         screenshotTimeline: activeSession.timeline,
-                        blockingManager: blockingManager
+                        blockingManager: blockingManager,
+                        budgetManager: budgetManager,
+                        optimizationAnalyzer: optimizationAnalyzer,
+                        thirdPartyAnalyzer: thirdPartyAnalyzer
                     )
 
                     // Screenshot Timeline
@@ -123,13 +132,18 @@ struct ContentView: View {
                 // Right side: Tabs (Waterfall, Performance, Vitals, Blocking)
                 VStack(spacing: 0) {
                     // Tab picker
-                    Picker("", selection: $selectedRightTab) {
-                        Text("Waterfall").tag(0)
-                        Text("Performance").tag(1)
-                        Text("Web Vitals").tag(2)
-                        Text("Blocking").tag(3)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        Picker("", selection: $selectedRightTab) {
+                            Text("Waterfall").tag(0)
+                            Text("Performance").tag(1)
+                            Text("Web Vitals").tag(2)
+                            Text("Optimize").tag(4)
+                            Text("3rd Party").tag(5)
+                            Text("Budgets").tag(6)
+                            Text("Blocking").tag(3)
+                        }
+                        .pickerStyle(.segmented)
                     }
-                    .pickerStyle(.segmented)
                     .padding()
 
                     Divider()
@@ -197,6 +211,18 @@ struct ContentView: View {
                             }
                         }
                         .tag(2)
+
+                        // Optimization Suggestions tab
+                        OptimizationSuggestionsView(analyzer: optimizationAnalyzer)
+                            .tag(4)
+
+                        // Third-Party Analysis tab
+                        ThirdPartyAnalysisView(analyzer: thirdPartyAnalyzer)
+                            .tag(5)
+
+                        // Performance Budgets tab
+                        PerformanceBudgetView(budgetManager: budgetManager)
+                            .tag(6)
 
                         // Request Blocking tab
                         RequestBlockingView(blockingManager: blockingManager)

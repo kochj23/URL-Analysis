@@ -24,6 +24,12 @@
 		A100000F000000000000001 /* RequestBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000F000000000000001 /* RequestBlockingView.swift */; };
 		A1000010000000000000001 /* ScreenshotTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000001 /* ScreenshotTimeline.swift */; };
 		A1000011000000000000001 /* URLComparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000001 /* URLComparison.swift */; };
+		A1000012000000000000001 /* PerformanceBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014000000000000001 /* PerformanceBudget.swift */; };
+		A1000013000000000000001 /* PerformanceBudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000015000000000000001 /* PerformanceBudgetView.swift */; };
+		A1000014000000000000001 /* OptimizationSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016000000000000001 /* OptimizationSuggestions.swift */; };
+		A1000015000000000000001 /* OptimizationSuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000017000000000000001 /* OptimizationSuggestionsView.swift */; };
+		A1000016000000000000001 /* ThirdPartyAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000018000000000000001 /* ThirdPartyAnalysis.swift */; };
+		A1000017000000000000001 /* ThirdPartyAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000019000000000000001 /* ThirdPartyAnalysisView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +53,12 @@
 		A2000011000000000000001 /* URLComparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComparison.swift; sourceTree = "<group>"; };
 		A2000012000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2000013000000000000001 /* URL_Analysis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis.entitlements; sourceTree = "<group>"; };
+		A2000014000000000000001 /* PerformanceBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceBudget.swift; sourceTree = "<group>"; };
+		A2000015000000000000001 /* PerformanceBudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceBudgetView.swift; sourceTree = "<group>"; };
+		A2000016000000000000001 /* OptimizationSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSuggestions.swift; sourceTree = "<group>"; };
+		A2000017000000000000001 /* OptimizationSuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSuggestionsView.swift; sourceTree = "<group>"; };
+		A2000018000000000000001 /* ThirdPartyAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyAnalysis.swift; sourceTree = "<group>"; };
+		A2000019000000000000001 /* ThirdPartyAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyAnalysisView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +99,12 @@
 				A200000F000000000000001 /* RequestBlockingView.swift */,
 				A2000010000000000000001 /* ScreenshotTimeline.swift */,
 				A2000011000000000000001 /* URLComparison.swift */,
+				A2000014000000000000001 /* PerformanceBudget.swift */,
+				A2000015000000000000001 /* PerformanceBudgetView.swift */,
+				A2000016000000000000001 /* OptimizationSuggestions.swift */,
+				A2000017000000000000001 /* OptimizationSuggestionsView.swift */,
+				A2000018000000000000001 /* ThirdPartyAnalysis.swift */,
+				A2000019000000000000001 /* ThirdPartyAnalysisView.swift */,
 				A200000A000000000000001 /* Assets.xcassets */,
 				A2000012000000000000001 /* Info.plist */,
 				A2000013000000000000001 /* URL_Analysis.entitlements */,
@@ -187,6 +205,12 @@
 				A100000F000000000000001 /* RequestBlockingView.swift in Sources */,
 				A1000010000000000000001 /* ScreenshotTimeline.swift in Sources */,
 				A1000011000000000000001 /* URLComparison.swift in Sources */,
+				A1000012000000000000001 /* PerformanceBudget.swift in Sources */,
+				A1000013000000000000001 /* PerformanceBudgetView.swift in Sources */,
+				A1000014000000000000001 /* OptimizationSuggestions.swift in Sources */,
+				A1000015000000000000001 /* OptimizationSuggestionsView.swift in Sources */,
+				A1000016000000000000001 /* ThirdPartyAnalysis.swift in Sources */,
+				A1000017000000000000001 /* ThirdPartyAnalysisView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
