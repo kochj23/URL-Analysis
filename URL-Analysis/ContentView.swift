@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var selectedResource: NetworkResource?
     @State private var showInspector = false
     @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking, 4: Optimization, 5: Third-Party, 6: Budgets
+    @State private var loadTrigger = 0  // Increment to trigger load
 
     private var activeSession: AnalysisSession {
         comparisonManager.activeSession
@@ -113,6 +114,7 @@ struct ContentView: View {
                             get: { activeSession.url },
                             set: { activeSession.url = $0 }
                         ),
+                        loadTrigger: $loadTrigger,
                         networkMonitor: activeSession.monitor,
                         screenshotTimeline: activeSession.timeline,
                         blockingManager: blockingManager,
@@ -270,7 +272,8 @@ struct ContentView: View {
     }
 
     private func loadURL() {
-        // The WebView will automatically start a new session when navigation begins
+        // Trigger load by incrementing loadTrigger
+        loadTrigger += 1
     }
 
     private func exportHAR() {

@@ -12,6 +12,7 @@ import WebKit
 /// SwiftUI wrapper for WKWebView with network monitoring
 struct WebView: NSViewRepresentable {
     @Binding var url: String
+    @Binding var loadTrigger: Int
     @ObservedObject var networkMonitor: NetworkMonitor
     @ObservedObject var screenshotTimeline: ScreenshotTimeline
     @ObservedObject var blockingManager: BlockingManager
@@ -26,6 +27,7 @@ struct WebView: NSViewRepresentable {
     class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         let parent: WebView
         var lastLoadedURL: String = ""
+        var lastLoadTrigger: Int = 0
         weak var webView: WKWebView?
 
         init(parent: WebView) {
@@ -353,14 +355,15 @@ struct WebView: NSViewRepresentable {
     }
 
     func updateNSView(_ webView: WKWebView, context: Context) {
-        // Only load if URL changed and hasn't been loaded yet
-        // Check against coordinator's lastLoadedURL to prevent reload loops
-        if let requestURL = URL(string: url),
-           url != context.coordinator.lastLoadedURL,
-           !context.coordinator.parent.networkMonitor.isLoading {
-            context.coordinator.lastLoadedURL = url
-            let request = URLRequest(url: requestURL)
-            webView.load(request)
+        // Load when loadTrigger changes (manual load button press)
+        if loadTrigger != context.coordinator.lastLoadTrigger {
+            context.coordinator.lastLoadTrigger = loadTrigger
+
+            if let requestURL = URL(string: url), !url.isEmpty {
+                context.coordinator.lastLoadedURL = url
+                let request = URLRequest(url: requestURL)
+                webView.load(request)
+            }
         }
     }
 }
