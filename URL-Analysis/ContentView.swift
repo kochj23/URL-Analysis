@@ -70,9 +70,7 @@ struct ContentView: View {
                         .buttonStyle(.borderedProminent)
 
                         Button("Clear All") {
-                            activeSession.url = ""
-                            activeSession.monitor.clearResources()
-                            activeSession.timeline.stopCapture()
+                            clearAll()
                         }
                         .buttonStyle(.bordered)
 
@@ -285,6 +283,31 @@ struct ContentView: View {
     private func loadURL() {
         // Trigger load by incrementing loadTrigger
         loadTrigger += 1
+    }
+
+    private func clearAll() {
+        // Clear URL
+        activeSession.url = "about:blank"
+
+        // Clear all monitoring data
+        activeSession.monitor.clearResources()
+
+        // Stop and clear screenshots
+        activeSession.timeline.stopCapture()
+        activeSession.timeline.frames.removeAll()
+
+        // Clear all analyzers
+        optimizationAnalyzer.suggestions.removeAll()
+        thirdPartyAnalyzer.domains.removeAll()
+        budgetManager.violations.removeAll()
+
+        // Load blank page to clear browser
+        loadTrigger += 1
+
+        // Then clear URL text after a brief delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            activeSession.url = ""
+        }
     }
 
     private func exportHAR() {
