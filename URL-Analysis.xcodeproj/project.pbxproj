@@ -11,6 +11,9 @@
 		A1000001000000000000001 /* URLAnalysisApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000001 /* URLAnalysisApp.swift */; };
 		A1000002000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000000000000001 /* ContentView.swift */; };
 		A1000003000000000000001 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003000000000000001 /* NetworkMonitor.swift */; };
+		33623361396334612D643938332D343562622D396666392D /* AIBackendManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */; };
+		62376132643730382D656363612D343763372D623135332D /* AIURLAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */; };
+		37306236623461622D306135312D343431392D623035302D /* AIAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */; };
 		A1000004000000000000001 /* HARFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000004000000000000001 /* HARFormat.swift */; };
 		A1000005000000000000001 /* NetworkInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000005000000000000001 /* NetworkInterceptor.swift */; };
 		A1000006000000000000001 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000006000000000000001 /* WebView.swift */; };
@@ -40,6 +43,9 @@
 		A2000001000000000000001 /* URLAnalysisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAnalysisApp.swift; sourceTree = "<group>"; };
 		A2000002000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2000003000000000000001 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AIBackendManager.swift; sourceTree = "<group>"; };
+		32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AIURLAnalyzer.swift; sourceTree = "<group>"; };
+		63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AIAnalysisView.swift; sourceTree = "<group>"; };
 		A2000004000000000000001 /* HARFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HARFormat.swift; sourceTree = "<group>"; };
 		A2000005000000000000001 /* NetworkInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptor.swift; sourceTree = "<group>"; };
 		A2000006000000000000001 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -198,6 +204,9 @@
 				A1000001000000000000001 /* URLAnalysisApp.swift in Sources */,
 				A1000002000000000000001 /* ContentView.swift in Sources */,
 				A1000003000000000000001 /* NetworkMonitor.swift in Sources */,
+				33623361396334612D643938332D343562622D396666392D /* AIBackendManager.swift in Sources */,
+				62376132643730382D656363612D343763372D623135332D /* AIURLAnalyzer.swift in Sources */,
+				37306236623461622D306135312D343431392D623035302D /* AIAnalysisView.swift in Sources */,
 				A1000004000000000000001 /* HARFormat.swift in Sources */,
 				A1000005000000000000001 /* NetworkInterceptor.swift in Sources */,
 				A1000006000000000000001 /* WebView.swift in Sources */,

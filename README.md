@@ -5,11 +5,78 @@ A professional-grade native macOS application for analyzing web page performance
 ![Platform](https://img.shields.io/badge/platform-macOS%2013.0%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)
+![Version](https://img.shields.io/badge/version-1.3.0-brightgreen)
 
 ## Features
 
-### 📊 Performance Budgets (NEW in v1.2.0)
+### 🤖 AI-Powered Analysis (NEW in v1.3.0)
+URL Analysis now includes **6 AI-powered features** for deep insights beyond rule-based analysis:
+
+#### 1. AI Performance Insights 💡
+- Natural language explanations of performance issues
+- Context-aware analysis: "Your page loads slowly because of 3 large uncompressed images from cdn.example.com"
+- Identifies root causes, not just symptoms
+- Actionable advice in plain English
+
+#### 2. AI Security Analysis 🔒
+- Detects suspicious URLs and phishing patterns
+- Identifies malware indicators in network traffic
+- Analyzes redirect chains for security risks
+- Flags potentially malicious third-party scripts
+- Risk scoring: Safe/Low/Medium/High/Critical
+
+#### 3. AI Optimization Coach 🚀
+- Detailed, context-specific optimization advice
+- Goes beyond generic suggestions with specific examples
+- "The largest image (hero.jpg, 2.3MB) should be converted to WebP and lazy-loaded"
+- Implementation guidance with code examples
+- Prioritization with reasoning
+
+#### 4. AI Technology Stack Detection 🔧
+- Automatically identifies frameworks and libraries from network traffic
+- Detects: React, Vue, Angular, Next.js, WordPress, Shopify, and more
+- Identifies analytics tools, CDNs, hosting providers
+- Example: "This site uses React 18.2, Next.js, Tailwind CSS, and Vercel hosting"
+
+#### 5. AI Privacy Impact Analysis 🛡️
+- Explains what trackers are actually doing
+- Privacy scoring (0-100, 100 = best privacy)
+- "Google Analytics is collecting: page views, user interactions, device info, approximate location"
+- Identifies data being collected and potential risks
+- Privacy recommendations
+
+#### 6. AI Q&A Interface 💬
+- Ask questions about the loaded page in natural language
+- Example questions:
+  - "Why is LCP so high?"
+  - "What's causing the layout shift?"
+  - "Is this URL safe?"
+  - "What data is being collected?"
+  - "How can I improve the performance score?"
+- Context-aware answers based on actual network data
+
+#### AI Backend Options
+URL Analysis supports **3 AI backends** - choose what works best for your setup:
+
+- **Ollama** - Fast GPU-accelerated (localhost:11434)
+  - Setup: `brew install ollama && ollama serve && ollama pull llama2`
+
+- **TinyLLM** by Jason Cox - Lightweight Docker-based (localhost:8000)
+  - Setup: `git clone https://github.com/jasonacox/TinyLLM && cd TinyLLM && docker-compose up -d`
+  - Project: https://github.com/jasonacox/TinyLLM
+
+- **MLX Toolkit** - Python-based Apple Silicon optimization
+  - Setup: `pip install mlx-lm`
+
+- **Auto Mode** - Automatically selects best available backend
+
+**Access AI Features:** Load a page → Click "🤖 AI Analysis" tab → Click "Run Full AI Analysis"
+
+All AI processing happens **100% locally** - no data leaves your machine.
+
+---
+
+### 📊 Performance Budgets (v1.2.0)
 - **Automatic Budget Enforcement**: Set thresholds and get instant alerts
 - **Visual Alerts**: Red/orange banners when budgets exceeded
 - **7 Metrics Tracked**: Load time, size, requests, score, LCP, CLS, FID
@@ -238,6 +305,18 @@ The position of each bar shows when the request started relative to page load.
 - **WebSocket Inspection**: Limited support for WebSocket connections
 - **FID Measurement**: Requires user interaction to capture (click or keyboard input)
 
+## What's New in v1.3.0
+
+- ✅ **AI-Powered Analysis** with 6 intelligent features
+- ✅ **AI Performance Insights** - Natural language explanations
+- ✅ **AI Security Analysis** - Threat and phishing detection
+- ✅ **AI Optimization Coach** - Detailed advice with code examples
+- ✅ **AI Technology Stack Detection** - Framework identification
+- ✅ **AI Privacy Impact Analysis** - Tracker analysis and privacy scoring
+- ✅ **AI Q&A Interface** - Ask questions about the page
+- ✅ **Multi-Backend Support** - Ollama, TinyLLM (by Jason Cox), MLX Toolkit
+- ✅ **100% Local AI** - No cloud, complete privacy
+
 ## What's New in v1.2.0
 
 - ✅ **Performance Budgets** with automatic violation detection
@@ -257,14 +336,18 @@ The position of each bar shows when the request started relative to page load.
 
 ## Roadmap
 
+- [✅] **AI-powered analysis** (DONE in v1.3.0)
+- [ ] AI-powered automatic optimization recommendations
+- [ ] AI-generated performance reports with insights
 - [ ] Custom throttling profiles with presets
 - [ ] Request replay from HAR files
 - [ ] WebSocket detailed inspection
 - [ ] Historical performance tracking
 - [ ] Dark mode support
 - [ ] Keyboard shortcuts for common actions
-- [ ] Export performance reports to PDF
+- [✅] **Export performance reports to PDF** (DONE in v1.2.0)
 - [ ] API/CLI mode for automation
+- [ ] AI comparison mode (compare multiple URLs with AI insights)
 
 ## Contributing
 
@@ -290,6 +373,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Inspired by Chrome DevTools Network Panel
 - HAR specification: http://www.softwareishard.com/blog/har-12-spec/
 - Built with Apple's WebKit and SwiftUI frameworks
+- **TinyLLM by Jason Cox** (https://github.com/jasonacox/TinyLLM) - AI backend option
+- **Ollama AI** (https://ollama.com) - AI backend option
+- **Apple MLX** (https://github.com/ml-explore/mlx) - AI backend option
 
 ## Support
 

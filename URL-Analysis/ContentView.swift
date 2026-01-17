@@ -14,9 +14,10 @@ struct ContentView: View {
     @StateObject private var budgetManager = BudgetManager()
     @StateObject private var optimizationAnalyzer = OptimizationAnalyzer()
     @StateObject private var thirdPartyAnalyzer = ThirdPartyAnalyzer()
+    @StateObject private var aiAnalyzer = AIURLAnalyzer()
     @State private var selectedResource: NetworkResource?
     @State private var showInspector = false
-    @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking, 4: Optimization, 5: Third-Party, 6: Budgets
+    @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking, 4: Optimization, 5: Third-Party, 6: Budgets, 7: AI Analysis
     @State private var loadTrigger = 0  // Increment to trigger load
 
     private var activeSession: AnalysisSession {
@@ -155,6 +156,7 @@ struct ContentView: View {
                             Text("Optimize").tag(4)
                             Text("3rd Party").tag(5)
                             Text("Budgets").tag(6)
+                            Text("🤖 AI Analysis").tag(7)
                             Text("Blocking").tag(3)
                         }
                         .pickerStyle(.segmented)
@@ -272,6 +274,10 @@ struct ContentView: View {
                         // Performance Budgets tab
                         PerformanceBudgetView(budgetManager: budgetManager)
                             .tag(6)
+
+                        // AI Analysis tab
+                        AIAnalysisView(analyzer: aiAnalyzer, monitor: activeSession.monitor, currentURL: activeSession.url)
+                            .tag(7)
 
                         // Request Blocking tab
                         RequestBlockingView(blockingManager: blockingManager)
