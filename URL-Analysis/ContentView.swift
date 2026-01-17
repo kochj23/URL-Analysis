@@ -24,11 +24,15 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Session tabs (for multiple URL comparison)
-            if comparisonManager.sessions.count > 1 {
-                URLComparisonView(manager: comparisonManager)
-            }
+        ZStack {
+            // Glassmorphic background
+            GlassmorphicBackground()
+
+            VStack(spacing: 0) {
+                // Session tabs (for multiple URL comparison)
+                if comparisonManager.sessions.count > 1 {
+                    URLComparisonView(manager: comparisonManager)
+                }
 
             HSplitView {
                 // Left side: Browser
@@ -277,6 +281,7 @@ struct ContentView: View {
                 }
                 .frame(minWidth: 500)
             }
+        }
         }
     }
 
