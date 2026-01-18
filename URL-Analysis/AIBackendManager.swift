@@ -70,7 +70,7 @@ class AIBackendManager: ObservableObject {
 
     // Ollama-specific
     @Published var ollamaModels: [String] = []
-    @Published var selectedOllamaModel: String = "llama2"
+    @Published var selectedOllamaModel: String = "mistral" // Changed from llama2 to mistral
 
     // MLX-specific
     @Published var pythonPath: String = "/opt/homebrew/bin/python3"
@@ -109,7 +109,7 @@ class AIBackendManager: ObservableObject {
             selectedBackend = backend
         }
 
-        selectedOllamaModel = userDefaults.string(forKey: Keys.ollamaModel) ?? "llama2"
+        selectedOllamaModel = userDefaults.string(forKey: Keys.ollamaModel) ?? "mistral"
         pythonPath = userDefaults.string(forKey: Keys.pythonPath) ?? "/opt/homebrew/bin/python3"
         mlxScriptPath = userDefaults.string(forKey: Keys.mlxScriptPath) ?? ""
         tinyLLMServerURL = userDefaults.string(forKey: Keys.tinyLLMServerURL) ?? "http://localhost:8000"

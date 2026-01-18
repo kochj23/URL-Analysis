@@ -44,6 +44,7 @@
 		A2000002000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2000003000000000000001 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AIBackendManager.swift; sourceTree = "<group>"; };
+		33663463313131642D663332662D343833642D626566342D /* AITestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AITestView.swift; sourceTree = "<group>"; };
 		32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AIURLAnalyzer.swift; sourceTree = "<group>"; };
 		63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL-Analysis/AIAnalysisView.swift; sourceTree = "<group>"; };
 		A2000004000000000000001 /* HARFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HARFormat.swift; sourceTree = "<group>"; };

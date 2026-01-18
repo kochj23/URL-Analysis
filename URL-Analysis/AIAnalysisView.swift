@@ -106,6 +106,18 @@ struct AIAnalysisView: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(analyzer.isAnalyzing || monitor.resources.isEmpty)
+
+            if monitor.resources.isEmpty {
+                Text("Load a page first")
+                    .font(.caption)
+                    .foregroundColor(.orange)
+            }
+
+            if let backend = AIBackendManager.shared.activeBackend {
+                Text("Using: \(backend.rawValue)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
         .padding()
         .background(Color(nsColor: .controlBackgroundColor))
@@ -119,7 +131,19 @@ struct AIAnalysisView: View {
                 .font(.title2)
                 .bold()
 
-            if !analyzer.performanceInsights.isEmpty {
+            // Debug info
+            Text("Insights length: \(analyzer.performanceInsights.count) chars")
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            if analyzer.isAnalyzing {
+                VStack {
+                    ProgressView()
+                    Text("AI is analyzing performance...")
+                        .font(.caption)
+                }
+                .padding()
+            } else if !analyzer.performanceInsights.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(analyzer.performanceInsights)
                         .font(.body)
@@ -130,6 +154,11 @@ struct AIAnalysisView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color.blue.opacity(0.1))
                         )
+
+                    Button("Refresh Analysis") {
+                        runFullAnalysis()
+                    }
+                    .buttonStyle(.bordered)
                 }
             } else {
                 emptyStateView(
@@ -137,6 +166,13 @@ struct AIAnalysisView: View {
                     title: "No insights yet",
                     message: "Click 'Run Full AI Analysis' to get AI-powered performance insights"
                 )
+
+                if let error = analyzer.lastError {
+                    Text("Error: \(error)")
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .padding()
+                }
             }
         }
     }
@@ -603,16 +639,30 @@ struct AIAnalysisView: View {
     }
 
     private func runFullAnalysis() {
-        guard let url = URL(string: currentURL) else { return }
+        guard let url = URL(string: currentURL) else {
+            print("❌ AI Analysis: Invalid URL: \(currentURL)")
+            return
+        }
+
+        print("🤖 AI Analysis: Starting full analysis for \(url.absoluteString)")
+        print("🤖 Resources loaded: \(monitor.resources.count)")
+        print("🤖 Backend: \(AIBackendManager.shared.activeBackend?.rawValue ?? "None")")
 
         Task {
+            print("🤖 Running parallel AI analyses...")
+
             // Run all analyses in parallel
             async let insights = analyzer.analyzePerformance(monitor: monitor, score: monitor.performanceScore?.overall ?? 0, vitals: monitor.webVitals)
             async let security = analyzer.analyzeURLSecurity(url: url, resources: monitor.resources)
             async let stack = analyzer.detectTechnologyStack(url: url, resources: monitor.resources)
             async let privacy = analyzer.analyzePrivacyImpact(resources: monitor.resources)
 
-            _ = await (insights, security, stack, privacy)
+            let results = await (insights, security, stack, privacy)
+            print("🤖 AI Analysis complete!")
+            print("🤖 Insights: \(results.0.prefix(100))...")
+            print("🤖 Security risk: \(results.1.riskLevel.rawValue)")
+            print("🤖 Tech stack: \(results.2.frontend ?? "unknown")")
+            print("🤖 Privacy score: \(results.3.privacyScore)")
         }
     }
 
