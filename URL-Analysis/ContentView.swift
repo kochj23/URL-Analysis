@@ -15,9 +15,14 @@ struct ContentView: View {
     @StateObject private var optimizationAnalyzer = OptimizationAnalyzer()
     @StateObject private var thirdPartyAnalyzer = ThirdPartyAnalyzer()
     @StateObject private var aiAnalyzer = AIURLAnalyzer()
+    @StateObject private var deviceEmulationManager = DeviceEmulationManager()
+    @StateObject private var historyManager = SessionHistoryManager()
+    @StateObject private var lighthouseManager = LighthouseManager()
+    @EnvironmentObject var themeManager: ThemeManager
     @State private var selectedResource: NetworkResource?
     @State private var showInspector = false
-    @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking, 4: Optimization, 5: Third-Party, 6: Budgets, 7: AI Analysis
+    @State private var showingHistory = false
+    @State private var selectedRightTab = 0  // 0: Waterfall, 1: Performance, 2: Web Vitals, 3: Blocking, 4: Optimization, 5: Third-Party, 6: Budgets, 7: AI Analysis, 8: Lighthouse
     @State private var loadTrigger = 0  // Increment to trigger load
 
     private var activeSession: AnalysisSession {
@@ -110,6 +115,75 @@ struct ContentView: View {
                         .buttonStyle(.bordered)
                         .help("Quick URLs")
 
+                        // Theme picker
+                        Menu {
+                            ForEach(ThemeManager.Theme.allCases) { theme in
+                                Button(action: { themeManager.setTheme(theme) }) {
+                                    HStack {
+                                        Image(systemName: theme.icon)
+                                        Text(theme.displayName)
+                                        if themeManager.currentTheme == theme {
+                                            Spacer()
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                        } label: {
+                            Image(systemName: themeManager.currentTheme.icon)
+                        }
+                        .buttonStyle(.bordered)
+                        .help("Theme")
+
+                        // Device emulation picker
+                        Menu {
+                            ForEach(DeviceProfile.allPresets) { device in
+                                Button(action: {
+                                    deviceEmulationManager.setDevice(device)
+                                    loadTrigger += 1  // Reload page with new device
+                                }) {
+                                    HStack {
+                                        Image(systemName: device.platformIcon)
+                                        VStack(alignment: .leading) {
+                                            Text(device.name)
+                                            Text(device.viewportDescription)
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        if deviceEmulationManager.selectedDevice.id == device.id && deviceEmulationManager.isEnabled {
+                                            Spacer()
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                            Divider()
+                            Button(action: {
+                                deviceEmulationManager.resetToDesktop()
+                                loadTrigger += 1
+                            }) {
+                                HStack {
+                                    Image(systemName: "desktopcomputer")
+                                    Text("Desktop (No Emulation)")
+                                    if !deviceEmulationManager.isEnabled {
+                                        Spacer()
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        } label: {
+                            Image(systemName: deviceEmulationManager.selectedDevice.platformIcon)
+                        }
+                        .buttonStyle(.bordered)
+                        .help("Device Emulation")
+
+                        // History button
+                        Button(action: { showingHistory = true }) {
+                            Image(systemName: "clock.arrow.circlepath")
+                        }
+                        .buttonStyle(.bordered)
+                        .help("Session History")
+
                         if comparisonManager.sessions.count == 1 {
                             Button(action: { comparisonManager.addSession() }) {
                                 HStack(spacing: 4) {
@@ -134,7 +208,8 @@ struct ContentView: View {
                         blockingManager: blockingManager,
                         budgetManager: budgetManager,
                         optimizationAnalyzer: optimizationAnalyzer,
-                        thirdPartyAnalyzer: thirdPartyAnalyzer
+                        thirdPartyAnalyzer: thirdPartyAnalyzer,
+                        deviceEmulationManager: deviceEmulationManager
                     )
 
                     // Screenshot Timeline
@@ -158,6 +233,7 @@ struct ContentView: View {
                             Text("Budgets").tag(6)
                             Text("🤖 AI Analysis").tag(7)
                             Text("Blocking").tag(3)
+                            Text("🔍 Lighthouse").tag(8)
                         }
                         .pickerStyle(.segmented)
                     }
@@ -279,6 +355,10 @@ struct ContentView: View {
                         AIAnalysisView(analyzer: aiAnalyzer, monitor: activeSession.monitor, currentURL: activeSession.url)
                             .tag(7)
 
+                        // Lighthouse tab
+                        LighthouseView(lighthouseManager: lighthouseManager, currentURL: activeSession.url)
+                            .tag(8)
+
                         // Request Blocking tab
                         RequestBlockingView(blockingManager: blockingManager)
                             .tag(3)
@@ -288,6 +368,21 @@ struct ContentView: View {
                 .frame(minWidth: 500)
             }
         }
+        }
+        .sheet(isPresented: $showingHistory) {
+            HistoryView(historyManager: historyManager)
+        }
+        .onChange(of: activeSession.monitor.resources.count) { _, newCount in
+            // Auto-save session when analysis completes
+            if newCount > 0 && !activeSession.monitor.isLoading && activeSession.monitor.performanceScore != nil {
+                Task {
+                    let persistentSession = PersistentSession.from(
+                        activeSession,
+                        deviceProfile: deviceEmulationManager.isEnabled ? deviceEmulationManager.selectedDevice : nil
+                    )
+                    try? await historyManager.saveSession(persistentSession)
+                }
+            }
         }
     }
 

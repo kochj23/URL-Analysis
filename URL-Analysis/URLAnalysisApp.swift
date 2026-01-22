@@ -12,11 +12,14 @@ import AppKit
 @main
 struct URLAnalysisApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var themeManager = ThemeManager()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .frame(minWidth: 1200, minHeight: 800)
+                .environmentObject(themeManager)
+                .preferredColorScheme(themeManager.effectiveColorScheme)
         }
         .windowStyle(.hiddenTitleBar)
         .commands {

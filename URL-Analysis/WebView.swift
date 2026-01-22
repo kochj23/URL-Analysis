@@ -19,6 +19,7 @@ struct WebView: NSViewRepresentable {
     @ObservedObject var budgetManager: BudgetManager
     @ObservedObject var optimizationAnalyzer: OptimizationAnalyzer
     @ObservedObject var thirdPartyAnalyzer: ThirdPartyAnalyzer
+    @ObservedObject var deviceEmulationManager: DeviceEmulationManager
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -348,6 +349,11 @@ struct WebView: NSViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
 
+        // Apply device emulation if enabled
+        if deviceEmulationManager.isEnabled {
+            webView.customUserAgent = deviceEmulationManager.selectedDevice.userAgent
+        }
+
         // Store webView reference for screenshots
         context.coordinator.webView = webView
 
@@ -355,6 +361,13 @@ struct WebView: NSViewRepresentable {
     }
 
     func updateNSView(_ webView: WKWebView, context: Context) {
+        // Update device emulation user agent
+        if deviceEmulationManager.isEnabled {
+            webView.customUserAgent = deviceEmulationManager.selectedDevice.userAgent
+        } else {
+            webView.customUserAgent = nil
+        }
+
         // Load when loadTrigger changes (manual load button press)
         if loadTrigger != context.coordinator.lastLoadTrigger {
             context.coordinator.lastLoadTrigger = loadTrigger

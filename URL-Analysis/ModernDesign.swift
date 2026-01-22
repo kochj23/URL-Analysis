@@ -74,27 +74,28 @@ struct ModernColors {
     }
 }
 
-// Extreme glassmorphic card with heavy blur
+// Extreme glassmorphic card with heavy blur (adaptive for dark/light mode)
 struct GlassCard: ViewModifier {
     let prominent: Bool
+    @Environment(\.colorScheme) var colorScheme
 
     func body(content: Content) -> some View {
         content
             .padding(20)
             .background(
                 RoundedRectangle(cornerRadius: 24)
-                    .fill(ModernColors.glassBackground)
+                    .fill(AdaptiveColors.glassBackground(for: colorScheme))
                     .background(
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(.ultraThinMaterial)
+                            .fill(AdaptiveColors.glassMaterial(for: colorScheme))
                             .opacity(0.9)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 24)
-                            .stroke(ModernColors.glassBorder, lineWidth: 2)
+                            .stroke(AdaptiveColors.glassBorder(for: colorScheme), lineWidth: 2)
                     )
-                    .shadow(color: Color.black.opacity(0.05), radius: 10, y: 5)
-                    .shadow(color: Color.white.opacity(0.8), radius: 1, x: -1, y: -1)
+                    .shadow(color: AdaptiveColors.shadowColor(for: colorScheme), radius: 10, y: 5)
+                    .shadow(color: AdaptiveColors.highlightShadow(for: colorScheme), radius: 1, x: -1, y: -1)
             )
     }
 }
@@ -105,10 +106,11 @@ extension View {
     }
 }
 
-// Modern button style with glass effect
+// Modern button style with glass effect (adaptive)
 struct ModernButtonStyle: ButtonStyle {
     let color: Color
     let style: ButtonStyleType
+    @Environment(\.colorScheme) var colorScheme
 
     enum ButtonStyleType {
         case filled
@@ -125,14 +127,14 @@ struct ModernButtonStyle: ButtonStyle {
                 Group {
                     if style == .glass {
                         RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.white.opacity(0.3))
+                            .fill(AdaptiveColors.glassBackground(for: colorScheme))
                             .background(
                                 RoundedRectangle(cornerRadius: 16)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(AdaptiveColors.glassMaterial(for: colorScheme))
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.white.opacity(0.5), lineWidth: 1.5)
+                                    .stroke(AdaptiveColors.glassBorder(for: colorScheme), lineWidth: 1.5)
                             )
                     } else if style == .filled || style == .destructive {
                         RoundedRectangle(cornerRadius: 16)
@@ -143,7 +145,7 @@ struct ModernButtonStyle: ButtonStyle {
                     }
                 }
             )
-            .foregroundColor(style == .outlined ? color : (style == .glass ? ModernColors.textPrimary : .white))
+            .foregroundColor(style == .outlined ? color : (style == .glass ? AdaptiveColors.textPrimary(for: colorScheme) : .white))
             .font(.system(size: 14, weight: .semibold, design: .rounded))
             .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
             .shadow(color: color.opacity(0.3), radius: configuration.isPressed ? 5 : 8)
@@ -151,9 +153,10 @@ struct ModernButtonStyle: ButtonStyle {
     }
 }
 
-// Modern header text
+// Modern header text (adaptive)
 struct ModernHeader: ViewModifier {
     let size: HeaderSize
+    @Environment(\.colorScheme) var colorScheme
 
     enum HeaderSize {
         case large, medium, small
@@ -170,7 +173,7 @@ struct ModernHeader: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.system(size: size.fontSize, weight: .bold, design: .rounded))
-            .foregroundColor(ModernColors.textPrimary)
+            .foregroundColor(AdaptiveColors.textPrimary(for: colorScheme))
     }
 }
 
@@ -204,19 +207,20 @@ struct FloatingBlob: View {
     }
 }
 
-// Background with floating blobs
+// Background with floating blobs (adaptive)
 struct GlassmorphicBackground: View {
     @State private var animateBlobs = false
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
             // Base gradient
-            ModernColors.backgroundGradient
+            AdaptiveColors.backgroundGradient(for: colorScheme)
                 .ignoresSafeArea()
 
-            // Large floating blobs (dark theme colors)
+            // Large floating blobs (adaptive colors)
             FloatingBlob(
-                color: ModernColors.blobCyan,
+                color: AdaptiveColors.blobCyan(for: colorScheme),
                 size: 400,
                 x: animateBlobs ? -100 : -150,
                 y: animateBlobs ? -200 : -250,
@@ -224,7 +228,7 @@ struct GlassmorphicBackground: View {
             )
 
             FloatingBlob(
-                color: ModernColors.blobPurple,
+                color: AdaptiveColors.blobPurple(for: colorScheme),
                 size: 350,
                 x: animateBlobs ? 150 : 100,
                 y: animateBlobs ? -150 : -100,
@@ -232,7 +236,7 @@ struct GlassmorphicBackground: View {
             )
 
             FloatingBlob(
-                color: ModernColors.blobPink,
+                color: AdaptiveColors.blobPink(for: colorScheme),
                 size: 450,
                 x: animateBlobs ? 100 : 150,
                 y: animateBlobs ? 300 : 350,
@@ -240,7 +244,7 @@ struct GlassmorphicBackground: View {
             )
 
             FloatingBlob(
-                color: ModernColors.blobOrange,
+                color: AdaptiveColors.blobOrange(for: colorScheme),
                 size: 300,
                 x: animateBlobs ? -200 : -150,
                 y: animateBlobs ? 250 : 300,
@@ -248,7 +252,7 @@ struct GlassmorphicBackground: View {
             )
 
             FloatingBlob(
-                color: ModernColors.blobCyan.opacity(0.7),
+                color: AdaptiveColors.blobYellow(for: colorScheme),
                 size: 250,
                 x: animateBlobs ? 200 : 250,
                 y: animateBlobs ? 100 : 50,
@@ -287,7 +291,7 @@ struct HexagonShape: Shape {
     }
 }
 
-// Reusable circular gauge component with smooth animations
+// Reusable circular gauge component with smooth animations (adaptive)
 struct CircularGauge: View {
     let value: Double // 0-100
     let color: Color
@@ -297,6 +301,7 @@ struct CircularGauge: View {
     let label: String?
 
     @State private var animatedValue: Double = 0
+    @Environment(\.colorScheme) var colorScheme
 
     init(value: Double, color: Color, size: CGFloat = 80, lineWidth: CGFloat = 8, showValue: Bool = true, label: String? = nil) {
         self.value = value
@@ -310,7 +315,7 @@ struct CircularGauge: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.white.opacity(0.1), lineWidth: lineWidth)
+                .stroke(AdaptiveColors.textTertiary(for: colorScheme).opacity(0.2), lineWidth: lineWidth)
 
             Circle()
                 .trim(from: 0, to: min(animatedValue / 100.0, 1.0))
@@ -325,12 +330,12 @@ struct CircularGauge: View {
                 VStack(spacing: 2) {
                     Text(String(format: "%.0f", animatedValue))
                         .font(.system(size: size > 60 ? 24 : 16, weight: .bold, design: .rounded))
-                        .foregroundColor(ModernColors.textPrimary)
+                        .foregroundColor(AdaptiveColors.textPrimary(for: colorScheme))
 
                     if let label = label {
                         Text(label)
                             .font(.system(size: size > 60 ? 10 : 8, weight: .medium, design: .rounded))
-                            .foregroundColor(ModernColors.textSecondary)
+                            .foregroundColor(AdaptiveColors.textSecondary(for: colorScheme))
                     }
                 }
             }
@@ -349,17 +354,18 @@ struct CircularGauge: View {
     }
 }
 
-// Mini circular gauge (for compact cards) with smooth animations
+// Mini circular gauge (for compact cards) with smooth animations (adaptive)
 struct MiniGauge: View {
     let value: Double
     let color: Color
 
     @State private var animatedValue: Double = 0
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.white.opacity(0.1), lineWidth: 4)
+                .stroke(AdaptiveColors.textTertiary(for: colorScheme).opacity(0.2), lineWidth: 4)
 
             Circle()
                 .trim(from: 0, to: min(animatedValue / 100.0, 1.0))
