@@ -372,7 +372,7 @@ struct ContentView: View {
         .sheet(isPresented: $showingHistory) {
             HistoryView(historyManager: historyManager)
         }
-        .onChange(of: activeSession.monitor.resources.count) { _, newCount in
+        .onChange(of: activeSession.monitor.resources.count) { newCount in
             // Auto-save session when analysis completes
             if newCount > 0 && !activeSession.monitor.isLoading && activeSession.monitor.performanceScore != nil {
                 Task {

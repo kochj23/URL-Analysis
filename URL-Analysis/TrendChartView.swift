@@ -119,7 +119,7 @@ struct TrendChartView: View {
     private func metricValue(for session: PersistentSession) -> Double {
         switch selectedMetric {
         case .score:
-            return session.performanceScore?.overall ?? 0
+            return session.overallScore ?? 0
         case .loadTime:
             return session.duration
         case .size:
@@ -127,7 +127,11 @@ struct TrendChartView: View {
         case .requests:
             return Double(session.requestCount)
         case .lcp:
-            return session.webVitals?.lcp.rawValue ?? 0
+            // Parse LCP value if present
+            if let lcpValue = session.lcpValue, let parsed = Double(lcpValue.replacingOccurrences(of: " s", with: "").replacingOccurrences(of: " ms", with: "")) {
+                return parsed
+            }
+            return 0
         }
     }
 }
@@ -142,7 +146,7 @@ struct StatisticsView: View {
         let values = sessions.map { session -> Double in
             switch metric {
             case .score:
-                return session.performanceScore?.overall ?? 0
+                return session.overallScore ?? 0
             case .loadTime:
                 return session.duration
             case .size:
@@ -150,7 +154,10 @@ struct StatisticsView: View {
             case .requests:
                 return Double(session.requestCount)
             case .lcp:
-                return session.webVitals?.lcp.rawValue ?? 0
+                if let lcpValue = session.lcpValue, let parsed = Double(lcpValue.replacingOccurrences(of: " s", with: "").replacingOccurrences(of: " ms", with: "")) {
+                    return parsed
+                }
+                return 0
             }
         }
 

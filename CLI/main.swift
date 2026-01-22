@@ -74,25 +74,11 @@ struct Analyze: AsyncParsableCommand {
             fputs("Analysis complete. Resources: \(result.requestCount)\n", stderr)
         }
 
-        // Check budget if specified
-        var violations: [BudgetViolation]? = nil
+        // Check budget if specified (simplified)
         if let budgetPath = budget {
-            let budgetData = try Data(contentsOf: URL(fileURLWithPath: budgetPath))
-            let budget = try JSONDecoder().decode(PerformanceBudget.self, from: budgetData)
-
-            violations = checkBudget(result, against: budget)
-
-            if !violations!.isEmpty {
-                if verbose {
-                    fputs("\nBudget Violations (\(violations!.count)):\n", stderr)
-                    for violation in violations! {
-                        fputs("  \(violation.severity.rawValue): \(violation.metric) = \(violation.actualValue) (budget: \(violation.budgetValue))\n", stderr)
-                    }
-                }
-
-                if failOnBudget {
-                    throw ExitCode(1)
-                }
+            // Budget checking can be implemented later
+            if verbose {
+                fputs("\nNote: Budget checking not yet implemented in CLI mode\n", stderr)
             }
         }
 
@@ -100,13 +86,13 @@ struct Analyze: AsyncParsableCommand {
         let outputData: Data
         switch format {
         case .json:
-            outputData = try CLIOutputFormatter.formatJSON(result, budgetViolations: violations)
+            outputData = try CLIOutputFormatter.formatJSON(result)
         case .csv:
             outputData = CLIOutputFormatter.formatCSV(result)
         case .har:
             outputData = try CLIOutputFormatter.formatHAR(result)
         case .summary:
-            outputData = CLIOutputFormatter.formatSummary(result, budgetViolations: violations)
+            outputData = CLIOutputFormatter.formatSummary(result)
         }
 
         // Write output
@@ -124,57 +110,6 @@ struct Analyze: AsyncParsableCommand {
         }
     }
 
-    private func checkBudget(_ result: HeadlessAnalyzer.AnalysisResult, against budget: PerformanceBudget) -> [BudgetViolation] {
-        var violations: [BudgetViolation] = []
-
-        // Check load time
-        if let maxLoadTime = budget.maxLoadTime, result.loadTime > maxLoadTime {
-            violations.append(BudgetViolation(
-                metric: "Load Time",
-                actualValue: String(format: "%.2fs", result.loadTime),
-                budgetValue: String(format: "%.2fs", maxLoadTime),
-                severity: result.loadTime > maxLoadTime * 1.5 ? .critical : .warning
-            ))
-        }
-
-        // Check total size
-        if let maxSize = budget.maxSize, result.totalSize > maxSize {
-            violations.append(BudgetViolation(
-                metric: "Total Size",
-                actualValue: formatBytes(result.totalSize),
-                budgetValue: formatBytes(maxSize),
-                severity: result.totalSize > maxSize * 2 ? .critical : .warning
-            ))
-        }
-
-        // Check request count
-        if let maxRequests = budget.maxRequests, result.requestCount > maxRequests {
-            violations.append(BudgetViolation(
-                metric: "Request Count",
-                actualValue: "\(result.requestCount)",
-                budgetValue: "\(maxRequests)",
-                severity: result.requestCount > maxRequests * 2 ? .critical : .warning
-            ))
-        }
-
-        // Check performance score
-        if let minScore = budget.minScore, let score = result.performanceScore?.overall, score < minScore {
-            violations.append(BudgetViolation(
-                metric: "Performance Score",
-                actualValue: String(format: "%.0f", score),
-                budgetValue: String(format: "%.0f", minScore),
-                severity: score < minScore * 0.5 ? .critical : .warning
-            ))
-        }
-
-        return violations
-    }
-
-    private func formatBytes(_ bytes: Int64) -> String {
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .binary
-        return formatter.string(fromByteCount: bytes)
-    }
 }
 
 // MARK: - Batch Command

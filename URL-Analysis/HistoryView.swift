@@ -172,7 +172,7 @@ struct SessionListItem: View {
             // Metrics
             HStack(spacing: 12) {
                 // Score
-                if let score = session.performanceScore?.overall {
+                if let score = session.overallScore {
                     Label(String(format: "%.0f", score), systemImage: "speedometer")
                         .font(.caption)
                         .foregroundColor(AdaptiveColors.performanceColor(score: score))
@@ -244,45 +244,43 @@ struct SessionDetailView: View {
                 Divider()
 
                 // Performance score card
-                if let score = session.performanceScore {
+                if let score = session.overallScore {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Performance Score")
                             .font(.headline)
                             .foregroundColor(AdaptiveColors.textPrimary(for: colorScheme))
 
-                        HStack(spacing: 20) {
-                            CircularGauge(
-                                value: score.overall,
-                                color: AdaptiveColors.performanceColor(score: score.overall),
-                                size: 100,
-                                lineWidth: 10,
-                                showValue: true,
-                                label: "Overall"
-                            )
-
-                            VStack(alignment: .leading, spacing: 8) {
-                                ScoreCategory(name: "Load Time", score: score.loadTimeScore, color: .green)
-                                ScoreCategory(name: "Resources", score: score.resourceCountScore, color: .blue)
-                                ScoreCategory(name: "Size", score: score.sizeScore, color: .orange)
-                                ScoreCategory(name: "Web Vitals", score: score.webVitalsScore, color: .purple)
-                            }
-                        }
+                        CircularGauge(
+                            value: score,
+                            color: AdaptiveColors.performanceColor(score: score),
+                            size: 120,
+                            lineWidth: 12,
+                            showValue: true,
+                            label: "Overall"
+                        )
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .padding()
                     .glassCard()
                 }
 
-                // Web Vitals
-                if let vitals = session.webVitals {
+                // Web Vitals (simplified)
+                if session.lcpValue != nil || session.clsValue != nil || session.fidValue != nil {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Core Web Vitals")
                             .font(.headline)
                             .foregroundColor(AdaptiveColors.textPrimary(for: colorScheme))
 
                         HStack(spacing: 16) {
-                            VitalCard(name: "LCP", value: vitals.lcp.value, rating: vitals.lcp.rating)
-                            VitalCard(name: "CLS", value: vitals.cls.value, rating: vitals.cls.rating)
-                            VitalCard(name: "FID", value: vitals.fid.value, rating: vitals.fid.rating)
+                            if let lcp = session.lcpValue {
+                                SimpleVitalCard(name: "LCP", value: lcp)
+                            }
+                            if let cls = session.clsValue {
+                                SimpleVitalCard(name: "CLS", value: cls)
+                            }
+                            if let fid = session.fidValue {
+                                SimpleVitalCard(name: "FID", value: fid)
+                            }
                         }
                     }
                     .padding()
@@ -347,11 +345,10 @@ struct ScoreCategory: View {
     }
 }
 
-/// Web Vital card
-struct VitalCard: View {
+/// Simplified Web Vital card (for historical sessions)
+struct SimpleVitalCard: View {
     let name: String
     let value: String
-    let rating: WebVitals.Rating
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
@@ -364,13 +361,6 @@ struct VitalCard: View {
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundColor(AdaptiveColors.textPrimary(for: colorScheme))
-
-            Text(rating.emoji)
-                .font(.title2)
-
-            Text(rating.label)
-                .font(.caption2)
-                .foregroundColor(rating.color)
         }
         .frame(maxWidth: .infinity)
         .padding()

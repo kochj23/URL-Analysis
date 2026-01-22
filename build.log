@@ -1,0 +1,524 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme "URL Analysis" clean build
+
+2026-01-22 11:51:47.479 xcodebuild[51071:28108258] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006032-001011922192801C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006032-001011922192801C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006032-001011922192801C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006032-001011922192801C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'URL Analysis' in project 'URL-Analysis' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: b0c07b0597dd24e2edb76e45665961c1
+Build description path: /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/XCBuildData/b0c07b0597dd24e2edb76e45665961c1.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk /Users/kochj/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -o /Users/kochj/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache
+
+CreateBuildDirectory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    builtin-create-build-directory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    builtin-create-build-directory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products
+
+CreateBuildDirectory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    builtin-create-build-directory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug
+
+CreateBuildDirectory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    builtin-create-build-directory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    builtin-create-build-directory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/EagerLinkingTBDs/Debug
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    builtin-create-build-directory /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/EagerLinkingTBDs/Debug
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL-Analysis-85b4d72494c3be6a4644fc0db475534b-VFS/all-product-headers.yaml
+    cd /Volumes/Data/xcode/URL-Analysis/URL-Analysis.xcodeproj
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL-Analysis-85b4d72494c3be6a4644fc0db475534b-VFS/all-product-headers.yaml
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-project-headers.hmap (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-project-headers.hmap
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-all-target-headers.hmap (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-own-target-headers.hmap (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-generated-files.hmap (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-generated-files.hmap
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-all-non-framework-target-headers.hmap (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.hmap (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.hmap
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-DebugDylibPath-normal-arm64.txt (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.DependencyStaticMetadataFileList (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-DebugDylibInstallName-normal-arm64.txt (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.DependencyMetadataFileList (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.DependencyMetadataFileList
+
+MkDir /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /bin/mkdir -p /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.SwiftConstValuesFileList (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis-OutputFileMap.json (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.LinkFileList (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.LinkFileList
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.SwiftFileList (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.SwiftFileList
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/Entitlements.plist (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/Entitlements.plist
+
+WriteAuxiliaryFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis_const_extract_protocols.json (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    write-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis_const_extract_protocols.json
+
+MkDir /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Resources (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /bin/mkdir -p /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Resources
+
+MkDir /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /bin/mkdir -p /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents
+
+MkDir /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/MacOS (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /bin/mkdir -p /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/MacOS
+
+ProcessProductPackaging /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URL_Analysis.entitlements /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.app.xcent (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+    Entitlements:
+    
+    {
+    "com.apple.security.app-sandbox" = 1;
+    "com.apple.security.files.user-selected.read-write" = 1;
+    "com.apple.security.get-task-allow" = 1;
+    "com.apple.security.network.client" = 1;
+    "com.apple.security.network.server" = 0;
+}
+    
+    builtin-productPackagingUtility /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URL_Analysis.entitlements -entitlements -format xml -o /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.app.xcent
+
+ProcessProductPackagingDER /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.app.xcent /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.app.xcent.der (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /usr/bin/derq query -f xml -i /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.app.xcent -o /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis.app.xcent.der --raw
+
+Ld /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/MacOS/__preview.dylib normal (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos13.0 -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O0 -L/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug -F/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug -install_name @rpath/URL\ Analysis.debug.dylib -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis_dependency_info.dat -Xlinker -no_adhoc_codesign -o /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/MacOS/__preview.dylib
+
+GenerateAssetSymbols /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets --compile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Resources --output-format human-readable-text --notices --warnings --export-dependency-info /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_dependencies --output-partial-info-plist /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --enable-on-demand-resources NO --development-region en --target-device mac --minimum-deployment-target 13.0 --platform macosx --bundle-identifier com.jordankoch.URL-Analysis --generate-swift-asset-symbols /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.document.warnings */
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets:./AppIcon.appiconset/[][tv][1280x1280][][][1x][][][][][2d][icon_1280x1280@1x.png]: warning: The app icon set "AppIcon" has 2 unassigned children.
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets:./AppIcon.appiconset/[][tv][1280x1280][][][1x][][][][][2d][icon_1280x1280@1x.png]: warning: The app icon set "AppIcon" has 2 unassigned children.
+/* com.apple.actool.compilation-results */
+/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL Analysis.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL Analysis.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL Analysis.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+MkDir /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/thinned (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /bin/mkdir -p /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/thinned
+
+MkDir /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/unthinned (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /bin/mkdir -p /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/unthinned
+
+CompileAssetCatalogVariant thinned /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Resources /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets --compile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --enable-on-demand-resources NO --development-region en --target-device mac --minimum-deployment-target 13.0 --platform macosx
+/* com.apple.actool.notices */
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets: warning: Accent color ‘AccentColor’ is not present in any asset catalogs.
+/* com.apple.actool.document.warnings */
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets:./AppIcon.appiconset/[][tv][1280x1280][][][1x][][][][][2d][icon_1280x1280@1x.png]: warning: The app icon set "AppIcon" has 2 unassigned children.
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets:./AppIcon.appiconset/[][tv][1280x1280][][][1x][][][][][2d][icon_1280x1280@1x.png]: warning: The app icon set "AppIcon" has 2 unassigned children.
+/* com.apple.actool.compilation-results */
+/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL Analysis.build/assetcatalog_generated_info.plist_thinned
+
+
+LinkAssetCatalog /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Assets.xcassets (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    builtin-linkAssetCatalog --thinned /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/thinned --thinned-dependencies /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_generated_info.plist_unthinned --output /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Resources --plist-output /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_generated_info.plist
+
+ProcessInfoPlistFile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Info.plist /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Info.plist (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    builtin-infoPlistUtility /Volumes/Data/xcode/URL-Analysis/URL-Analysis/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/PkgInfo -expandbuildsettings -platform macosx -additionalcontentfile /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/assetcatalog_generated_info.plist -o /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/URL\ Analysis.app/Contents/Info.plist
+
+SwiftDriver URL\ Analysis normal arm64 com.apple.xcode.tools.swift.compiler (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name URL_Analysis -Onone -enforce-exclusivity\=checked @/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-macos13.0 -g -module-cache-path /Users/kochj/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug -F /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64 -c -j32 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/kochj/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache -output-file-map /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/kochj/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/kochj/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL_Analysis.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/kochj/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis_const_extract_protocols.json -Xcc -iquote -Xcc /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-generated-files.hmap -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-own-target-headers.hmap -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-all-target-headers.hmap -Xcc -iquote -Xcc /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-project-headers.hmap -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/include -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources-normal/arm64 -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/arm64 -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL_Analysis-Swift.h -working-directory /Volumes/Data/xcode/URL-Analysis -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ HARFormat.swift,\ NetworkInterceptor.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HARFormat.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/NetworkInterceptor.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HARFormat.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/NetworkInterceptor.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ PerformanceScore.swift,\ WebVitals.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceScore.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WebVitals.swift (in target 'URL Analysis' from project 'URL-Analysis')
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceScore.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WebVitals.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ URLAnalysisApp.swift,\ ContentView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URLAnalysisApp.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ContentView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URLAnalysisApp.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ContentView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ NetworkMonitor.swift,\ AIBackendManager.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/NetworkMonitor.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIBackendManager.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/NetworkMonitor.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIBackendManager.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ WaterfallToolbar.swift,\ ResourceInspector.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WaterfallToolbar.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ResourceInspector.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WaterfallToolbar.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ResourceInspector.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ URLComparison.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URLComparison.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URLComparison.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ RequestBlockingView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/RequestBlockingView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/RequestBlockingView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ ScreenshotTimeline.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ScreenshotTimeline.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ScreenshotTimeline.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ OptimizationSuggestionsView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/OptimizationSuggestionsView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/OptimizationSuggestionsView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ AIURLAnalyzer.swift,\ AIAnalysisView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIURLAnalyzer.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIAnalysisView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIURLAnalyzer.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIAnalysisView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ PerformanceBudget.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceBudget.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceBudget.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ PerformanceBudgetView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceBudgetView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceBudgetView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ WebView.swift,\ WaterfallView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WebView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WaterfallView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WebView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WaterfallView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ PerformanceScoreView.swift,\ RequestBlocking.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceScoreView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/RequestBlocking.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceScoreView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/RequestBlocking.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ OptimizationSuggestions.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/OptimizationSuggestions.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/OptimizationSuggestions.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ ThirdPartyAnalysis.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThirdPartyAnalysis.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThirdPartyAnalysis.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ PDFReport.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PDFReport.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PDFReport.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ AdaptiveColors.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AdaptiveColors.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AdaptiveColors.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ PersistentSession.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift (in target 'URL Analysis' from project 'URL-Analysis')
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URLAnalysisApp.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ContentView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/NetworkMonitor.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIBackendManager.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIURLAnalyzer.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIAnalysisView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HARFormat.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/NetworkInterceptor.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WebView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WaterfallView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WaterfallToolbar.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ResourceInspector.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceScore.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/WebVitals.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceScoreView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/RequestBlocking.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/RequestBlockingView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ScreenshotTimeline.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/URLComparison.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceBudget.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PerformanceBudgetView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/OptimizationSuggestions.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/OptimizationSuggestionsView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThirdPartyAnalysis.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThirdPartyAnalysisView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PDFReport.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ModernDesign.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThemeManager.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/AdaptiveColors.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/DeviceEmulation.swift -primary-file /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/SessionHistoryManager.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HistoryView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/TrendChartView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HeadlessAnalyzer.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/CLIOutputFormatter.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseIntegration.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseModels.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseView.swift /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/GeneratedAssetSymbols.swift -emit-dependencies-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/PersistentSession.d -emit-const-values-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/PersistentSession.swiftconstvalues -emit-reference-dependencies-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/PersistentSession.swiftdeps -serialize-diagnostics-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/PersistentSession.dia -emit-localized-strings -emit-localized-strings-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64 -target arm64-apple-macos13.0 -module-can-import-version AppKit 2685.30.107 2685.30.107 -module-can-import-version DeveloperToolsSupport 23.0.4 23.0.4 -module-can-import-version SwiftUI 7.2.5.1 7.2.5 -disable-cross-import-overlay-search -swift-module-cross-import WebKit /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Cryptexes/OS/System/Library/Frameworks/WebKit.framework/Modules/WebKit.swiftcrossimport/SwiftUI.swiftoverlay -swift-module-cross-import WebKit /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/WebKit.framework/Modules/WebKit.swiftcrossimport/SwiftUI.swiftoverlay -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libPreviewsMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#PreviewsMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftUIMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftUIMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL_Analysis-dependencies-1.json -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -I /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug -F /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug -no-color-diagnostics -Xcc -fno-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -module-cache-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/URL\ Analysis_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/kochj/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Volumes/Data/xcode/URL-Analysis -enable-anonymous-context-mangled-names -file-compilation-dir /Volumes/Data/xcode/URL-Analysis -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/kochj/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-generated-files.hmap -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-own-target-headers.hmap -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-all-target-headers.hmap -Xcc -iquote -Xcc /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/URL\ Analysis-project-headers.hmap -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Products/Debug/include -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources-normal/arm64 -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/arm64 -Xcc -I/Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name URL_Analysis -frontend-parseable-output -disable-clang-spi -target-sdk-version 26.2 -target-sdk-name macosx26.2 -clang-target arm64-apple-macos26.2 -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -o /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/PersistentSession.o -index-unit-output-path /URL-Analysis.build/Debug/URL\ Analysis.build/Objects-normal/arm64/PersistentSession.o -index-store-path /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Index.noindex/DataStore -index-system-modules
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:13:8: error: type 'PersistentSession' does not conform to protocol 'Decodable'
+struct PersistentSession: Codable, Identifiable {
+       ^
+Swift.Decodable.init:2:1: note: protocol requires initializer 'init(from:)' with type 'Decodable'
+init(from decoder: any Decoder) throws}
+^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:22:9: note: cannot automatically synthesize 'Decodable' because 'PerformanceScore?' does not conform to 'Decodable'
+    let performanceScore: PerformanceScore?
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:25:9: note: cannot automatically synthesize 'Decodable' because '[BudgetViolation]' does not conform to 'Decodable'
+    let budgetViolations: [BudgetViolation]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:26:9: note: cannot automatically synthesize 'Decodable' because '[OptimizationSuggestion]' does not conform to 'Decodable'
+    let optimizationSuggestions: [OptimizationSuggestion]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:27:9: note: cannot automatically synthesize 'Decodable' because '[ThirdPartyDomain]' does not conform to 'Decodable'
+    let thirdPartyDomains: [ThirdPartyDomain]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:13:8: error: type 'PersistentSession' does not conform to protocol 'Encodable'
+struct PersistentSession: Codable, Identifiable {
+       ^
+Swift.Encodable.encode:2:6: note: protocol requires function 'encode(to:)' with type 'Encodable'
+func encode(to encoder: any Encoder) throws}
+     ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:22:9: note: cannot automatically synthesize 'Encodable' because 'PerformanceScore?' does not conform to 'Encodable'
+    let performanceScore: PerformanceScore?
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:25:9: note: cannot automatically synthesize 'Encodable' because '[BudgetViolation]' does not conform to 'Encodable'
+    let budgetViolations: [BudgetViolation]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:26:9: note: cannot automatically synthesize 'Encodable' because '[OptimizationSuggestion]' does not conform to 'Encodable'
+    let optimizationSuggestions: [OptimizationSuggestion]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:27:9: note: cannot automatically synthesize 'Encodable' because '[ThirdPartyDomain]' does not conform to 'Encodable'
+    let thirdPartyDomains: [ThirdPartyDomain]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:75:46: error: cannot use optional chaining on non-optional value of type 'NSImage'
+            guard let imageData = frame.image?.tiffRepresentation,
+                                  ~~~~~~~~~~~^
+                                             
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:13:8: error: type 'PersistentSession' does not conform to protocol 'Decodable'
+struct PersistentSession: Codable, Identifiable {
+       ^
+Swift.Decodable.init:2:1: note: protocol requires initializer 'init(from:)' with type 'Decodable'
+init(from decoder: any Decoder) throws}
+^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:22:9: note: cannot automatically synthesize 'Decodable' because 'PerformanceScore?' does not conform to 'Decodable'
+    let performanceScore: PerformanceScore?
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:25:9: note: cannot automatically synthesize 'Decodable' because '[BudgetViolation]' does not conform to 'Decodable'
+    let budgetViolations: [BudgetViolation]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:26:9: note: cannot automatically synthesize 'Decodable' because '[OptimizationSuggestion]' does not conform to 'Decodable'
+    let optimizationSuggestions: [OptimizationSuggestion]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:27:9: note: cannot automatically synthesize 'Decodable' because '[ThirdPartyDomain]' does not conform to 'Decodable'
+    let thirdPartyDomains: [ThirdPartyDomain]
+        ^
+/Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift:140:20: error: type of expression is ambiguous without a type annotation
+        self.score = session.performanceScore?.overall
+        ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SwiftCompile normal arm64 Compiling\ ThemeManager.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThemeManager.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThemeManager.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ ThirdPartyAnalysisView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThirdPartyAnalysisView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ThirdPartyAnalysisView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ SessionHistoryManager.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/SessionHistoryManager.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/SessionHistoryManager.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ HistoryView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HistoryView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HistoryView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ ModernDesign.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ModernDesign.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/ModernDesign.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ DeviceEmulation.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/DeviceEmulation.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/DeviceEmulation.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ HeadlessAnalyzer.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HeadlessAnalyzer.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/HeadlessAnalyzer.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ LighthouseIntegration.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseIntegration.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseIntegration.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ URL_Analysis (in target 'URL Analysis' from project 'URL-Analysis')
+
+EmitSwiftModule normal arm64 (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ LighthouseView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ GeneratedAssetSymbols.swift /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Users/kochj/Library/Developer/Xcode/DerivedData/URL-Analysis-bjqftmalwiqvpdasylnrbxypgdsb/Build/Intermediates.noindex/URL-Analysis.build/Debug/URL\ Analysis.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ CLIOutputFormatter.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/CLIOutputFormatter.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/CLIOutputFormatter.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ TrendChartView.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/TrendChartView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/TrendChartView.swift (in target 'URL Analysis' from project 'URL-Analysis')
+    cd /Volumes/Data/xcode/URL-Analysis
+    
+
+SwiftCompile normal arm64 Compiling\ LighthouseModels.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/LighthouseModels.swift (in target 'URL Analysis' from project 'URL-Analysis')
+
+note: Disabling hardened runtime with ad-hoc codesigning. (in target 'URL Analysis' from project 'URL-Analysis')
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 Compiling\ PersistentSession.swift /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift (in target 'URL Analysis' from project 'URL-Analysis')
+	SwiftCompile normal arm64 /Volumes/Data/xcode/URL-Analysis/URL-Analysis/PersistentSession.swift (in target 'URL Analysis' from project 'URL-Analysis')
+	Building project URL-Analysis with scheme URL Analysis
+(3 failures)

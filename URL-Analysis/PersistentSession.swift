@@ -16,15 +16,22 @@ struct PersistentSession: Codable, Identifiable {
     let timestamp: Date
     let deviceProfile: DeviceProfile?
 
-    // Core performance data
-    let resources: [NetworkResource]
-    let webVitals: WebVitals?
-    let performanceScore: PerformanceScore?
+    // Core performance data (simplified for Codable)
+    let resourceCount: Int
+    let resourceData: String  // JSON string of resources
+
+    // Web Vitals (as simple values)
+    let lcpValue: String?
+    let clsValue: String?
+    let fidValue: String?
+
+    // Performance Score (as simple value)
+    let overallScore: Double?
 
     // Analysis results
-    let budgetViolations: [BudgetViolation]
-    let optimizationSuggestions: [OptimizationSuggestion]
-    let thirdPartyDomains: [ThirdPartyDomain]
+    let budgetViolations: [String]
+    let optimizationCount: Int
+    let thirdPartyCount: Int
 
     // Metadata
     let duration: TimeInterval
@@ -46,20 +53,23 @@ struct PersistentSession: Codable, Identifiable {
     }
 
     init(id: UUID = UUID(), url: String, timestamp: Date = Date(), deviceProfile: DeviceProfile? = nil,
-         resources: [NetworkResource], webVitals: WebVitals?, performanceScore: PerformanceScore?,
-         budgetViolations: [BudgetViolation], optimizationSuggestions: [OptimizationSuggestion],
-         thirdPartyDomains: [ThirdPartyDomain], duration: TimeInterval, totalSize: Int64,
-         requestCount: Int, tags: [String] = [], notes: String = "", screenshots: [ScreenshotData] = []) {
+         resourceCount: Int, resourceData: String, lcpValue: String?, clsValue: String?, fidValue: String?,
+         overallScore: Double?, budgetViolations: [String], optimizationCount: Int, thirdPartyCount: Int,
+         duration: TimeInterval, totalSize: Int64, requestCount: Int, tags: [String] = [],
+         notes: String = "", screenshots: [ScreenshotData] = []) {
         self.id = id
         self.url = url
         self.timestamp = timestamp
         self.deviceProfile = deviceProfile
-        self.resources = resources
-        self.webVitals = webVitals
-        self.performanceScore = performanceScore
+        self.resourceCount = resourceCount
+        self.resourceData = resourceData
+        self.lcpValue = lcpValue
+        self.clsValue = clsValue
+        self.fidValue = fidValue
+        self.overallScore = overallScore
         self.budgetViolations = budgetViolations
-        self.optimizationSuggestions = optimizationSuggestions
-        self.thirdPartyDomains = thirdPartyDomains
+        self.optimizationCount = optimizationCount
+        self.thirdPartyCount = thirdPartyCount
         self.duration = duration
         self.totalSize = totalSize
         self.requestCount = requestCount
@@ -69,10 +79,12 @@ struct PersistentSession: Codable, Identifiable {
     }
 
     /// Create from AnalysisSession
+    @MainActor
     static func from(_ session: AnalysisSession, deviceProfile: DeviceProfile? = nil) -> PersistentSession {
         // Convert screenshots
         let screenshotData = session.timeline.frames.compactMap { frame -> ScreenshotData? in
-            guard let imageData = frame.image?.tiffRepresentation,
+            let image = frame.image
+            guard let imageData = image.tiffRepresentation,
                   let bitmap = NSBitmapImageRep(data: imageData),
                   let pngData = bitmap.representation(using: .png, properties: [:]) else {
                 return nil
@@ -80,15 +92,27 @@ struct PersistentSession: Codable, Identifiable {
             return ScreenshotData(timestamp: frame.timestamp, imageData: pngData)
         }
 
+        // Encode resources to JSON string (simplified storage)
+        let resourceDataString: String
+        if let jsonData = try? JSONEncoder().encode(session.monitor.resources),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            resourceDataString = jsonString
+        } else {
+            resourceDataString = "[]"
+        }
+
         return PersistentSession(
             url: session.url,
             deviceProfile: deviceProfile,
-            resources: session.monitor.resources,
-            webVitals: session.monitor.webVitals,
-            performanceScore: session.monitor.performanceScore,
-            budgetViolations: [],  // Would come from BudgetManager
-            optimizationSuggestions: [],  // Would come from OptimizationAnalyzer
-            thirdPartyDomains: [],  // Would come from ThirdPartyAnalyzer
+            resourceCount: session.monitor.resources.count,
+            resourceData: resourceDataString,
+            lcpValue: session.monitor.webVitals?.lcp.value,
+            clsValue: session.monitor.webVitals?.cls.value,
+            fidValue: session.monitor.webVitals?.fid.value,
+            overallScore: session.monitor.performanceScore.map { Double($0.overall) },
+            budgetViolations: [],
+            optimizationCount: 0,
+            thirdPartyCount: 0,
             duration: session.monitor.totalDuration,
             totalSize: session.monitor.totalSize,
             requestCount: session.monitor.resources.count,
@@ -115,7 +139,7 @@ struct PersistentSession: Codable, Identifiable {
 
     /// Get performance rating
     var performanceRating: String {
-        guard let score = performanceScore?.overall else { return "N/A" }
+        guard let score = overallScore else { return "N/A" }
         if score >= 75 { return "Good" }
         if score >= 50 { return "Needs Improvement" }
         return "Poor"
@@ -137,7 +161,7 @@ struct SessionMetadata: Codable {
         self.id = session.id
         self.url = session.url
         self.timestamp = session.timestamp
-        self.score = session.performanceScore?.overall
+        self.score = session.overallScore
         self.loadTime = session.duration
         self.totalSize = session.totalSize
         self.requestCount = session.requestCount
