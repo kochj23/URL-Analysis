@@ -5,12 +5,12 @@ A professional-grade native macOS application for analyzing web page performance
 ![Platform](https://img.shields.io/badge/platform-macOS%2013.0%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-1.3.0-brightgreen)
+![Version](https://img.shields.io/badge/version-1.5.0-brightgreen)
 
 ## Features
 
-### 🤖 AI-Powered Analysis (NEW in v1.3.0)
-URL Analysis now includes **6 AI-powered features** for deep insights beyond rule-based analysis:
+### 🤖 AI-Powered Analysis (Enhanced in v1.5.0)
+URL Analysis now includes **10 AI-powered features** for deep insights beyond rule-based analysis:
 
 #### 1. AI Performance Insights 💡
 - Natural language explanations of performance issues
@@ -55,8 +55,40 @@ URL Analysis now includes **6 AI-powered features** for deep insights beyond rul
   - "How can I improve the performance score?"
 - Context-aware answers based on actual network data
 
+#### 7. AI Code Generation 💻 (NEW in v1.5.0)
+- Generates production-ready code to fix performance issues
+- Framework-aware: Detects React, Vue, Next.js and generates appropriate code
+- Multiple languages: JavaScript, CSS, HTML, Nginx, .htaccess
+- Copy-to-clipboard functionality for immediate use
+- Estimated impact per fix: "Reduce LCP by ~1.2s"
+- Top 5 optimizations get auto-generated code
+
+#### 8. Performance Time Machine ⏰ (NEW in v1.5.0)
+- Simulate performance impact BEFORE implementing changes
+- "What if" analysis: Predict score, LCP, size, and time savings
+- 6 preset scenarios: Remove trackers, compress images, lazy loading, caching, minification
+- Confidence scoring (High/Medium/Low) based on data quality
+- Before/after comparison with AI-validated predictions
+- Perfect for evaluating optimization ROI
+
+#### 9. AI Trend Analysis & Predictions 📈 (NEW in v1.5.0)
+- Analyzes historical performance data for trends
+- Forecasts metrics 7/14/30 days ahead
+- Anomaly detection: Flags unusual performance (>2 std dev)
+- Pattern recognition: "Performance degrades every Monday"
+- Proactive alerts: "LCP will exceed 3s in 2 weeks at current rate"
+- Requires 5+ historical sessions (works with Historical Tracking feature)
+
+#### 10. AI Regression Detection & Root Cause 🔍 (NEW in v1.5.0)
+- Automatically detects performance regressions
+- Compares current performance vs historical baseline (median of last 30 days)
+- Root cause identification: "Load time increased because you added Google Tag Manager"
+- Evidence-based analysis with confidence scores
+- Timeline estimation: "Change occurred ~Jan 15"
+- Severity levels: Critical/Warning/Minor/None
+
 #### AI Backend Options
-URL Analysis supports **3 AI backends** - choose what works best for your setup:
+URL Analysis supports **5 AI backends** - choose what works best for your setup:
 
 - **Ollama** - Fast GPU-accelerated (localhost:11434)
   - Setup: `brew install ollama && ollama serve && ollama pull llama2`
@@ -64,6 +96,14 @@ URL Analysis supports **3 AI backends** - choose what works best for your setup:
 - **TinyLLM** by Jason Cox - Lightweight Docker-based (localhost:8000)
   - Setup: `git clone https://github.com/jasonacox/TinyLLM && cd TinyLLM && docker-compose up -d`
   - Project: https://github.com/jasonacox/TinyLLM
+
+- **TinyChat** by Jason Cox - Fast chatbot interface (localhost:8000)
+  - Setup: Same as TinyLLM
+  - Project: https://github.com/jasonacox/tinychat
+
+- **OpenWebUI** - Self-hosted AI platform (localhost:8080)
+  - Setup: `docker run -d -p 8080:8080 ghcr.io/open-webui/open-webui:main`
+  - Project: https://github.com/open-webui/open-webui
 
 - **MLX Toolkit** - Python-based Apple Silicon optimization
   - Setup: `pip install mlx-lm`
@@ -304,6 +344,27 @@ The position of each bar shows when the request started relative to page load.
 - **Throttling Accuracy**: Simulated throttling is approximate, not hardware-level
 - **WebSocket Inspection**: Limited support for WebSocket connections
 - **FID Measurement**: Requires user interaction to capture (click or keyboard input)
+
+## What's New in v1.5.0
+
+- ✅ **AI Code Generation** - Production-ready code to fix performance issues
+- ✅ **Performance Time Machine** - What-if analysis with impact predictions
+- ✅ **AI Trend Analysis & Predictions** - Forecast future performance, detect anomalies
+- ✅ **AI Regression Detection** - Automatic regression detection with root cause analysis
+- ✅ **10 Total AI Features** - Most comprehensive AI-powered performance tool
+- ✅ **Framework-Aware Code** - Generates React/Vue/Next.js specific code
+- ✅ **Proactive Monitoring** - Forecasts and alerts before problems occur
+
+## What's New in v1.4.0
+
+- ✅ **Dark Mode Support** - Full light/dark theme with system following
+- ✅ **Mobile Device Emulation** - 10 device presets (iPhone, iPad, Android)
+- ✅ **Historical Performance Tracking** - Persistent session storage with trends
+- ✅ **CLI/API Mode** - Command-line tool for CI/CD integration
+- ✅ **Google Lighthouse Integration** - SEO, accessibility, best practices analysis
+- ✅ **Session History Browser** - Search, filter, compare historical sessions
+- ✅ **Trend Charts** - Performance metrics over time
+- ✅ **Device-Specific Analysis** - Mobile vs desktop scoring
 
 ## What's New in v1.3.0
 
