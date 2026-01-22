@@ -28,15 +28,21 @@ struct AIAnalysisView: View {
             Divider()
 
             // Tab selector
-            Picker("Feature", selection: $selectedTab) {
-                Text("💡 Insights").tag(0)
-                Text("🔒 Security").tag(1)
-                Text("🚀 Coach").tag(2)
-                Text("🔧 Tech Stack").tag(3)
-                Text("🛡️ Privacy").tag(4)
-                Text("💬 Ask AI").tag(5)
+            ScrollView(.horizontal, showsIndicators: false) {
+                Picker("Feature", selection: $selectedTab) {
+                    Text("💡 Insights").tag(0)
+                    Text("🔒 Security").tag(1)
+                    Text("🚀 Coach").tag(2)
+                    Text("🔧 Tech Stack").tag(3)
+                    Text("🛡️ Privacy").tag(4)
+                    Text("💬 Ask AI").tag(5)
+                    Text("💻 Code Fixes").tag(6)
+                    Text("⏰ Time Machine").tag(7)
+                    Text("📈 Trends").tag(8)
+                    Text("🔍 Regression").tag(9)
+                }
+                .pickerStyle(SegmentedPickerStyle())
             }
-            .pickerStyle(SegmentedPickerStyle())
             .padding()
 
             Divider()
@@ -51,6 +57,10 @@ struct AIAnalysisView: View {
                     case 3: technologyStackView
                     case 4: privacyAnalysisView
                     case 5: qaInterfaceView
+                    case 6: codeGenerationView
+                    case 7: timeMachineView
+                    case 8: trendAnalysisView
+                    case 9: regressionDetectionView
                     default: Text("Unknown tab")
                     }
                 }
@@ -621,6 +631,41 @@ struct AIAnalysisView: View {
         if score >= 60 { return .yellow }
         if score >= 40 { return .orange }
         return .red
+    }
+
+    // MARK: - New AI Feature Views
+
+    private var codeGenerationView: some View {
+        CodeGenerationView(
+            analyzer: analyzer,
+            optimizationAnalyzer: OptimizationAnalyzer(),
+            techStack: analyzer.technologyStack,
+            resources: monitor.resources
+        )
+    }
+
+    private var timeMachineView: some View {
+        TimeMachineView(
+            analyzer: analyzer,
+            currentSession: monitor,
+            historicalSessions: []
+        )
+    }
+
+    private var trendAnalysisView: some View {
+        AITrendAnalysisView(
+            analyzer: analyzer,
+            historyManager: SessionHistoryManager(),
+            currentURL: currentURL
+        )
+    }
+
+    private var regressionDetectionView: some View {
+        RegressionDetectionView(
+            analyzer: analyzer,
+            currentSession: monitor,
+            historyManager: SessionHistoryManager()
+        )
     }
 
     // MARK: - Actions

@@ -25,6 +25,12 @@ class AIURLAnalyzer: ObservableObject {
     @Published var privacyAnalysis: PrivacyAnalysis?
     @Published var lastError: String?
 
+    // New AI Features
+    @Published var generatedCode: [CodeFix] = []
+    @Published var whatIfResults: [WhatIfScenario] = []
+    @Published var trendAnalysis: TrendAnalysisResult?
+    @Published var regressionReport: RegressionReport?
+
     private let aiBackend = AIBackendManager.shared
 
     // MARK: - Feature 1: AI Performance Insights
@@ -674,6 +680,579 @@ class AIURLAnalyzer: ObservableObject {
         formatter.countStyle = .file
         return formatter.string(fromByteCount: bytes)
     }
+
+    // MARK: - Feature 7: AI Code Generation for Fixes
+
+    /// Generate production-ready code to fix performance issues
+    func generateCodeFixes(
+        suggestions: [OptimizationSuggestion],
+        techStack: TechnologyStack?,
+        resources: [NetworkResource]
+    ) async -> [CodeFix] {
+        guard aiBackend.activeBackend != nil else {
+            return generateGenericCodeFixes(suggestions: suggestions)
+        }
+
+        isAnalyzing = true
+        defer { isAnalyzing = false }
+
+        var fixes: [CodeFix] = []
+
+        // Generate code for top 5 suggestions
+        for suggestion in suggestions.prefix(5) {
+            let framework = techStack?.frontend ?? "vanilla JavaScript"
+
+            let prompt = """
+            Generate production-ready code to fix this performance issue.
+
+            Title: \(suggestion.title)
+            Description: \(suggestion.description)
+            Impact: \(suggestion.impact.rawValue)
+            Current State: \(suggestion.currentState)
+            Target State: \(suggestion.targetState ?? "Optimized")
+            Framework: \(framework)
+
+            Affected Resources:
+            \(suggestion.affectedResources.map { "- \($0.url) (\(formatBytes($0.size)))" }.joined(separator: "\n"))
+
+            Return ONLY valid JSON in this exact format:
+            {
+              "title": "Short title",
+              "description": "What this code does",
+              "code": "actual code here (escaped for JSON)",
+              "language": "javascript|css|html|nginx|htaccess",
+              "framework": "\(framework.lowercased())|null",
+              "estimatedImpact": "Reduce LCP by ~X.Xs or Save ~XKB"
+            }
+            """
+
+            do {
+                let response = try await aiBackend.generate(
+                    prompt: prompt,
+                    systemPrompt: "You are an expert web performance engineer who writes production-ready optimization code. Always return valid JSON.",
+                    temperature: 0.3,
+                    maxTokens: 800
+                )
+
+                if let fix = parseCodeFix(from: response, suggestion: suggestion) {
+                    fixes.append(fix)
+                }
+            } catch {
+                lastError = error.localizedDescription
+            }
+        }
+
+        await MainActor.run {
+            self.generatedCode = fixes
+        }
+
+        return fixes
+    }
+
+    private func parseCodeFix(from response: String, suggestion: OptimizationSuggestion) -> CodeFix? {
+        // Try to parse JSON response
+        let jsonString = response.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard let jsonData = jsonString.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+            return nil
+        }
+
+        return CodeFix(
+            title: json["title"] as? String ?? suggestion.title,
+            description: json["description"] as? String ?? "",
+            code: json["code"] as? String ?? "",
+            language: json["language"] as? String ?? "javascript",
+            framework: json["framework"] as? String,
+            estimatedImpact: json["estimatedImpact"] as? String ?? ""
+        )
+    }
+
+    private func generateGenericCodeFixes(suggestions: [OptimizationSuggestion]) -> [CodeFix] {
+        // Fallback: Generate generic code templates
+        var fixes: [CodeFix] = []
+
+        for suggestion in suggestions.prefix(5) {
+            if suggestion.category == .images {
+                fixes.append(CodeFix(
+                    title: "Lazy Load Images",
+                    description: "Defer loading of below-the-fold images to improve initial page load",
+                    code: """
+                    // Lazy load images
+                    document.querySelectorAll('img[data-src]').forEach(img => {
+                      const observer = new IntersectionObserver(entries => {
+                        if (entries[0].isIntersecting) {
+                          img.src = img.dataset.src;
+                          observer.disconnect();
+                        }
+                      });
+                      observer.observe(img);
+                    });
+                    """,
+                    language: "javascript",
+                    framework: nil,
+                    estimatedImpact: "Reduce initial load by ~30%"
+                ))
+            }
+        }
+
+        return fixes
+    }
+
+    // MARK: - Feature 8: Performance Time Machine
+
+    /// Simulate performance impact of hypothetical changes
+    func simulateWhatIf(
+        scenario: WhatIfScenarioType,
+        currentSession: NetworkMonitor,
+        historicalData: [PersistentSession]
+    ) async -> WhatIfScenario {
+        guard aiBackend.activeBackend != nil else {
+            return simulateBasicWhatIf(scenario: scenario, session: currentSession)
+        }
+
+        isAnalyzing = true
+        defer { isAnalyzing = false }
+
+        let scenarioDescription = describeScenario(scenario, session: currentSession)
+        let affectedResources = identifyAffectedResources(scenario: scenario, session: currentSession)
+
+        let prompt = """
+        Simulate the performance impact of this change:
+
+        Scenario: \(scenarioDescription)
+
+        Current Performance:
+        - Score: \(currentSession.performanceScore?.overall ?? 0)/100
+        - Load Time: \(String(format: "%.2f", currentSession.totalDuration))s
+        - LCP: \(currentSession.webVitals?.lcp.value ?? "N/A")
+        - Total Size: \(formatBytes(currentSession.totalSize))
+        - Requests: \(currentSession.resources.count)
+
+        Resources That Would Be Affected:
+        \(affectedResources.map { "- \($0.url) (\(formatBytes($0.responseSize)))" }.joined(separator: "\n"))
+
+        Based on typical optimization gains, predict:
+        1. New performance score (0-100)
+        2. New load time
+        3. New LCP
+        4. Size savings
+        5. Time savings
+        6. Confidence level (High/Medium/Low)
+
+        Return ONLY valid JSON:
+        {
+          "predictedScore": 85.0,
+          "predictedLCP": "1.2s",
+          "sizeSavings": "500KB",
+          "timeSavings": "0.8s",
+          "confidence": "High|Medium|Low",
+          "explanation": "Detailed explanation of prediction..."
+        }
+        """
+
+        do {
+            let response = try await aiBackend.generate(
+                prompt: prompt,
+                systemPrompt: "You are a web performance expert who accurately predicts optimization impact. Always return valid JSON.",
+                temperature: 0.4,
+                maxTokens: 500
+            )
+
+            if let scenario = parseWhatIfScenario(from: response, originalScenario: scenarioDescription) {
+                await MainActor.run {
+                    self.whatIfResults.append(scenario)
+                }
+                return scenario
+            }
+        } catch {
+            lastError = error.localizedDescription
+        }
+
+        return simulateBasicWhatIf(scenario: scenario, session: currentSession)
+    }
+
+    private func describeScenario(_ scenario: WhatIfScenarioType, session: NetworkMonitor) -> String {
+        switch scenario {
+        case .removeTracker(let name):
+            return "Remove \(name) tracker"
+        case .compressImages:
+            return "Compress all images to WebP/AVIF format"
+        case .lazyLoadImages:
+            return "Lazy load below-the-fold images"
+        case .removeScript(let url):
+            return "Remove script: \(url)"
+        case .enableCaching:
+            return "Enable browser caching for static assets"
+        case .minifyJavaScript:
+            return "Minify and compress JavaScript bundles"
+        }
+    }
+
+    private func identifyAffectedResources(scenario: WhatIfScenarioType, session: NetworkMonitor) -> [NetworkResource] {
+        switch scenario {
+        case .removeTracker(let name):
+            return session.resources.filter { $0.url.localizedCaseInsensitiveContains(name) }
+        case .compressImages:
+            return session.resources.filter { $0.resourceType == .image }
+        case .lazyLoadImages:
+            return session.resources.filter { $0.resourceType == .image }
+        case .removeScript(let url):
+            return session.resources.filter { $0.url == url }
+        case .enableCaching:
+            return session.resources.filter { $0.resourceType == .stylesheet || $0.resourceType == .script }
+        case .minifyJavaScript:
+            return session.resources.filter { $0.resourceType == .script }
+        }
+    }
+
+    private func parseWhatIfScenario(from response: String, originalScenario: String) -> WhatIfScenario? {
+        guard let jsonData = response.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+            return nil
+        }
+
+        return WhatIfScenario(
+            scenario: originalScenario,
+            predictedScore: json["predictedScore"] as? Double ?? 0,
+            predictedLCP: json["predictedLCP"] as? String ?? "N/A",
+            sizeSavings: json["sizeSavings"] as? String ?? "Unknown",
+            timeSavings: json["timeSavings"] as? String ?? "Unknown",
+            confidence: json["confidence"] as? String ?? "Low",
+            explanation: json["explanation"] as? String ?? ""
+        )
+    }
+
+    private func simulateBasicWhatIf(scenario: WhatIfScenarioType, session: NetworkMonitor) -> WhatIfScenario {
+        let affected = identifyAffectedResources(scenario: scenario, session: session)
+        let sizeSavings = affected.reduce(0) { $0 + $1.responseSize }
+        let estimatedTimeSavings = Double(sizeSavings) / 1_000_000.0 * 0.5 // Rough estimate
+
+        return WhatIfScenario(
+            scenario: describeScenario(scenario, session: session),
+            predictedScore: Double(session.performanceScore?.overall ?? 50) + 10,
+            predictedLCP: "Estimated improvement",
+            sizeSavings: formatBytes(sizeSavings),
+            timeSavings: String(format: "~%.1fs", estimatedTimeSavings),
+            confidence: "Low",
+            explanation: "Basic estimation based on affected resources. AI analysis unavailable."
+        )
+    }
+
+    // MARK: - Feature 9: AI Trend Analysis & Predictions
+
+    /// Analyze performance trends and make predictions
+    func analyzeTrends(sessions: [PersistentSession], forURL: String) async -> TrendAnalysisResult {
+        guard aiBackend.activeBackend != nil, sessions.count >= 5 else {
+            return generateBasicTrendAnalysis(sessions: sessions)
+        }
+
+        isAnalyzing = true
+        defer { isAnalyzing = false }
+
+        // Calculate statistics
+        let scores = sessions.compactMap { $0.overallScore }
+        let loadTimes = sessions.map { $0.duration }
+        let sizes = sessions.map { $0.totalSize }
+
+        let scoreMean = scores.isEmpty ? 0 : scores.reduce(0, +) / Double(scores.count)
+        let scoreStd = calculateStdDev(scores)
+
+        let prompt = """
+        Analyze these performance trends and make predictions:
+
+        Historical Data (\(sessions.count) sessions over \(daysBetween(sessions.first!.timestamp, sessions.last!.timestamp)) days):
+
+        \(sessions.prefix(20).map { session in
+            "- Date: \(session.formattedTimestamp), Score: \(session.overallScore ?? 0), Load Time: \(String(format: "%.2f", session.duration))s, Size: \(formatBytes(session.totalSize))"
+        }.joined(separator: "\n"))
+
+        Statistical Summary:
+        - Score: mean=\(String(format: "%.1f", scoreMean)), std=\(String(format: "%.1f", scoreStd))
+        - Load Time: mean=\(String(format: "%.2f", loadTimes.reduce(0, +) / Double(loadTimes.count)))s
+        - Trend: \(scores.first! < scores.last! ? "Improving" : "Degrading")
+
+        Tasks:
+        1. Identify overall performance trend
+        2. Forecast performance for next 7, 14, and 30 days
+        3. Flag any anomalies (sessions >2 std dev from mean)
+        4. Detect patterns (day-of-week, time trends)
+        5. Recommend actions
+
+        Return ONLY valid JSON:
+        {
+          "summary": "Brief overall trend description",
+          "predictions": [
+            {"metric": "Score", "forecast": "Will reach X in Y days", "confidence": "High|Medium|Low", "trend": "Improving|Stable|Degrading"}
+          ],
+          "anomalies": [
+            {"date": "ISO8601", "metric": "Score", "deviation": "3x higher", "possibleCauses": ["cause1", "cause2"]}
+          ],
+          "patterns": [
+            {"description": "Performance degrades Mondays", "frequency": "Weekly", "impact": "High|Medium|Low"}
+          ],
+          "recommendation": "Top recommendation"
+        }
+        """
+
+        do {
+            let response = try await aiBackend.generate(
+                prompt: prompt,
+                systemPrompt: "You are a data scientist specializing in web performance forecasting. Always return valid JSON.",
+                temperature: 0.3,
+                maxTokens: 800
+            )
+
+            if let result = parseTrendAnalysis(from: response) {
+                await MainActor.run {
+                    self.trendAnalysis = result
+                }
+                return result
+            }
+        } catch {
+            lastError = error.localizedDescription
+        }
+
+        return generateBasicTrendAnalysis(sessions: sessions)
+    }
+
+    private func parseTrendAnalysis(from response: String) -> TrendAnalysisResult? {
+        guard let jsonData = response.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+            return nil
+        }
+
+        let predictions = (json["predictions"] as? [[String: Any]])?.compactMap { dict -> TrendAnalysisResult.Prediction in
+            TrendAnalysisResult.Prediction(
+                metric: dict["metric"] as? String ?? "",
+                forecast: dict["forecast"] as? String ?? "",
+                confidence: dict["confidence"] as? String ?? "Low",
+                trend: dict["trend"] as? String ?? "Stable"
+            )
+        } ?? []
+
+        let anomalies = (json["anomalies"] as? [[String: Any]])?.compactMap { dict -> TrendAnalysisResult.Anomaly? in
+            let formatter = ISO8601DateFormatter()
+            guard let dateString = dict["date"] as? String,
+                  let date = formatter.date(from: dateString) else {
+                return nil
+            }
+            return TrendAnalysisResult.Anomaly(
+                date: date,
+                metric: dict["metric"] as? String ?? "",
+                deviation: dict["deviation"] as? String ?? "",
+                possibleCauses: dict["possibleCauses"] as? [String] ?? []
+            )
+        } ?? []
+
+        let patterns = (json["patterns"] as? [[String: Any]])?.compactMap { dict -> TrendAnalysisResult.Pattern in
+            TrendAnalysisResult.Pattern(
+                description: dict["description"] as? String ?? "",
+                frequency: dict["frequency"] as? String ?? "",
+                impact: dict["impact"] as? String ?? ""
+            )
+        } ?? []
+
+        return TrendAnalysisResult(
+            summary: json["summary"] as? String ?? "",
+            predictions: predictions,
+            anomalies: anomalies,
+            patterns: patterns,
+            recommendation: json["recommendation"] as? String ?? ""
+        )
+    }
+
+    private func generateBasicTrendAnalysis(sessions: [PersistentSession]) -> TrendAnalysisResult {
+        let scores = sessions.compactMap { $0.overallScore }
+        let trend = scores.count >= 2 && scores.first! < scores.last! ? "Improving" : "Stable"
+
+        return TrendAnalysisResult(
+            summary: "Performance is \(trend.lowercased()) over the last \(sessions.count) sessions.",
+            predictions: [],
+            anomalies: [],
+            patterns: [],
+            recommendation: "Need at least 5 sessions for detailed trend analysis. AI backend unavailable."
+        )
+    }
+
+    private func calculateStdDev(_ values: [Double]) -> Double {
+        guard values.count > 1 else { return 0 }
+        let mean = values.reduce(0, +) / Double(values.count)
+        let variance = values.map { pow($0 - mean, 2) }.reduce(0, +) / Double(values.count)
+        return sqrt(variance)
+    }
+
+    private func daysBetween(_ start: Date, _ end: Date) -> Int {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: start, to: end)
+        return abs(components.day ?? 0)
+    }
+
+    // MARK: - Feature 10: AI Regression Detection & Root Cause
+
+    /// Detect performance regressions and identify root causes
+    func detectRegression(
+        currentSession: NetworkMonitor,
+        historicalSessions: [PersistentSession],
+        baseline: PersistentSession? = nil
+    ) async -> RegressionReport {
+        guard aiBackend.activeBackend != nil else {
+            return generateBasicRegression(current: currentSession, baseline: baseline)
+        }
+
+        isAnalyzing = true
+        defer { isAnalyzing = false }
+
+        // Calculate baseline (median of last 30 days or use provided)
+        let baselineSession: PersistentSession
+        if let provided = baseline {
+            baselineSession = provided
+        } else {
+            let recent = historicalSessions.prefix(30)
+            let sortedByScore = recent.sorted { ($0.overallScore ?? 0) < ($1.overallScore ?? 0) }
+            baselineSession = sortedByScore[sortedByScore.count / 2]
+        }
+
+        let currentScore = currentSession.performanceScore?.overall ?? 0
+        let baselineScore = baselineSession.overallScore ?? 0
+
+        let prompt = """
+        Analyze this performance regression:
+
+        Baseline (median of \(historicalSessions.count) sessions):
+        - Score: \(baselineScore)/100
+        - Load Time: \(String(format: "%.2f", baselineSession.duration))s
+        - Total Size: \(formatBytes(baselineSession.totalSize))
+        - Requests: \(baselineSession.requestCount)
+
+        Current:
+        - Score: \(currentScore)/100 (Δ \(currentScore - Int(baselineScore)))
+        - Load Time: \(String(format: "%.2f", currentSession.totalDuration))s (Δ \(String(format: "%.2f", currentSession.totalDuration - baselineSession.duration))s)
+        - Total Size: \(formatBytes(currentSession.totalSize)) (Δ \(formatBytes(currentSession.totalSize - baselineSession.totalSize)))
+        - Requests: \(currentSession.resources.count) (Δ \(currentSession.resources.count - baselineSession.requestCount))
+
+        Analyze:
+        1. Is there a regression?
+        2. What are the root causes?
+        3. When did it likely occur?
+        4. What should be fixed first?
+
+        Return ONLY valid JSON:
+        {
+          "hasRegression": true|false,
+          "severity": "critical|warning|minor|none",
+          "affectedMetrics": [
+            {"metric": "Score", "baseline": "75", "current": "60", "change": "-15 (-20%)", "severity": "critical"}
+          ],
+          "rootCauses": [
+            {"cause": "Added Google Tag Manager", "evidence": ["evidence1", "evidence2"], "confidence": "High|Medium|Low"}
+          ],
+          "recommendations": ["Fix 1", "Fix 2"],
+          "timelineEstimate": "Change occurred ~Jan 15"
+        }
+        """
+
+        do {
+            let response = try await aiBackend.generate(
+                prompt: prompt,
+                systemPrompt: "You are a senior performance engineer who debugs regressions. Always return valid JSON.",
+                temperature: 0.3,
+                maxTokens: 700
+            )
+
+            if let report = parseRegressionReport(from: response) {
+                await MainActor.run {
+                    self.regressionReport = report
+                }
+                return report
+            }
+        } catch {
+            lastError = error.localizedDescription
+        }
+
+        return generateBasicRegression(current: currentSession, baseline: baseline)
+    }
+
+    private func parseRegressionReport(from response: String) -> RegressionReport? {
+        guard let jsonData = response.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+            return nil
+        }
+
+        let hasRegression = json["hasRegression"] as? Bool ?? false
+        let severityString = json["severity"] as? String ?? "none"
+        let severity: RegressionReport.Severity = {
+            switch severityString {
+            case "critical": return .critical
+            case "warning": return .warning
+            case "minor": return .minor
+            default: return .none
+            }
+        }()
+
+        let metrics = (json["affectedMetrics"] as? [[String: Any]])?.map { dict -> RegressionReport.MetricRegression in
+            RegressionReport.MetricRegression(
+                metric: dict["metric"] as? String ?? "",
+                baseline: dict["baseline"] as? String ?? "",
+                current: dict["current"] as? String ?? "",
+                change: dict["change"] as? String ?? "",
+                severity: dict["severity"] as? String ?? ""
+            )
+        } ?? []
+
+        let causes = (json["rootCauses"] as? [[String: Any]])?.map { dict -> RegressionReport.RootCause in
+            RegressionReport.RootCause(
+                cause: dict["cause"] as? String ?? "",
+                evidence: dict["evidence"] as? [String] ?? [],
+                confidence: dict["confidence"] as? String ?? "Low"
+            )
+        } ?? []
+
+        return RegressionReport(
+            hasRegression: hasRegression,
+            severity: severity,
+            affectedMetrics: metrics,
+            rootCauses: causes,
+            recommendations: json["recommendations"] as? [String] ?? [],
+            timelineEstimate: json["timelineEstimate"] as? String
+        )
+    }
+
+    private func generateBasicRegression(current: NetworkMonitor, baseline: PersistentSession?) -> RegressionReport {
+        guard let baseline = baseline else {
+            return RegressionReport(
+                hasRegression: false,
+                severity: .none,
+                affectedMetrics: [],
+                rootCauses: [],
+                recommendations: ["No baseline available for comparison"],
+                timelineEstimate: nil
+            )
+        }
+
+        let currentScore = current.performanceScore?.overall ?? 0
+        let baselineScore = Int(baseline.overallScore ?? 0)
+        let scoreDelta = currentScore - baselineScore
+
+        let hasRegression = scoreDelta < -10  // Score dropped by 10+ points
+
+        return RegressionReport(
+            hasRegression: hasRegression,
+            severity: hasRegression ? .warning : .none,
+            affectedMetrics: [
+                RegressionReport.MetricRegression(
+                    metric: "Score",
+                    baseline: "\(baselineScore)",
+                    current: "\(currentScore)",
+                    change: "\(scoreDelta > 0 ? "+" : "")\(scoreDelta)",
+                    severity: abs(scoreDelta) > 20 ? "critical" : "warning"
+                )
+            ],
+            rootCauses: [],
+            recommendations: ["AI analysis unavailable - enable AI backend for detailed root cause analysis"],
+            timelineEstimate: nil
+        )
+    }
 }
 
 // MARK: - Data Models
@@ -744,6 +1323,118 @@ struct URLAnalysisContext {
     let slowestResource: NetworkResource?
     let thirdPartyDomains: Set<String>
     let securityIssues: [String]
+}
+
+// MARK: - New AI Feature Data Models
+
+struct CodeFix: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let code: String
+    let language: String
+    let framework: String?
+    let estimatedImpact: String
+}
+
+enum WhatIfScenarioType {
+    case removeTracker(name: String)
+    case compressImages
+    case lazyLoadImages
+    case removeScript(url: String)
+    case enableCaching
+    case minifyJavaScript
+}
+
+struct WhatIfScenario: Identifiable {
+    let id = UUID()
+    let scenario: String
+    let predictedScore: Double
+    let predictedLCP: String
+    let sizeSavings: String
+    let timeSavings: String
+    let confidence: String
+    let explanation: String
+}
+
+struct TrendAnalysisResult: Identifiable {
+    let id = UUID()
+    let summary: String
+    let predictions: [Prediction]
+    let anomalies: [Anomaly]
+    let patterns: [Pattern]
+    let recommendation: String
+
+    struct Prediction: Identifiable {
+        let id = UUID()
+        let metric: String
+        let forecast: String
+        let confidence: String
+        let trend: String
+    }
+
+    struct Anomaly: Identifiable {
+        let id = UUID()
+        let date: Date
+        let metric: String
+        let deviation: String
+        let possibleCauses: [String]
+    }
+
+    struct Pattern: Identifiable {
+        let id = UUID()
+        let description: String
+        let frequency: String
+        let impact: String
+    }
+}
+
+struct RegressionReport: Identifiable {
+    let id = UUID()
+    let hasRegression: Bool
+    let severity: Severity
+    let affectedMetrics: [MetricRegression]
+    let rootCauses: [RootCause]
+    let recommendations: [String]
+    let timelineEstimate: String?
+
+    struct MetricRegression: Identifiable {
+        let id = UUID()
+        let metric: String
+        let baseline: String
+        let current: String
+        let change: String
+        let severity: String
+    }
+
+    struct RootCause: Identifiable {
+        let id = UUID()
+        let cause: String
+        let evidence: [String]
+        let confidence: String
+    }
+
+    enum Severity {
+        case critical, warning, minor, none
+
+        var color: Color {
+            switch self {
+            case .critical: return .red
+            case .warning: return .orange
+            case .minor: return .yellow
+            case .none: return .green
+            }
+        }
+
+        var label: String {
+            switch self {
+            case .critical: return "Critical"
+            case .warning: return "Warning"
+            case .minor: return "Minor"
+            case .none: return "No Regression"
+            }
+        }
+    }
 }
 
 // NetworkResource and related types defined in NetworkMonitor.swift
