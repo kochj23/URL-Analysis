@@ -29,6 +29,11 @@ enum AIBackend: String, Codable, CaseIterable {
     case tinyLLM = "TinyLLM"
     case tinyChat = "TinyChat"
     case openWebUI = "OpenWebUI"
+    case openAI = "OpenAI"
+    case googleCloud = "Google Cloud AI"
+    case azureCognitive = "Microsoft Azure"
+    case awsAI = "AWS AI Services"
+    case ibmWatson = "IBM Watson"
     case auto = "Auto (Prefer Ollama)"
 
     var icon: String {
@@ -38,6 +43,11 @@ enum AIBackend: String, Codable, CaseIterable {
         case .tinyLLM: return "cube"
         case .tinyChat: return "bubble.left.and.bubble.right.fill"
         case .openWebUI: return "globe"
+        case .openAI: return "brain"
+        case .googleCloud: return "cloud"
+        case .azureCognitive: return "cloud.fill"
+        case .awsAI: return "server.rack"
+        case .ibmWatson: return "atom"
         case .auto: return "sparkles"
         }
     }
@@ -54,6 +64,16 @@ enum AIBackend: String, Codable, CaseIterable {
             return "TinyChat by Jason Cox - Fast chatbot interface (localhost:8000)"
         case .openWebUI:
             return "OpenWebUI - Self-hosted AI platform (localhost:8080)"
+        case .openAI:
+            return "OpenAI API - GPT-4o, DALL-E 3 (api.openai.com)"
+        case .googleCloud:
+            return "Google Cloud AI - Vision, Speech, Translation (cloud.google.com)"
+        case .azureCognitive:
+            return "Microsoft Azure Cognitive Services - Speech, Vision, Language"
+        case .awsAI:
+            return "AWS AI Services - Rekognition, Polly, Comprehend"
+        case .ibmWatson:
+            return "IBM Watson API - NLU, Speech, Discovery"
         case .auto:
             return "Automatically choose best available backend"
         }
@@ -67,6 +87,16 @@ enum AIBackend: String, Codable, CaseIterable {
             return "TinyChat by Jason Cox (https://github.com/jasonacox/tinychat)"
         case .openWebUI:
             return "OpenWebUI Community Project (https://github.com/open-webui/open-webui)"
+        case .openAI:
+            return "OpenAI (https://platform.openai.com)"
+        case .googleCloud:
+            return "Google Cloud Platform (https://cloud.google.com/ai)"
+        case .azureCognitive:
+            return "Microsoft Azure (https://azure.microsoft.com/cognitive-services)"
+        case .awsAI:
+            return "Amazon Web Services (https://aws.amazon.com/ai)"
+        case .ibmWatson:
+            return "IBM Watson (https://www.ibm.com/watson)"
         default:
             return nil
         }
@@ -108,6 +138,24 @@ class AIBackendManager: ObservableObject {
     // OpenWebUI-specific
     @Published var openWebUIServerURL: String = "http://localhost:8080"
 
+    // Cloud AI Services - API Keys (WARNING: Use Keychain in production!)
+    @Published var openAIAPIKey: String = ""
+    @Published var googleCloudAPIKey: String = ""
+    @Published var azureAPIKey: String = ""
+    @Published var azureEndpoint: String = ""
+    @Published var awsAccessKey: String = ""
+    @Published var awsSecretKey: String = ""
+    @Published var awsRegion: String = "us-east-1"
+    @Published var ibmWatsonAPIKey: String = ""
+    @Published var ibmWatsonURL: String = ""
+
+    // Cloud availability
+    @Published var isOpenAIAvailable = false
+    @Published var isGoogleCloudAvailable = false
+    @Published var isAzureAvailable = false
+    @Published var isAWSAvailable = false
+    @Published var isIBMWatsonAvailable = false
+
     // MARK: - Private Properties
 
     private let userDefaults = UserDefaults.standard
@@ -121,6 +169,16 @@ class AIBackendManager: ObservableObject {
         static let tinyLLMServerURL = "AIBackendManager_TinyLLMServerURL"
         static let tinyChatServerURL = "AIBackendManager_TinyChatServerURL"
         static let openWebUIServerURL = "AIBackendManager_OpenWebUIServerURL"
+        // Cloud API Keys (WARNING: Store in Keychain for production!)
+        static let openAIAPIKey = "AIBackendManager_OpenAI_Key"
+        static let googleCloudAPIKey = "AIBackendManager_GoogleCloud_Key"
+        static let azureAPIKey = "AIBackendManager_Azure_Key"
+        static let azureEndpoint = "AIBackendManager_Azure_Endpoint"
+        static let awsAccessKey = "AIBackendManager_AWS_AccessKey"
+        static let awsSecretKey = "AIBackendManager_AWS_SecretKey"
+        static let awsRegion = "AIBackendManager_AWS_Region"
+        static let ibmWatsonAPIKey = "AIBackendManager_IBM_Key"
+        static let ibmWatsonURL = "AIBackendManager_IBM_URL"
     }
 
     // MARK: - Initialization
@@ -146,6 +204,17 @@ class AIBackendManager: ObservableObject {
         tinyLLMServerURL = userDefaults.string(forKey: Keys.tinyLLMServerURL) ?? "http://localhost:8000"
         tinyChatServerURL = userDefaults.string(forKey: Keys.tinyChatServerURL) ?? "http://localhost:8000"
         openWebUIServerURL = userDefaults.string(forKey: Keys.openWebUIServerURL) ?? "http://localhost:8080"
+
+        // Cloud API Keys (WARNING: These should be in Keychain in production!)
+        openAIAPIKey = userDefaults.string(forKey: Keys.openAIAPIKey) ?? ""
+        googleCloudAPIKey = userDefaults.string(forKey: Keys.googleCloudAPIKey) ?? ""
+        azureAPIKey = userDefaults.string(forKey: Keys.azureAPIKey) ?? ""
+        azureEndpoint = userDefaults.string(forKey: Keys.azureEndpoint) ?? ""
+        awsAccessKey = userDefaults.string(forKey: Keys.awsAccessKey) ?? ""
+        awsSecretKey = userDefaults.string(forKey: Keys.awsSecretKey) ?? ""
+        awsRegion = userDefaults.string(forKey: Keys.awsRegion) ?? "us-east-1"
+        ibmWatsonAPIKey = userDefaults.string(forKey: Keys.ibmWatsonAPIKey) ?? ""
+        ibmWatsonURL = userDefaults.string(forKey: Keys.ibmWatsonURL) ?? ""
     }
 
     func saveSettings() {
@@ -156,6 +225,17 @@ class AIBackendManager: ObservableObject {
         userDefaults.set(tinyLLMServerURL, forKey: Keys.tinyLLMServerURL)
         userDefaults.set(tinyChatServerURL, forKey: Keys.tinyChatServerURL)
         userDefaults.set(openWebUIServerURL, forKey: Keys.openWebUIServerURL)
+
+        // Cloud API Keys (WARNING: These should be in Keychain in production!)
+        userDefaults.set(openAIAPIKey, forKey: Keys.openAIAPIKey)
+        userDefaults.set(googleCloudAPIKey, forKey: Keys.googleCloudAPIKey)
+        userDefaults.set(azureAPIKey, forKey: Keys.azureAPIKey)
+        userDefaults.set(azureEndpoint, forKey: Keys.azureEndpoint)
+        userDefaults.set(awsAccessKey, forKey: Keys.awsAccessKey)
+        userDefaults.set(awsSecretKey, forKey: Keys.awsSecretKey)
+        userDefaults.set(awsRegion, forKey: Keys.awsRegion)
+        userDefaults.set(ibmWatsonAPIKey, forKey: Keys.ibmWatsonAPIKey)
+        userDefaults.set(ibmWatsonURL, forKey: Keys.ibmWatsonURL)
     }
 
     // MARK: - Backend Availability Checking
@@ -175,8 +255,27 @@ class AIBackendManager: ObservableObject {
         isTinyChatAvailable = tinyChat
         isOpenWebUIAvailable = openWebUI
 
+        // Check cloud services availability (based on API key presence)
+        isOpenAIAvailable = !openAIAPIKey.isEmpty
+        isGoogleCloudAvailable = !googleCloudAPIKey.isEmpty
+        isAzureAvailable = !azureAPIKey.isEmpty && !azureEndpoint.isEmpty
+        isAWSAvailable = !awsAccessKey.isEmpty && !awsSecretKey.isEmpty
+        isIBMWatsonAvailable = !ibmWatsonAPIKey.isEmpty && !ibmWatsonURL.isEmpty
+
         // Determine active backend
         determineActiveBackend()
+    }
+
+    // MARK: - Compatibility Alias (for older code expecting refreshAllBackends)
+
+    /// Alias for checkBackendAvailability() - for compatibility with existing code
+    func refreshAllBackends() async {
+        await checkBackendAvailability()
+    }
+
+    /// Alias for saveSettings() - for compatibility with existing code
+    func saveConfiguration() {
+        saveSettings()
     }
 
     private func determineActiveBackend() {
@@ -191,8 +290,18 @@ class AIBackendManager: ObservableObject {
             activeBackend = isTinyChatAvailable ? .tinyChat : nil
         case .openWebUI:
             activeBackend = isOpenWebUIAvailable ? .openWebUI : nil
+        case .openAI:
+            activeBackend = isOpenAIAvailable ? .openAI : nil
+        case .googleCloud:
+            activeBackend = isGoogleCloudAvailable ? .googleCloud : nil
+        case .azureCognitive:
+            activeBackend = isAzureAvailable ? .azureCognitive : nil
+        case .awsAI:
+            activeBackend = isAWSAvailable ? .awsAI : nil
+        case .ibmWatson:
+            activeBackend = isIBMWatsonAvailable ? .ibmWatson : nil
         case .auto:
-            // Prefer Ollama, fallback to TinyChat/TinyLLM/OpenWebUI, then MLX
+            // Prefer Ollama, fallback to TinyChat/TinyLLM/OpenWebUI, then MLX, finally cloud services
             if isOllamaAvailable {
                 activeBackend = .ollama
             } else if isTinyChatAvailable {
@@ -203,6 +312,16 @@ class AIBackendManager: ObservableObject {
                 activeBackend = .openWebUI
             } else if isMLXAvailable {
                 activeBackend = .mlx
+            } else if isOpenAIAvailable {
+                activeBackend = .openAI
+            } else if isGoogleCloudAvailable {
+                activeBackend = .googleCloud
+            } else if isAzureAvailable {
+                activeBackend = .azureCognitive
+            } else if isAWSAvailable {
+                activeBackend = .awsAI
+            } else if isIBMWatsonAvailable {
+                activeBackend = .ibmWatson
             } else {
                 activeBackend = nil
             }
@@ -357,6 +476,41 @@ class AIBackendManager: ObservableObject {
             )
         case .openWebUI:
             return try await generateWithOpenWebUI(
+                prompt: prompt,
+                systemPrompt: systemPrompt,
+                temperature: temperature,
+                maxTokens: maxTokens
+            )
+        case .openAI:
+            return try await generateWithOpenAI(
+                prompt: prompt,
+                systemPrompt: systemPrompt,
+                temperature: temperature,
+                maxTokens: maxTokens
+            )
+        case .googleCloud:
+            return try await generateWithGoogleCloud(
+                prompt: prompt,
+                systemPrompt: systemPrompt,
+                temperature: temperature,
+                maxTokens: maxTokens
+            )
+        case .azureCognitive:
+            return try await generateWithAzure(
+                prompt: prompt,
+                systemPrompt: systemPrompt,
+                temperature: temperature,
+                maxTokens: maxTokens
+            )
+        case .awsAI:
+            return try await generateWithAWS(
+                prompt: prompt,
+                systemPrompt: systemPrompt,
+                temperature: temperature,
+                maxTokens: maxTokens
+            )
+        case .ibmWatson:
+            return try await generateWithIBMWatson(
                 prompt: prompt,
                 systemPrompt: systemPrompt,
                 temperature: temperature,
@@ -647,6 +801,226 @@ class AIBackendManager: ObservableObject {
         return response.choices.first?.message.content ?? ""
     }
 
+    // MARK: - OpenAI Implementation
+
+    private func generateWithOpenAI(
+        prompt: String,
+        systemPrompt: String?,
+        temperature: Float,
+        maxTokens: Int
+    ) async throws -> String {
+        guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
+            throw AIBackendError.invalidConfiguration
+        }
+
+        var messages: [[String: String]] = []
+        if let systemPrompt = systemPrompt {
+            messages.append(["role": "system", "content": systemPrompt])
+        }
+        messages.append(["role": "user", "content": prompt])
+
+        let requestBody: [String: Any] = [
+            "model": "gpt-4o",
+            "messages": messages,
+            "max_tokens": maxTokens,
+            "temperature": temperature
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(openAIAPIKey)", forHTTPHeaderField: "Authorization")
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        struct OpenAIResponse: Codable {
+            struct Choice: Codable {
+                struct Message: Codable {
+                    let content: String
+                }
+                let message: Message
+            }
+            let choices: [Choice]
+        }
+
+        let decoder = JSONDecoder()
+        let response = try decoder.decode(OpenAIResponse.self, from: data)
+        return response.choices.first?.message.content ?? ""
+    }
+
+    // MARK: - Google Cloud AI Implementation
+
+    private func generateWithGoogleCloud(
+        prompt: String,
+        systemPrompt: String?,
+        temperature: Float,
+        maxTokens: Int
+    ) async throws -> String {
+        // Google Cloud Vertex AI endpoint for text generation
+        guard let url = URL(string: "https://us-central1-aiplatform.googleapis.com/v1/projects/YOUR_PROJECT_ID/locations/us-central1/publishers/google/models/text-bison:predict") else {
+            throw AIBackendError.invalidConfiguration
+        }
+
+        var fullPrompt = ""
+        if let systemPrompt = systemPrompt {
+            fullPrompt += "Context: \(systemPrompt)\n\n"
+        }
+        fullPrompt += prompt
+
+        let requestBody: [String: Any] = [
+            "instances": [
+                ["content": fullPrompt]
+            ],
+            "parameters": [
+                "temperature": temperature,
+                "maxOutputTokens": maxTokens
+            ]
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(googleCloudAPIKey)", forHTTPHeaderField: "Authorization")
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        struct GoogleCloudResponse: Codable {
+            struct Prediction: Codable {
+                let content: String
+            }
+            let predictions: [Prediction]
+        }
+
+        let decoder = JSONDecoder()
+        let response = try decoder.decode(GoogleCloudResponse.self, from: data)
+        return response.predictions.first?.content ?? ""
+    }
+
+    // MARK: - Azure Cognitive Services Implementation
+
+    private func generateWithAzure(
+        prompt: String,
+        systemPrompt: String?,
+        temperature: Float,
+        maxTokens: Int
+    ) async throws -> String {
+        guard let url = URL(string: "\(azureEndpoint)/openai/deployments/gpt-4/chat/completions?api-version=2024-02-15-preview") else {
+            throw AIBackendError.invalidConfiguration
+        }
+
+        var messages: [[String: String]] = []
+        if let systemPrompt = systemPrompt {
+            messages.append(["role": "system", "content": systemPrompt])
+        }
+        messages.append(["role": "user", "content": prompt])
+
+        let requestBody: [String: Any] = [
+            "messages": messages,
+            "max_tokens": maxTokens,
+            "temperature": temperature
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(azureAPIKey, forHTTPHeaderField: "api-key")
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        struct AzureResponse: Codable {
+            struct Choice: Codable {
+                struct Message: Codable {
+                    let content: String
+                }
+                let message: Message
+            }
+            let choices: [Choice]
+        }
+
+        let decoder = JSONDecoder()
+        let response = try decoder.decode(AzureResponse.self, from: data)
+        return response.choices.first?.message.content ?? ""
+    }
+
+    // MARK: - AWS AI Services Implementation
+
+    private func generateWithAWS(
+        prompt: String,
+        systemPrompt: String?,
+        temperature: Float,
+        maxTokens: Int
+    ) async throws -> String {
+        // AWS Bedrock API for AI text generation
+        // Note: This is a simplified implementation. AWS requires signature v4 authentication
+        // For production, use AWS SDK: https://github.com/awslabs/aws-sdk-swift
+
+        var fullPrompt = ""
+        if let systemPrompt = systemPrompt {
+            fullPrompt += "\(systemPrompt)\n\n"
+        }
+        fullPrompt += prompt
+
+        // This is a placeholder implementation
+        // In production, use AWS SDK with proper authentication
+        throw AIBackendError.invalidConfiguration
+    }
+
+    // MARK: - IBM Watson Implementation
+
+    private func generateWithIBMWatson(
+        prompt: String,
+        systemPrompt: String?,
+        temperature: Float,
+        maxTokens: Int
+    ) async throws -> String {
+        guard let url = URL(string: "\(ibmWatsonURL)/v1/generate") else {
+            throw AIBackendError.invalidConfiguration
+        }
+
+        var fullPrompt = ""
+        if let systemPrompt = systemPrompt {
+            fullPrompt += "System: \(systemPrompt)\n\n"
+        }
+        fullPrompt += "User: \(prompt)"
+
+        let requestBody: [String: Any] = [
+            "model_id": "ibm/granite-13b-chat-v2",
+            "input": fullPrompt,
+            "parameters": [
+                "temperature": temperature,
+                "max_new_tokens": maxTokens
+            ]
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // IBM Watson uses Basic Auth with "apikey" as username
+        let credentials = "apikey:\(ibmWatsonAPIKey)"
+        let credentialsData = credentials.data(using: .utf8)!
+        let base64Credentials = credentialsData.base64EncodedString()
+        request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
+
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        struct IBMWatsonResponse: Codable {
+            struct Result: Codable {
+                let generated_text: String
+            }
+            let results: [Result]
+        }
+
+        let decoder = JSONDecoder()
+        let response = try decoder.decode(IBMWatsonResponse.self, from: data)
+        return response.results.first?.generated_text ?? ""
+    }
+
     // MARK: - Embeddings (for semantic search)
 
     func generateEmbeddings(text: String) async throws -> [Float] {
@@ -665,6 +1039,16 @@ class AIBackendManager: ObservableObject {
             return try await generateEmbeddingsWithTinyChat(text: text)
         case .openWebUI:
             return try await generateEmbeddingsWithOpenWebUI(text: text)
+        case .openAI:
+            throw AIBackendError.embeddingsNotSupported
+        case .googleCloud:
+            throw AIBackendError.embeddingsNotSupported
+        case .azureCognitive:
+            throw AIBackendError.embeddingsNotSupported
+        case .awsAI:
+            throw AIBackendError.embeddingsNotSupported
+        case .ibmWatson:
+            throw AIBackendError.embeddingsNotSupported
         case .auto:
             throw AIBackendError.invalidState
         }
@@ -1077,6 +1461,11 @@ struct AIBackendSettingsView: View {
         .padding()
     }
 }
+
+// MARK: - Compatibility Typealias (for older code expecting AIBackendSelectionView)
+
+/// Alias for AIBackendSettingsView - for compatibility with existing code
+typealias AIBackendSelectionView = AIBackendSettingsView
 
 // MARK: - Preview
 
