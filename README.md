@@ -11,6 +11,9 @@
 
 ---
 
+![URL Analysis](Screenshots/main-window.png)
+
+
 ## ✨ Latest Update: January 26, 2026
 
 ### 🎉 Major Enhancements:
