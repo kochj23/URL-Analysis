@@ -1,0 +1,3 @@
+theme: jekyll-theme-cayman
+title: "URL-Analysis"
+description: "macOS app for web page performance analysis — detailed network waterfall visualization, request timing, and resource breakdown. Built with Swift and SwiftUI."

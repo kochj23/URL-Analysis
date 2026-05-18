@@ -1,0 +1,886 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		019268A570B3278CE1F51EBE /* LighthouseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C5F239FFE16520A6B120D /* LighthouseModels.swift */; };
+		04A19A3E8E4636B5F7B469DB /* NovaAPIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */; };
+		06AD9D5B2B8ABC43686F0418 /* LighthouseIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12066CC19D2AC3CD0DC4E8A /* LighthouseIntegration.swift */; };
+		0890E26F7394FA2624298DC2 /* AIBackendStatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB35174236D269DD7F3C95 /* AIBackendStatusMenu.swift */; };
+		1C69BAF41850B8AF00964FCF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F67C01C4A109A940BD3B073 /* HistoryView.swift */; };
+		33623361396334612D643938332D343562622D396666392D /* AIBackendManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */; };
+		37306236623461622D306135312D343431392D623035302D /* AIAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */; };
+		40F7A6D1EBDACA8C01E0D220 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80806676651A0D9D0DAF3984 /* ThemeManager.swift */; };
+		5296126E9B046DDAA7E6BAE8 /* AITrendAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DBF9DCF0F378531961118E /* AITrendAnalysisView.swift */; };
+		62376132643730382D656363612D343763372D623135332D /* AIURLAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */; };
+		7E2A5AD618C7E0E14BD7FBF9 /* DeviceEmulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C10B1ACF2F8151D4B6F048 /* DeviceEmulation.swift */; };
+		8296310387A79E7C8F85C661 /* AIBackendManager+Enhanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BA7A886D2778F4838EE06E /* AIBackendManager+Enhanced.swift */; };
+		837FA498DC3F48BFBCAAF190 /* ModernDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7910E1973FC440583515B70 /* ModernDesign.swift */; };
+		849763947954AE2867BDCF98 /* CLIOutputFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8E3B1E0E90B6B6CDA52084 /* CLIOutputFormatter.swift */; };
+		8EDC509E4259EA36CB6FD202 /* TrendChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B31612D04E90D9209BAA7D /* TrendChartView.swift */; };
+		90AF4FB8EB9F777286A11C3E /* UnifiedAICapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582C8B07F749B742566F343 /* UnifiedAICapabilities.swift */; };
+		9685D375E228D9BCEA44E10F /* SessionHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ABF0BC5D37CF06E624D527 /* SessionHistoryManager.swift */; };
+		96F829CE7E6EB814BB9CA2AE /* AIBackendManager+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B554CEDA28E95FE08B8FA957 /* AIBackendManager+Generation.swift */; };
+		A1000001000000000000001 /* URLAnalysisApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000001 /* URLAnalysisApp.swift */; };
+		A1000002000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000000000000001 /* ContentView.swift */; };
+		A1000003000000000000001 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003000000000000001 /* NetworkMonitor.swift */; };
+		A1000004000000000000001 /* HARFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000004000000000000001 /* HARFormat.swift */; };
+		A1000005000000000000001 /* NetworkInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000005000000000000001 /* NetworkInterceptor.swift */; };
+		A1000006000000000000001 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000006000000000000001 /* WebView.swift */; };
+		A1000007000000000000001 /* WaterfallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000007000000000000001 /* WaterfallView.swift */; };
+		A1000008000000000000001 /* WaterfallToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000008000000000000001 /* WaterfallToolbar.swift */; };
+		A1000009000000000000001 /* ResourceInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000009000000000000001 /* ResourceInspector.swift */; };
+		A100000A000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A200000A000000000000001 /* Assets.xcassets */; };
+		A100000B000000000000001 /* PerformanceScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000B000000000000001 /* PerformanceScore.swift */; };
+		A100000C000000000000001 /* WebVitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000C000000000000001 /* WebVitals.swift */; };
+		A100000D000000000000001 /* PerformanceScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000D000000000000001 /* PerformanceScoreView.swift */; };
+		A100000E000000000000001 /* RequestBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000E000000000000001 /* RequestBlocking.swift */; };
+		A100000F000000000000001 /* RequestBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200000F000000000000001 /* RequestBlockingView.swift */; };
+		A1000010000000000000001 /* ScreenshotTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000001 /* ScreenshotTimeline.swift */; };
+		A1000011000000000000001 /* URLComparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000001 /* URLComparison.swift */; };
+		A1000012000000000000001 /* PerformanceBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014000000000000001 /* PerformanceBudget.swift */; };
+		A1000013000000000000001 /* PerformanceBudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000015000000000000001 /* PerformanceBudgetView.swift */; };
+		A1000014000000000000001 /* OptimizationSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016000000000000001 /* OptimizationSuggestions.swift */; };
+		A1000015000000000000001 /* OptimizationSuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000017000000000000001 /* OptimizationSuggestionsView.swift */; };
+		A1000016000000000000001 /* ThirdPartyAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000018000000000000001 /* ThirdPartyAnalysis.swift */; };
+		A1000017000000000000001 /* ThirdPartyAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000019000000000000001 /* ThirdPartyAnalysisView.swift */; };
+		A1000018000000000000001 /* PDFReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200001A000000000000001 /* PDFReport.swift */; };
+		A1000019000000000000001 /* WidgetDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200001B000000000000001 /* WidgetDataSync.swift */; };
+		AEC17A4359AB3768E116ECF8 /* TimeMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9711E7B1839E4BD57312C30B /* TimeMachineView.swift */; };
+		BF0F0057F91D4D28380360CE /* AnalysisUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E9986574D906BAC21D363F /* AnalysisUnified.swift */; };
+		D36A65576DA969FAB8292836 /* PersistentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A8E6FF9DC12F20386E29F0 /* PersistentSession.swift */; };
+		DE1230C995EA67538163E5B2 /* AdaptiveColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C546389EB38376F3B984FEB /* AdaptiveColors.swift */; };
+		E1B82CDB2B3AF83661B1C511 /* RegressionDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562919951CDFCCC64BD7FF83 /* RegressionDetectionView.swift */; };
+		E9A6415C090FBC00A2EE20C2 /* LighthouseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FDA871994DDE24B5B1425D /* LighthouseView.swift */; };
+		ED5813E1F91C8968E5FDC658 /* HeadlessAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F89F6DCC15889B7E31550F /* HeadlessAnalyzer.swift */; };
+		EFAF606AF7508F3C53B1CA8A /* VoiceUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C7CA2FF26008CF4E798830 /* VoiceUnified.swift */; };
+		F3FB19BBE00A56AA44D311CA /* ImageGenerationUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD8F764445DFF313D2F06 /* ImageGenerationUnified.swift */; };
+		F7CFBDD7F12AB3F40B893C75 /* CodeGenerationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE0D340E0549EE920C7F5B /* CodeGenerationView.swift */; };
+		FFC0817E7671A1ADBEEED7C5 /* SecurityUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD20180A86948143A34A84B /* SecurityUnified.swift */; };
+		W1000001000000000000001 /* URLAnalysisWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000001000000000000001 /* URLAnalysisWidget.swift */; };
+		W1000002000000000000001 /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000002000000000000001 /* WidgetData.swift */; };
+		W1000003000000000000001 /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000003000000000000001 /* SharedDataManager.swift */; };
+		W1000004000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = W2000004000000000000001 /* Assets.xcassets */; };
+		W1000005000000000000001 /* URL-Analysis Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = W3000001000000000000001 /* URL-Analysis Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		T1000001000000000000001 /* WebVitalsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000001000000000000001 /* WebVitalsTests.swift */; };
+		T1000002000000000000001 /* NetworkMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000002000000000000001 /* NetworkMonitorTests.swift */; };
+		T1000003000000000000001 /* PerformanceScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000003000000000000001 /* PerformanceScoreTests.swift */; };
+		T1000004000000000000001 /* ThirdPartyAnalysisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000004000000000000001 /* ThirdPartyAnalysisTests.swift */; };
+		T1000005000000000000001 /* DeviceEmulationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000005000000000000001 /* DeviceEmulationTests.swift */; };
+		T1000006000000000000001 /* PerformanceBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000006000000000000001 /* PerformanceBudgetTests.swift */; };
+		T1000007000000000000001 /* RequestBlockingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000007000000000000001 /* RequestBlockingTests.swift */; };
+		T1000008000000000000001 /* SecurityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000008000000000000001 /* SecurityTests.swift */; };
+		T1000009000000000000001 /* PersistentSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000009000000000000001 /* PersistentSessionTests.swift */; };
+		T100000A000000000000001 /* EthicalGuardianTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T200000A000000000000001 /* EthicalGuardianTests.swift */; };
+		T100000B000000000000001 /* ComprehensiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T200000B000000000000001 /* ComprehensiveTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		W4000001000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0000001000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = W6000001000000000000001;
+			remoteInfo = "URL-Analysis Widget";
+		};
+		T4000001000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0000001000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A6000001000000000000001;
+			remoteInfo = "URL Analysis";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		W5000001000000000000001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				W1000005000000000000001 /* URL-Analysis Widget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		20F89F6DCC15889B7E31550F /* HeadlessAnalyzer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessAnalyzer.swift; sourceTree = "<group>"; };
+		30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/AIBackendManager.swift"; sourceTree = "<group>"; };
+		32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/AIURLAnalyzer.swift"; sourceTree = "<group>"; };
+		4582C8B07F749B742566F343 /* UnifiedAICapabilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UnifiedAICapabilities.swift; path = AICapabilities/UnifiedAICapabilities.swift; sourceTree = "<group>"; };
+		4F67C01C4A109A940BD3B073 /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		55C10B1ACF2F8151D4B6F048 /* DeviceEmulation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceEmulation.swift; sourceTree = "<group>"; };
+		562919951CDFCCC64BD7FF83 /* RegressionDetectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegressionDetectionView.swift; sourceTree = "<group>"; };
+		57CAD8F764445DFF313D2F06 /* ImageGenerationUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageGenerationUnified.swift; path = AICapabilities/ImageGenerationUnified.swift; sourceTree = "<group>"; };
+		61E9986574D906BAC21D363F /* AnalysisUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnalysisUnified.swift; path = AICapabilities/AnalysisUnified.swift; sourceTree = "<group>"; };
+		63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/AIAnalysisView.swift"; sourceTree = "<group>"; };
+		66B31612D04E90D9209BAA7D /* TrendChartView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrendChartView.swift; sourceTree = "<group>"; };
+		6F6C5F239FFE16520A6B120D /* LighthouseModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LighthouseModels.swift; sourceTree = "<group>"; };
+		76ABF0BC5D37CF06E624D527 /* SessionHistoryManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionHistoryManager.swift; sourceTree = "<group>"; };
+		79A8E6FF9DC12F20386E29F0 /* PersistentSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PersistentSession.swift; sourceTree = "<group>"; };
+		79DBF9DCF0F378531961118E /* AITrendAnalysisView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AITrendAnalysisView.swift; sourceTree = "<group>"; };
+		80806676651A0D9D0DAF3984 /* ThemeManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		80EB35174236D269DD7F3C95 /* AIBackendStatusMenu.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AIBackendStatusMenu.swift; path = "URL-Analysis/AIBackendStatusMenu.swift"; sourceTree = "<group>"; };
+		8C546389EB38376F3B984FEB /* AdaptiveColors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveColors.swift; sourceTree = "<group>"; };
+		93C7CA2FF26008CF4E798830 /* VoiceUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VoiceUnified.swift; path = AICapabilities/VoiceUnified.swift; sourceTree = "<group>"; };
+		9711E7B1839E4BD57312C30B /* TimeMachineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeMachineView.swift; sourceTree = "<group>"; };
+		A2000001000000000000001 /* URLAnalysisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAnalysisApp.swift; sourceTree = "<group>"; };
+		A2000002000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A2000003000000000000001 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		A2000004000000000000001 /* HARFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HARFormat.swift; sourceTree = "<group>"; };
+		A2000005000000000000001 /* NetworkInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptor.swift; sourceTree = "<group>"; };
+		A2000006000000000000001 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		A2000007000000000000001 /* WaterfallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallView.swift; sourceTree = "<group>"; };
+		A2000008000000000000001 /* WaterfallToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallToolbar.swift; sourceTree = "<group>"; };
+		A2000009000000000000001 /* ResourceInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInspector.swift; sourceTree = "<group>"; };
+		A200000A000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A200000B000000000000001 /* PerformanceScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceScore.swift; sourceTree = "<group>"; };
+		A200000C000000000000001 /* WebVitals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVitals.swift; sourceTree = "<group>"; };
+		A200000D000000000000001 /* PerformanceScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceScoreView.swift; sourceTree = "<group>"; };
+		A200000E000000000000001 /* RequestBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBlocking.swift; sourceTree = "<group>"; };
+		A200000F000000000000001 /* RequestBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBlockingView.swift; sourceTree = "<group>"; };
+		A2000010000000000000001 /* ScreenshotTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTimeline.swift; sourceTree = "<group>"; };
+		A2000011000000000000001 /* URLComparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComparison.swift; sourceTree = "<group>"; };
+		A2000012000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2000013000000000000001 /* URL_Analysis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis.entitlements; sourceTree = "<group>"; };
+		A2000014000000000000001 /* PerformanceBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceBudget.swift; sourceTree = "<group>"; };
+		A2000015000000000000001 /* PerformanceBudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceBudgetView.swift; sourceTree = "<group>"; };
+		A2000016000000000000001 /* OptimizationSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSuggestions.swift; sourceTree = "<group>"; };
+		A2000017000000000000001 /* OptimizationSuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSuggestionsView.swift; sourceTree = "<group>"; };
+		A2000018000000000000001 /* ThirdPartyAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyAnalysis.swift; sourceTree = "<group>"; };
+		A2000019000000000000001 /* ThirdPartyAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyAnalysisView.swift; sourceTree = "<group>"; };
+		A200001A000000000000001 /* PDFReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReport.swift; sourceTree = "<group>"; };
+		A200001B000000000000001 /* WidgetDataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataSync.swift; sourceTree = "<group>"; };
+		A2FDA871994DDE24B5B1425D /* LighthouseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LighthouseView.swift; sourceTree = "<group>"; };
+		A3000001000000000000001 /* URL Analysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "URL Analysis.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7910E1973FC440583515B70 /* ModernDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/ModernDesign.swift"; sourceTree = "<group>"; };
+		ABD20180A86948143A34A84B /* SecurityUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecurityUnified.swift; path = AICapabilities/SecurityUnified.swift; sourceTree = "<group>"; };
+		B12066CC19D2AC3CD0DC4E8A /* LighthouseIntegration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LighthouseIntegration.swift; sourceTree = "<group>"; };
+		B554CEDA28E95FE08B8FA957 /* AIBackendManager+Generation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AIBackendManager+Generation.swift"; path = "URL-Analysis/AIBackendManager+Generation.swift"; sourceTree = "<group>"; };
+		BD8E3B1E0E90B6B6CDA52084 /* CLIOutputFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CLIOutputFormatter.swift; sourceTree = "<group>"; };
+		C5FE0D340E0549EE920C7F5B /* CodeGenerationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CodeGenerationView.swift; sourceTree = "<group>"; };
+		E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis/NovaAPIServer.swift"; sourceTree = "<absolute>"; };
+		F7BA7A886D2778F4838EE06E /* AIBackendManager+Enhanced.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AIBackendManager+Enhanced.swift"; path = "URL-Analysis/AIBackendManager+Enhanced.swift"; sourceTree = "<group>"; };
+		W2000001000000000000001 /* URLAnalysisWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAnalysisWidget.swift; sourceTree = "<group>"; };
+		W2000002000000000000001 /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
+		W2000003000000000000001 /* SharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataManager.swift; sourceTree = "<group>"; };
+		W2000004000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		W2000005000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		W2000006000000000000001 /* URL_Analysis_Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis_Widget.entitlements; sourceTree = "<group>"; };
+		W3000001000000000000001 /* URL-Analysis Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "URL-Analysis Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		T2000001000000000000001 /* WebVitalsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVitalsTests.swift; sourceTree = "<group>"; };
+		T2000002000000000000001 /* NetworkMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorTests.swift; sourceTree = "<group>"; };
+		T2000003000000000000001 /* PerformanceScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceScoreTests.swift; sourceTree = "<group>"; };
+		T2000004000000000000001 /* ThirdPartyAnalysisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyAnalysisTests.swift; sourceTree = "<group>"; };
+		T2000005000000000000001 /* DeviceEmulationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceEmulationTests.swift; sourceTree = "<group>"; };
+		T2000006000000000000001 /* PerformanceBudgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceBudgetTests.swift; sourceTree = "<group>"; };
+		T2000007000000000000001 /* RequestBlockingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBlockingTests.swift; sourceTree = "<group>"; };
+		T2000008000000000000001 /* SecurityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityTests.swift; sourceTree = "<group>"; };
+		T2000009000000000000001 /* PersistentSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentSessionTests.swift; sourceTree = "<group>"; };
+		T200000A000000000000001 /* EthicalGuardianTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthicalGuardianTests.swift; sourceTree = "<group>"; };
+		T200000B000000000000001 /* ComprehensiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComprehensiveTests.swift; sourceTree = "<group>"; };
+		T3000001000000000000001 /* URL-AnalysisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "URL-AnalysisTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A4000001000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		W4000002000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		T5000001000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8AF569772B41599015902CBA /* AICapabilities */ = {
+			isa = PBXGroup;
+			children = (
+				4582C8B07F749B742566F343 /* UnifiedAICapabilities.swift */,
+				57CAD8F764445DFF313D2F06 /* ImageGenerationUnified.swift */,
+				93C7CA2FF26008CF4E798830 /* VoiceUnified.swift */,
+				61E9986574D906BAC21D363F /* AnalysisUnified.swift */,
+				ABD20180A86948143A34A84B /* SecurityUnified.swift */,
+			);
+			name = AICapabilities;
+			sourceTree = "<group>";
+		};
+		A5000001000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A7910E1973FC440583515B70 /* ModernDesign.swift */,
+				A5000002000000000000001 /* URL-Analysis */,
+				W5000002000000000000001 /* URL-Analysis Widget */,
+				T5000002000000000000001 /* URL-AnalysisTests */,
+				A5000003000000000000001 /* Products */,
+				F9461738610664DDF4CEB891 /* AIBackend */,
+			);
+			sourceTree = "<group>";
+		};
+		A5000002000000000000001 /* URL-Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				A2000001000000000000001 /* URLAnalysisApp.swift */,
+				A2000002000000000000001 /* ContentView.swift */,
+				A2000003000000000000001 /* NetworkMonitor.swift */,
+				A2000004000000000000001 /* HARFormat.swift */,
+				A2000005000000000000001 /* NetworkInterceptor.swift */,
+				A2000006000000000000001 /* WebView.swift */,
+				A2000007000000000000001 /* WaterfallView.swift */,
+				A2000008000000000000001 /* WaterfallToolbar.swift */,
+				A2000009000000000000001 /* ResourceInspector.swift */,
+				A200000B000000000000001 /* PerformanceScore.swift */,
+				A200000C000000000000001 /* WebVitals.swift */,
+				A200000D000000000000001 /* PerformanceScoreView.swift */,
+				A200000E000000000000001 /* RequestBlocking.swift */,
+				A200000F000000000000001 /* RequestBlockingView.swift */,
+				A2000010000000000000001 /* ScreenshotTimeline.swift */,
+				A2000011000000000000001 /* URLComparison.swift */,
+				A2000014000000000000001 /* PerformanceBudget.swift */,
+				A2000015000000000000001 /* PerformanceBudgetView.swift */,
+				A2000016000000000000001 /* OptimizationSuggestions.swift */,
+				A2000017000000000000001 /* OptimizationSuggestionsView.swift */,
+				A2000018000000000000001 /* ThirdPartyAnalysis.swift */,
+				A2000019000000000000001 /* ThirdPartyAnalysisView.swift */,
+				A200001A000000000000001 /* PDFReport.swift */,
+				A200001B000000000000001 /* WidgetDataSync.swift */,
+				A200000A000000000000001 /* Assets.xcassets */,
+				A2000012000000000000001 /* Info.plist */,
+				A2000013000000000000001 /* URL_Analysis.entitlements */,
+				80806676651A0D9D0DAF3984 /* ThemeManager.swift */,
+				8C546389EB38376F3B984FEB /* AdaptiveColors.swift */,
+				55C10B1ACF2F8151D4B6F048 /* DeviceEmulation.swift */,
+				79A8E6FF9DC12F20386E29F0 /* PersistentSession.swift */,
+				76ABF0BC5D37CF06E624D527 /* SessionHistoryManager.swift */,
+				4F67C01C4A109A940BD3B073 /* HistoryView.swift */,
+				66B31612D04E90D9209BAA7D /* TrendChartView.swift */,
+				20F89F6DCC15889B7E31550F /* HeadlessAnalyzer.swift */,
+				BD8E3B1E0E90B6B6CDA52084 /* CLIOutputFormatter.swift */,
+				B12066CC19D2AC3CD0DC4E8A /* LighthouseIntegration.swift */,
+				6F6C5F239FFE16520A6B120D /* LighthouseModels.swift */,
+				A2FDA871994DDE24B5B1425D /* LighthouseView.swift */,
+				C5FE0D340E0549EE920C7F5B /* CodeGenerationView.swift */,
+				9711E7B1839E4BD57312C30B /* TimeMachineView.swift */,
+				79DBF9DCF0F378531961118E /* AITrendAnalysisView.swift */,
+				562919951CDFCCC64BD7FF83 /* RegressionDetectionView.swift */,
+				8AF569772B41599015902CBA /* AICapabilities */,
+				E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */,
+			);
+			path = "URL-Analysis";
+			sourceTree = "<group>";
+		};
+		A5000003000000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3000001000000000000001 /* URL Analysis.app */,
+				W3000001000000000000001 /* URL-Analysis Widget.appex */,
+				T3000001000000000000001 /* URL-AnalysisTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F9461738610664DDF4CEB891 /* AIBackend */ = {
+			isa = PBXGroup;
+			children = (
+				B554CEDA28E95FE08B8FA957 /* AIBackendManager+Generation.swift */,
+				F7BA7A886D2778F4838EE06E /* AIBackendManager+Enhanced.swift */,
+				80EB35174236D269DD7F3C95 /* AIBackendStatusMenu.swift */,
+			);
+			name = AIBackend;
+			sourceTree = "<group>";
+		};
+		W5000002000000000000001 /* URL-Analysis Widget */ = {
+			isa = PBXGroup;
+			children = (
+				W2000001000000000000001 /* URLAnalysisWidget.swift */,
+				W2000002000000000000001 /* WidgetData.swift */,
+				W2000003000000000000001 /* SharedDataManager.swift */,
+				W2000004000000000000001 /* Assets.xcassets */,
+				W2000005000000000000001 /* Info.plist */,
+				W2000006000000000000001 /* URL_Analysis_Widget.entitlements */,
+			);
+			path = "URL-Analysis Widget";
+			sourceTree = "<group>";
+		};
+		T5000002000000000000001 /* URL-AnalysisTests */ = {
+			isa = PBXGroup;
+			children = (
+				T2000001000000000000001 /* WebVitalsTests.swift */,
+				T2000002000000000000001 /* NetworkMonitorTests.swift */,
+				T2000003000000000000001 /* PerformanceScoreTests.swift */,
+				T2000004000000000000001 /* ThirdPartyAnalysisTests.swift */,
+				T2000005000000000000001 /* DeviceEmulationTests.swift */,
+				T2000006000000000000001 /* PerformanceBudgetTests.swift */,
+				T2000007000000000000001 /* RequestBlockingTests.swift */,
+				T2000008000000000000001 /* SecurityTests.swift */,
+				T2000009000000000000001 /* PersistentSessionTests.swift */,
+				T200000A000000000000001 /* EthicalGuardianTests.swift */,
+				T200000B000000000000001 /* ComprehensiveTests.swift */,
+			);
+			path = "URL-AnalysisTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A6000001000000000000001 /* URL Analysis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL Analysis" */;
+			buildPhases = (
+				A8000001000000000000001 /* Sources */,
+				A4000001000000000000001 /* Frameworks */,
+				A9000001000000000000001 /* Resources */,
+				W5000001000000000000001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				W4000003000000000000001 /* PBXTargetDependency */,
+			);
+			name = "URL Analysis";
+			productName = "URL Analysis";
+			productReference = A3000001000000000000001 /* URL Analysis.app */;
+			productType = "com.apple.product-type.application";
+		};
+		W6000001000000000000001 /* URL-Analysis Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = W7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-Analysis Widget" */;
+			buildPhases = (
+				W8000001000000000000001 /* Sources */,
+				W4000002000000000000001 /* Frameworks */,
+				W9000001000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "URL-Analysis Widget";
+			productName = "URL-Analysis Widget";
+			productReference = W3000001000000000000001 /* URL-Analysis Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		T6000001000000000000001 /* URL-AnalysisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = T7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-AnalysisTests" */;
+			buildPhases = (
+				T8000001000000000000001 /* Sources */,
+				T5000001000000000000001 /* Frameworks */,
+				T9000001000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				T4000002000000000000001 /* PBXTargetDependency */,
+			);
+			name = "URL-AnalysisTests";
+			productName = "URL-AnalysisTests";
+			productReference = T3000001000000000000001 /* URL-AnalysisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0000001000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A6000001000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					W6000001000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					T6000001000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = A6000001000000000000001;
+					};
+				};
+			};
+			buildConfigurationList = A7000002000000000000001 /* Build configuration list for PBXProject "URL-Analysis" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5000001000000000000001;
+			productRefGroup = A5000003000000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A6000001000000000000001 /* URL Analysis */,
+				W6000001000000000000001 /* URL-Analysis Widget */,
+				T6000001000000000000001 /* URL-AnalysisTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9000001000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000A000000000000001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		W9000001000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				W1000004000000000000001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		T9000001000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A8000001000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001000000000000001 /* URLAnalysisApp.swift in Sources */,
+				A1000002000000000000001 /* ContentView.swift in Sources */,
+				A1000003000000000000001 /* NetworkMonitor.swift in Sources */,
+				33623361396334612D643938332D343562622D396666392D /* AIBackendManager.swift in Sources */,
+				62376132643730382D656363612D343763372D623135332D /* AIURLAnalyzer.swift in Sources */,
+				37306236623461622D306135312D343431392D623035302D /* AIAnalysisView.swift in Sources */,
+				A1000004000000000000001 /* HARFormat.swift in Sources */,
+				A1000005000000000000001 /* NetworkInterceptor.swift in Sources */,
+				A1000006000000000000001 /* WebView.swift in Sources */,
+				A1000007000000000000001 /* WaterfallView.swift in Sources */,
+				A1000008000000000000001 /* WaterfallToolbar.swift in Sources */,
+				A1000009000000000000001 /* ResourceInspector.swift in Sources */,
+				A100000B000000000000001 /* PerformanceScore.swift in Sources */,
+				A100000C000000000000001 /* WebVitals.swift in Sources */,
+				A100000D000000000000001 /* PerformanceScoreView.swift in Sources */,
+				A100000E000000000000001 /* RequestBlocking.swift in Sources */,
+				A100000F000000000000001 /* RequestBlockingView.swift in Sources */,
+				A1000010000000000000001 /* ScreenshotTimeline.swift in Sources */,
+				A1000011000000000000001 /* URLComparison.swift in Sources */,
+				A1000012000000000000001 /* PerformanceBudget.swift in Sources */,
+				A1000013000000000000001 /* PerformanceBudgetView.swift in Sources */,
+				A1000014000000000000001 /* OptimizationSuggestions.swift in Sources */,
+				A1000015000000000000001 /* OptimizationSuggestionsView.swift in Sources */,
+				A1000016000000000000001 /* ThirdPartyAnalysis.swift in Sources */,
+				A1000017000000000000001 /* ThirdPartyAnalysisView.swift in Sources */,
+				A1000018000000000000001 /* PDFReport.swift in Sources */,
+				A1000019000000000000001 /* WidgetDataSync.swift in Sources */,
+				837FA498DC3F48BFBCAAF190 /* ModernDesign.swift in Sources */,
+				40F7A6D1EBDACA8C01E0D220 /* ThemeManager.swift in Sources */,
+				DE1230C995EA67538163E5B2 /* AdaptiveColors.swift in Sources */,
+				7E2A5AD618C7E0E14BD7FBF9 /* DeviceEmulation.swift in Sources */,
+				D36A65576DA969FAB8292836 /* PersistentSession.swift in Sources */,
+				9685D375E228D9BCEA44E10F /* SessionHistoryManager.swift in Sources */,
+				1C69BAF41850B8AF00964FCF /* HistoryView.swift in Sources */,
+				8EDC509E4259EA36CB6FD202 /* TrendChartView.swift in Sources */,
+				ED5813E1F91C8968E5FDC658 /* HeadlessAnalyzer.swift in Sources */,
+				849763947954AE2867BDCF98 /* CLIOutputFormatter.swift in Sources */,
+				06AD9D5B2B8ABC43686F0418 /* LighthouseIntegration.swift in Sources */,
+				019268A570B3278CE1F51EBE /* LighthouseModels.swift in Sources */,
+				E9A6415C090FBC00A2EE20C2 /* LighthouseView.swift in Sources */,
+				F7CFBDD7F12AB3F40B893C75 /* CodeGenerationView.swift in Sources */,
+				AEC17A4359AB3768E116ECF8 /* TimeMachineView.swift in Sources */,
+				5296126E9B046DDAA7E6BAE8 /* AITrendAnalysisView.swift in Sources */,
+				E1B82CDB2B3AF83661B1C511 /* RegressionDetectionView.swift in Sources */,
+				90AF4FB8EB9F777286A11C3E /* UnifiedAICapabilities.swift in Sources */,
+				F3FB19BBE00A56AA44D311CA /* ImageGenerationUnified.swift in Sources */,
+				EFAF606AF7508F3C53B1CA8A /* VoiceUnified.swift in Sources */,
+				BF0F0057F91D4D28380360CE /* AnalysisUnified.swift in Sources */,
+				FFC0817E7671A1ADBEEED7C5 /* SecurityUnified.swift in Sources */,
+				96F829CE7E6EB814BB9CA2AE /* AIBackendManager+Generation.swift in Sources */,
+				8296310387A79E7C8F85C661 /* AIBackendManager+Enhanced.swift in Sources */,
+				0890E26F7394FA2624298DC2 /* AIBackendStatusMenu.swift in Sources */,
+				04A19A3E8E4636B5F7B469DB /* NovaAPIServer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		W8000001000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				W1000001000000000000001 /* URLAnalysisWidget.swift in Sources */,
+				W1000002000000000000001 /* WidgetData.swift in Sources */,
+				W1000003000000000000001 /* SharedDataManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		T8000001000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				T1000001000000000000001 /* WebVitalsTests.swift in Sources */,
+				T1000002000000000000001 /* NetworkMonitorTests.swift in Sources */,
+				T1000003000000000000001 /* PerformanceScoreTests.swift in Sources */,
+				T1000004000000000000001 /* ThirdPartyAnalysisTests.swift in Sources */,
+				T1000005000000000000001 /* DeviceEmulationTests.swift in Sources */,
+				T1000006000000000000001 /* PerformanceBudgetTests.swift in Sources */,
+				T1000007000000000000001 /* RequestBlockingTests.swift in Sources */,
+				T1000008000000000000001 /* SecurityTests.swift in Sources */,
+				T1000009000000000000001 /* PersistentSessionTests.swift in Sources */,
+				T100000A000000000000001 /* EthicalGuardianTests.swift in Sources */,
+				T100000B000000000000001 /* ComprehensiveTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		W4000003000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = W6000001000000000000001 /* URL-Analysis Widget */;
+			targetProxy = W4000001000000000000001 /* PBXContainerItemProxy */;
+		};
+		T4000002000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A6000001000000000000001 /* URL Analysis */;
+			targetProxy = T4000001000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A7000003000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A7000004000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		A7000005000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "URL-Analysis/URL_Analysis.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "URL-Analysis/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
+				INFOPLIST_KEY_NSMainStoryboardFile = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis";
+				PRODUCT_NAME = "URL Analysis";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A7000006000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "URL-Analysis/URL_Analysis.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "URL-Analysis/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
+				INFOPLIST_KEY_NSMainStoryboardFile = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis";
+				PRODUCT_NAME = "URL Analysis";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		W7000002000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "URL-Analysis Widget/URL_Analysis_Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "URL-Analysis Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		W7000003000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "URL-Analysis Widget/URL_Analysis_Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "URL-Analysis Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		T7000002000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-AnalysisTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/URL Analysis.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/URL Analysis";
+			};
+			name = Debug;
+		};
+		T7000003000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-AnalysisTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/URL Analysis.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/URL Analysis";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL Analysis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7000005000000000000001 /* Debug */,
+				A7000006000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7000002000000000000001 /* Build configuration list for PBXProject "URL-Analysis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7000003000000000000001 /* Debug */,
+				A7000004000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		W7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-Analysis Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				W7000002000000000000001 /* Debug */,
+				W7000003000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		T7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-AnalysisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				T7000002000000000000001 /* Debug */,
+				T7000003000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0000001000000000000001 /* Project object */;
+}
