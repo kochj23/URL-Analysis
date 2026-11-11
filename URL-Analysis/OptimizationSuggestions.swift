@@ -122,7 +122,7 @@ class OptimizationAnalyzer: ObservableObject {
 
             // Group by type for better reporting
             let byType = Dictionary(grouping: uncompressed, by: { $0.resourceType })
-            var typeBreakdown = byType.map { type, resources in
+            let typeBreakdown = byType.map { type, resources in
                 "\(resources.count) \(type.rawValue)"
             }.joined(separator: ", ")
 
@@ -227,7 +227,7 @@ class OptimizationAnalyzer: ObservableObject {
             let totalSize = uncached.reduce(0) { $0 + $1.responseSize }
             let byType = Dictionary(grouping: uncached, by: { $0.resourceType })
 
-            var typeBreakdown = byType.map { type, resources in
+            let typeBreakdown = byType.map { type, resources in
                 let typeSize = resources.reduce(0) { $0 + $1.responseSize }
                 return "\(resources.count) \(type.rawValue) (\(formatSize(typeSize)))"
             }.joined(separator: ", ")

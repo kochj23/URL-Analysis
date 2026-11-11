@@ -1,0 +1,15 @@
+{
+  "originHash" : "5c4f9c5e6624b25b60e5e5b2f6bbf5b2abac7c2f423cb232e497b012173846c9",
+  "pins" : [
+    {
+      "identity" : "novaaikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kochj23/NovaAIKit.git",
+      "state" : {
+        "revision" : "e556e454c7544090680fb9a817fe933a4bd2d6b7",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

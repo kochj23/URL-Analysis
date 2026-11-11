@@ -10,21 +10,19 @@
 		019268A570B3278CE1F51EBE /* LighthouseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C5F239FFE16520A6B120D /* LighthouseModels.swift */; };
 		04A19A3E8E4636B5F7B469DB /* NovaAPIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */; };
 		06AD9D5B2B8ABC43686F0418 /* LighthouseIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12066CC19D2AC3CD0DC4E8A /* LighthouseIntegration.swift */; };
-		0890E26F7394FA2624298DC2 /* AIBackendStatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB35174236D269DD7F3C95 /* AIBackendStatusMenu.swift */; };
+		11F02B7ADDEB69767A939346 /* AIKitAdoptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94851A72B79F6748128B410 /* AIKitAdoptionTests.swift */; };
 		1C69BAF41850B8AF00964FCF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F67C01C4A109A940BD3B073 /* HistoryView.swift */; };
-		33623361396334612D643938332D343562622D396666392D /* AIBackendManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */; };
 		37306236623461622D306135312D343431392D623035302D /* AIAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */; };
 		40F7A6D1EBDACA8C01E0D220 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80806676651A0D9D0DAF3984 /* ThemeManager.swift */; };
+		46A258D50621EED1481BC1F0 /* NovaAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9D8063623E47295B1172444 /* NovaAIKit */; };
 		5296126E9B046DDAA7E6BAE8 /* AITrendAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DBF9DCF0F378531961118E /* AITrendAnalysisView.swift */; };
 		62376132643730382D656363612D343763372D623135332D /* AIURLAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */; };
 		7E2A5AD618C7E0E14BD7FBF9 /* DeviceEmulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C10B1ACF2F8151D4B6F048 /* DeviceEmulation.swift */; };
-		8296310387A79E7C8F85C661 /* AIBackendManager+Enhanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BA7A886D2778F4838EE06E /* AIBackendManager+Enhanced.swift */; };
 		837FA498DC3F48BFBCAAF190 /* ModernDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7910E1973FC440583515B70 /* ModernDesign.swift */; };
 		849763947954AE2867BDCF98 /* CLIOutputFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8E3B1E0E90B6B6CDA52084 /* CLIOutputFormatter.swift */; };
 		8EDC509E4259EA36CB6FD202 /* TrendChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B31612D04E90D9209BAA7D /* TrendChartView.swift */; };
-		90AF4FB8EB9F777286A11C3E /* UnifiedAICapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4582C8B07F749B742566F343 /* UnifiedAICapabilities.swift */; };
 		9685D375E228D9BCEA44E10F /* SessionHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ABF0BC5D37CF06E624D527 /* SessionHistoryManager.swift */; };
-		96F829CE7E6EB814BB9CA2AE /* AIBackendManager+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B554CEDA28E95FE08B8FA957 /* AIBackendManager+Generation.swift */; };
+		A07517DDB071AC2088687C55 /* AppAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C711BD5A9EA9494F51F67D0 /* AppAI.swift */; };
 		A1000001000000000000001 /* URLAnalysisApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000001 /* URLAnalysisApp.swift */; };
 		A1000002000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000000000000001 /* ContentView.swift */; };
 		A1000003000000000000001 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003000000000000001 /* NetworkMonitor.swift */; };
@@ -51,21 +49,14 @@
 		A1000018000000000000001 /* PDFReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200001A000000000000001 /* PDFReport.swift */; };
 		A1000019000000000000001 /* WidgetDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A200001B000000000000001 /* WidgetDataSync.swift */; };
 		AEC17A4359AB3768E116ECF8 /* TimeMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9711E7B1839E4BD57312C30B /* TimeMachineView.swift */; };
-		BF0F0057F91D4D28380360CE /* AnalysisUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E9986574D906BAC21D363F /* AnalysisUnified.swift */; };
+		B27ABF15F371CAB843B0C404 /* URLAnalysisAIValidators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D52585F42C5571E0108CC6 /* URLAnalysisAIValidators.swift */; };
 		D36A65576DA969FAB8292836 /* PersistentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A8E6FF9DC12F20386E29F0 /* PersistentSession.swift */; };
 		DE1230C995EA67538163E5B2 /* AdaptiveColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C546389EB38376F3B984FEB /* AdaptiveColors.swift */; };
 		E1B82CDB2B3AF83661B1C511 /* RegressionDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562919951CDFCCC64BD7FF83 /* RegressionDetectionView.swift */; };
+		E27B77C17D75BC5F227FBEB8 /* NovaAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = E5FCBE385FDD0244FD1267D9 /* NovaAIKit */; };
 		E9A6415C090FBC00A2EE20C2 /* LighthouseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FDA871994DDE24B5B1425D /* LighthouseView.swift */; };
 		ED5813E1F91C8968E5FDC658 /* HeadlessAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F89F6DCC15889B7E31550F /* HeadlessAnalyzer.swift */; };
-		EFAF606AF7508F3C53B1CA8A /* VoiceUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C7CA2FF26008CF4E798830 /* VoiceUnified.swift */; };
-		F3FB19BBE00A56AA44D311CA /* ImageGenerationUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD8F764445DFF313D2F06 /* ImageGenerationUnified.swift */; };
 		F7CFBDD7F12AB3F40B893C75 /* CodeGenerationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE0D340E0549EE920C7F5B /* CodeGenerationView.swift */; };
-		FFC0817E7671A1ADBEEED7C5 /* SecurityUnified.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD20180A86948143A34A84B /* SecurityUnified.swift */; };
-		W1000001000000000000001 /* URLAnalysisWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000001000000000000001 /* URLAnalysisWidget.swift */; };
-		W1000002000000000000001 /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000002000000000000001 /* WidgetData.swift */; };
-		W1000003000000000000001 /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000003000000000000001 /* SharedDataManager.swift */; };
-		W1000004000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = W2000004000000000000001 /* Assets.xcassets */; };
-		W1000005000000000000001 /* URL-Analysis Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = W3000001000000000000001 /* URL-Analysis Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		T1000001000000000000001 /* WebVitalsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000001000000000000001 /* WebVitalsTests.swift */; };
 		T1000002000000000000001 /* NetworkMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000002000000000000001 /* NetworkMonitorTests.swift */; };
 		T1000003000000000000001 /* PerformanceScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000003000000000000001 /* PerformanceScoreTests.swift */; };
@@ -77,22 +68,27 @@
 		T1000009000000000000001 /* PersistentSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T2000009000000000000001 /* PersistentSessionTests.swift */; };
 		T100000A000000000000001 /* EthicalGuardianTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T200000A000000000000001 /* EthicalGuardianTests.swift */; };
 		T100000B000000000000001 /* ComprehensiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T200000B000000000000001 /* ComprehensiveTests.swift */; };
+		W1000001000000000000001 /* URLAnalysisWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000001000000000000001 /* URLAnalysisWidget.swift */; };
+		W1000002000000000000001 /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000002000000000000001 /* WidgetData.swift */; };
+		W1000003000000000000001 /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = W2000003000000000000001 /* SharedDataManager.swift */; };
+		W1000004000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = W2000004000000000000001 /* Assets.xcassets */; };
+		W1000005000000000000001 /* URL-Analysis Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = W3000001000000000000001 /* URL-Analysis Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		W4000001000000000000001 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A0000001000000000000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = W6000001000000000000001;
-			remoteInfo = "URL-Analysis Widget";
-		};
 		T4000001000000000000001 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A0000001000000000000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A6000001000000000000001;
 			remoteInfo = "URL Analysis";
+		};
+		W4000001000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0000001000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = W6000001000000000000001;
+			remoteInfo = "URL-Analysis Widget";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -112,14 +108,11 @@
 
 /* Begin PBXFileReference section */
 		20F89F6DCC15889B7E31550F /* HeadlessAnalyzer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HeadlessAnalyzer.swift; sourceTree = "<group>"; };
-		30396630323534302D663561312D346438332D626233662D /* AIBackendManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/AIBackendManager.swift"; sourceTree = "<group>"; };
 		32353466613231342D653834332D343232332D396332322D /* AIURLAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/AIURLAnalyzer.swift"; sourceTree = "<group>"; };
-		4582C8B07F749B742566F343 /* UnifiedAICapabilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UnifiedAICapabilities.swift; path = AICapabilities/UnifiedAICapabilities.swift; sourceTree = "<group>"; };
+		4C711BD5A9EA9494F51F67D0 /* AppAI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppAI.swift; sourceTree = "<group>"; };
 		4F67C01C4A109A940BD3B073 /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		55C10B1ACF2F8151D4B6F048 /* DeviceEmulation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceEmulation.swift; sourceTree = "<group>"; };
 		562919951CDFCCC64BD7FF83 /* RegressionDetectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegressionDetectionView.swift; sourceTree = "<group>"; };
-		57CAD8F764445DFF313D2F06 /* ImageGenerationUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageGenerationUnified.swift; path = AICapabilities/ImageGenerationUnified.swift; sourceTree = "<group>"; };
-		61E9986574D906BAC21D363F /* AnalysisUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnalysisUnified.swift; path = AICapabilities/AnalysisUnified.swift; sourceTree = "<group>"; };
 		63396163636236352D363934332D343561632D393161382D /* AIAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/AIAnalysisView.swift"; sourceTree = "<group>"; };
 		66B31612D04E90D9209BAA7D /* TrendChartView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrendChartView.swift; sourceTree = "<group>"; };
 		6F6C5F239FFE16520A6B120D /* LighthouseModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LighthouseModels.swift; sourceTree = "<group>"; };
@@ -127,9 +120,7 @@
 		79A8E6FF9DC12F20386E29F0 /* PersistentSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PersistentSession.swift; sourceTree = "<group>"; };
 		79DBF9DCF0F378531961118E /* AITrendAnalysisView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AITrendAnalysisView.swift; sourceTree = "<group>"; };
 		80806676651A0D9D0DAF3984 /* ThemeManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
-		80EB35174236D269DD7F3C95 /* AIBackendStatusMenu.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AIBackendStatusMenu.swift; path = "URL-Analysis/AIBackendStatusMenu.swift"; sourceTree = "<group>"; };
 		8C546389EB38376F3B984FEB /* AdaptiveColors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdaptiveColors.swift; sourceTree = "<group>"; };
-		93C7CA2FF26008CF4E798830 /* VoiceUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VoiceUnified.swift; path = AICapabilities/VoiceUnified.swift; sourceTree = "<group>"; };
 		9711E7B1839E4BD57312C30B /* TimeMachineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeMachineView.swift; sourceTree = "<group>"; };
 		A2000001000000000000001 /* URLAnalysisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAnalysisApp.swift; sourceTree = "<group>"; };
 		A2000002000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -161,20 +152,12 @@
 		A2FDA871994DDE24B5B1425D /* LighthouseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LighthouseView.swift; sourceTree = "<group>"; };
 		A3000001000000000000001 /* URL Analysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "URL Analysis.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7910E1973FC440583515B70 /* ModernDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Analysis/ModernDesign.swift"; sourceTree = "<group>"; };
-		ABD20180A86948143A34A84B /* SecurityUnified.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecurityUnified.swift; path = AICapabilities/SecurityUnified.swift; sourceTree = "<group>"; };
 		B12066CC19D2AC3CD0DC4E8A /* LighthouseIntegration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LighthouseIntegration.swift; sourceTree = "<group>"; };
-		B554CEDA28E95FE08B8FA957 /* AIBackendManager+Generation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AIBackendManager+Generation.swift"; path = "URL-Analysis/AIBackendManager+Generation.swift"; sourceTree = "<group>"; };
+		B9D52585F42C5571E0108CC6 /* URLAnalysisAIValidators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = URLAnalysisAIValidators.swift; sourceTree = "<group>"; };
 		BD8E3B1E0E90B6B6CDA52084 /* CLIOutputFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CLIOutputFormatter.swift; sourceTree = "<group>"; };
 		C5FE0D340E0549EE920C7F5B /* CodeGenerationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CodeGenerationView.swift; sourceTree = "<group>"; };
-		E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis/NovaAPIServer.swift"; sourceTree = "<absolute>"; };
-		F7BA7A886D2778F4838EE06E /* AIBackendManager+Enhanced.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AIBackendManager+Enhanced.swift"; path = "URL-Analysis/AIBackendManager+Enhanced.swift"; sourceTree = "<group>"; };
-		W2000001000000000000001 /* URLAnalysisWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAnalysisWidget.swift; sourceTree = "<group>"; };
-		W2000002000000000000001 /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
-		W2000003000000000000001 /* SharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataManager.swift; sourceTree = "<group>"; };
-		W2000004000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		W2000005000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		W2000006000000000000001 /* URL_Analysis_Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis_Widget.entitlements; sourceTree = "<group>"; };
-		W3000001000000000000001 /* URL-Analysis Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "URL-Analysis Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NovaAPIServer.swift; sourceTree = "<group>"; };
+		F94851A72B79F6748128B410 /* AIKitAdoptionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AIKitAdoptionTests.swift; sourceTree = "<group>"; };
 		T2000001000000000000001 /* WebVitalsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVitalsTests.swift; sourceTree = "<group>"; };
 		T2000002000000000000001 /* NetworkMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorTests.swift; sourceTree = "<group>"; };
 		T2000003000000000000001 /* PerformanceScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceScoreTests.swift; sourceTree = "<group>"; };
@@ -187,6 +170,13 @@
 		T200000A000000000000001 /* EthicalGuardianTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthicalGuardianTests.swift; sourceTree = "<group>"; };
 		T200000B000000000000001 /* ComprehensiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComprehensiveTests.swift; sourceTree = "<group>"; };
 		T3000001000000000000001 /* URL-AnalysisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "URL-AnalysisTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		W2000001000000000000001 /* URLAnalysisWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAnalysisWidget.swift; sourceTree = "<group>"; };
+		W2000002000000000000001 /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
+		W2000003000000000000001 /* SharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataManager.swift; sourceTree = "<group>"; };
+		W2000004000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		W2000005000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		W2000006000000000000001 /* URL_Analysis_Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = URL_Analysis_Widget.entitlements; sourceTree = "<group>"; };
+		W3000001000000000000001 /* URL-Analysis Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "URL-Analysis Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +184,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A258D50621EED1481BC1F0 /* NovaAIKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		T5000001000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E27B77C17D75BC5F227FBEB8 /* NovaAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,26 +203,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		T5000001000000000000001 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8AF569772B41599015902CBA /* AICapabilities */ = {
+		6C9B56392E30E7989B1BE622 /* AI */ = {
 			isa = PBXGroup;
 			children = (
-				4582C8B07F749B742566F343 /* UnifiedAICapabilities.swift */,
-				57CAD8F764445DFF313D2F06 /* ImageGenerationUnified.swift */,
-				93C7CA2FF26008CF4E798830 /* VoiceUnified.swift */,
-				61E9986574D906BAC21D363F /* AnalysisUnified.swift */,
-				ABD20180A86948143A34A84B /* SecurityUnified.swift */,
+				4C711BD5A9EA9494F51F67D0 /* AppAI.swift */,
+				B9D52585F42C5571E0108CC6 /* URLAnalysisAIValidators.swift */,
 			);
-			name = AICapabilities;
+			name = AI;
+			path = AI;
 			sourceTree = "<group>";
 		};
 		A5000001000000000000001 = {
@@ -234,7 +224,6 @@
 				W5000002000000000000001 /* URL-Analysis Widget */,
 				T5000002000000000000001 /* URL-AnalysisTests */,
 				A5000003000000000000001 /* Products */,
-				F9461738610664DDF4CEB891 /* AIBackend */,
 			);
 			sourceTree = "<group>";
 		};
@@ -284,8 +273,8 @@
 				9711E7B1839E4BD57312C30B /* TimeMachineView.swift */,
 				79DBF9DCF0F378531961118E /* AITrendAnalysisView.swift */,
 				562919951CDFCCC64BD7FF83 /* RegressionDetectionView.swift */,
-				8AF569772B41599015902CBA /* AICapabilities */,
 				E57C7E90D203FD9A648894D5 /* NovaAPIServer.swift */,
+				6C9B56392E30E7989B1BE622 /* AI */,
 			);
 			path = "URL-Analysis";
 			sourceTree = "<group>";
@@ -298,29 +287,6 @@
 				T3000001000000000000001 /* URL-AnalysisTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F9461738610664DDF4CEB891 /* AIBackend */ = {
-			isa = PBXGroup;
-			children = (
-				B554CEDA28E95FE08B8FA957 /* AIBackendManager+Generation.swift */,
-				F7BA7A886D2778F4838EE06E /* AIBackendManager+Enhanced.swift */,
-				80EB35174236D269DD7F3C95 /* AIBackendStatusMenu.swift */,
-			);
-			name = AIBackend;
-			sourceTree = "<group>";
-		};
-		W5000002000000000000001 /* URL-Analysis Widget */ = {
-			isa = PBXGroup;
-			children = (
-				W2000001000000000000001 /* URLAnalysisWidget.swift */,
-				W2000002000000000000001 /* WidgetData.swift */,
-				W2000003000000000000001 /* SharedDataManager.swift */,
-				W2000004000000000000001 /* Assets.xcassets */,
-				W2000005000000000000001 /* Info.plist */,
-				W2000006000000000000001 /* URL_Analysis_Widget.entitlements */,
-			);
-			path = "URL-Analysis Widget";
 			sourceTree = "<group>";
 		};
 		T5000002000000000000001 /* URL-AnalysisTests */ = {
@@ -337,8 +303,22 @@
 				T2000009000000000000001 /* PersistentSessionTests.swift */,
 				T200000A000000000000001 /* EthicalGuardianTests.swift */,
 				T200000B000000000000001 /* ComprehensiveTests.swift */,
+				F94851A72B79F6748128B410 /* AIKitAdoptionTests.swift */,
 			);
 			path = "URL-AnalysisTests";
+			sourceTree = "<group>";
+		};
+		W5000002000000000000001 /* URL-Analysis Widget */ = {
+			isa = PBXGroup;
+			children = (
+				W2000001000000000000001 /* URLAnalysisWidget.swift */,
+				W2000002000000000000001 /* WidgetData.swift */,
+				W2000003000000000000001 /* SharedDataManager.swift */,
+				W2000004000000000000001 /* Assets.xcassets */,
+				W2000005000000000000001 /* Info.plist */,
+				W2000006000000000000001 /* URL_Analysis_Widget.entitlements */,
+			);
+			path = "URL-Analysis Widget";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,9 +339,33 @@
 				W4000003000000000000001 /* PBXTargetDependency */,
 			);
 			name = "URL Analysis";
+			packageProductDependencies = (
+				E9D8063623E47295B1172444 /* NovaAIKit */,
+			);
 			productName = "URL Analysis";
 			productReference = A3000001000000000000001 /* URL Analysis.app */;
 			productType = "com.apple.product-type.application";
+		};
+		T6000001000000000000001 /* URL-AnalysisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = T7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-AnalysisTests" */;
+			buildPhases = (
+				T8000001000000000000001 /* Sources */,
+				T5000001000000000000001 /* Frameworks */,
+				T9000001000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				T4000002000000000000001 /* PBXTargetDependency */,
+			);
+			name = "URL-AnalysisTests";
+			packageProductDependencies = (
+				E5FCBE385FDD0244FD1267D9 /* NovaAIKit */,
+			);
+			productName = "URL-AnalysisTests";
+			productReference = T3000001000000000000001 /* URL-AnalysisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		W6000001000000000000001 /* URL-Analysis Widget */ = {
 			isa = PBXNativeTarget;
@@ -380,24 +384,6 @@
 			productReference = W3000001000000000000001 /* URL-Analysis Widget.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		T6000001000000000000001 /* URL-AnalysisTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = T7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-AnalysisTests" */;
-			buildPhases = (
-				T8000001000000000000001 /* Sources */,
-				T5000001000000000000001 /* Frameworks */,
-				T9000001000000000000001 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				T4000002000000000000001 /* PBXTargetDependency */,
-			);
-			name = "URL-AnalysisTests";
-			productName = "URL-AnalysisTests";
-			productReference = T3000001000000000000001 /* URL-AnalysisTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -411,12 +397,12 @@
 					A6000001000000000000001 = {
 						CreatedOnToolsVersion = 15.0;
 					};
-					W6000001000000000000001 = {
-						CreatedOnToolsVersion = 15.0;
-					};
 					T6000001000000000000001 = {
 						CreatedOnToolsVersion = 15.0;
 						TestTargetID = A6000001000000000000001;
+					};
+					W6000001000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
@@ -429,6 +415,9 @@
 				Base,
 			);
 			mainGroup = A5000001000000000000001;
+			packageReferences = (
+				201652E7F077AF4D8753B4C9 /* XCRemoteSwiftPackageReference "NovaAIKit" */,
+			);
 			productRefGroup = A5000003000000000000001 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -449,18 +438,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		T9000001000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		W9000001000000000000001 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				W1000004000000000000001 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		T9000001000000000000001 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +463,6 @@
 				A1000001000000000000001 /* URLAnalysisApp.swift in Sources */,
 				A1000002000000000000001 /* ContentView.swift in Sources */,
 				A1000003000000000000001 /* NetworkMonitor.swift in Sources */,
-				33623361396334612D643938332D343562622D396666392D /* AIBackendManager.swift in Sources */,
 				62376132643730382D656363612D343763372D623135332D /* AIURLAnalyzer.swift in Sources */,
 				37306236623461622D306135312D343431392D623035302D /* AIAnalysisView.swift in Sources */,
 				A1000004000000000000001 /* HARFormat.swift in Sources */,
@@ -515,25 +503,9 @@
 				AEC17A4359AB3768E116ECF8 /* TimeMachineView.swift in Sources */,
 				5296126E9B046DDAA7E6BAE8 /* AITrendAnalysisView.swift in Sources */,
 				E1B82CDB2B3AF83661B1C511 /* RegressionDetectionView.swift in Sources */,
-				90AF4FB8EB9F777286A11C3E /* UnifiedAICapabilities.swift in Sources */,
-				F3FB19BBE00A56AA44D311CA /* ImageGenerationUnified.swift in Sources */,
-				EFAF606AF7508F3C53B1CA8A /* VoiceUnified.swift in Sources */,
-				BF0F0057F91D4D28380360CE /* AnalysisUnified.swift in Sources */,
-				FFC0817E7671A1ADBEEED7C5 /* SecurityUnified.swift in Sources */,
-				96F829CE7E6EB814BB9CA2AE /* AIBackendManager+Generation.swift in Sources */,
-				8296310387A79E7C8F85C661 /* AIBackendManager+Enhanced.swift in Sources */,
-				0890E26F7394FA2624298DC2 /* AIBackendStatusMenu.swift in Sources */,
 				04A19A3E8E4636B5F7B469DB /* NovaAPIServer.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		W8000001000000000000001 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				W1000001000000000000001 /* URLAnalysisWidget.swift in Sources */,
-				W1000002000000000000001 /* WidgetData.swift in Sources */,
-				W1000003000000000000001 /* SharedDataManager.swift in Sources */,
+				A07517DDB071AC2088687C55 /* AppAI.swift in Sources */,
+				B27ABF15F371CAB843B0C404 /* URLAnalysisAIValidators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,21 +524,32 @@
 				T1000009000000000000001 /* PersistentSessionTests.swift in Sources */,
 				T100000A000000000000001 /* EthicalGuardianTests.swift in Sources */,
 				T100000B000000000000001 /* ComprehensiveTests.swift in Sources */,
+				11F02B7ADDEB69767A939346 /* AIKitAdoptionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		W8000001000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				W1000001000000000000001 /* URLAnalysisWidget.swift in Sources */,
+				W1000002000000000000001 /* WidgetData.swift in Sources */,
+				W1000003000000000000001 /* SharedDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		W4000003000000000000001 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = W6000001000000000000001 /* URL-Analysis Widget */;
-			targetProxy = W4000001000000000000001 /* PBXContainerItemProxy */;
-		};
 		T4000002000000000000001 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A6000001000000000000001 /* URL Analysis */;
 			targetProxy = T4000001000000000000001 /* PBXContainerItemProxy */;
+		};
+		W4000003000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = W6000001000000000000001 /* URL-Analysis Widget */;
+			targetProxy = W4000001000000000000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -694,11 +677,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "URL-Analysis/URL_Analysis.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -712,7 +694,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis";
 				PRODUCT_NAME = "URL Analysis";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -725,11 +707,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "URL-Analysis/URL_Analysis.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -743,65 +724,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis";
 				PRODUCT_NAME = "URL Analysis";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		W7000002000000000000001 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = "URL-Analysis Widget/URL_Analysis_Widget.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "URL-Analysis Widget/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis Widget";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 1.3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis.widget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		W7000003000000000000001 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = "URL-Analysis Widget/URL_Analysis_Widget.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "URL-Analysis Widget/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis Widget";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 1.3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis.widget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -812,10 +737,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-AnalysisTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -829,15 +754,69 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-AnalysisTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/URL Analysis.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/URL Analysis";
+			};
+			name = Release;
+		};
+		W7000002000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "URL-Analysis Widget/URL_Analysis_Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "URL-Analysis Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.4.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		W7000003000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "URL-Analysis Widget/URL_Analysis_Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "URL-Analysis Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "URL Analysis Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Jordan Koch. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.4.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jordankoch.URL-Analysis.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -862,15 +841,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		W7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-Analysis Widget" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				W7000002000000000000001 /* Debug */,
-				W7000003000000000000001 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		T7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-AnalysisTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -880,7 +850,40 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		W7000001000000000000001 /* Build configuration list for PBXNativeTarget "URL-Analysis Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				W7000002000000000000001 /* Debug */,
+				W7000003000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		201652E7F077AF4D8753B4C9 /* XCRemoteSwiftPackageReference "NovaAIKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kochj23/NovaAIKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E5FCBE385FDD0244FD1267D9 /* NovaAIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 201652E7F077AF4D8753B4C9 /* XCRemoteSwiftPackageReference "NovaAIKit" */;
+			productName = NovaAIKit;
+		};
+		E9D8063623E47295B1172444 /* NovaAIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 201652E7F077AF4D8753B4C9 /* XCRemoteSwiftPackageReference "NovaAIKit" */;
+			productName = NovaAIKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A0000001000000000000001 /* Project object */;
 }

@@ -18,6 +18,7 @@
 
 import XCTest
 import CryptoKit
+import NovaAIKit
 @testable import URL_Analysis
 
 // MARK: - Unit Tests
@@ -489,13 +490,9 @@ final class ComprehensiveSecurityTests: XCTestCase {
     // MARK: - No Hardcoded API Keys in Source
 
     func testNoHardcodedOpenAIKeyInSourceFiles() throws {
-        let sourceDir = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis"
-        let swiftFiles = try FileManager.default.contentsOfDirectory(atPath: sourceDir)
-            .filter { $0.hasSuffix(".swift") }
-
-        for file in swiftFiles {
-            let path = (sourceDir as NSString).appendingPathComponent(file)
-            let content = try String(contentsOfFile: path, encoding: .utf8)
+        for url in AITestSupport.appSourceFiles {
+            let file = url.lastPathComponent
+            let content = try String(contentsOf: url, encoding: .utf8)
             // Look for actual API key patterns (not variable names or documentation)
             let hasOpenAIKey = content.range(of: "sk-[A-Za-z0-9]{20,}", options: .regularExpression) != nil
             XCTAssertFalse(hasOpenAIKey, "File \(file) appears to contain a hardcoded OpenAI API key")
@@ -503,26 +500,18 @@ final class ComprehensiveSecurityTests: XCTestCase {
     }
 
     func testNoHardcodedAWSCredentials() throws {
-        let sourceDir = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis"
-        let swiftFiles = try FileManager.default.contentsOfDirectory(atPath: sourceDir)
-            .filter { $0.hasSuffix(".swift") }
-
-        for file in swiftFiles {
-            let path = (sourceDir as NSString).appendingPathComponent(file)
-            let content = try String(contentsOfFile: path, encoding: .utf8)
+        for url in AITestSupport.appSourceFiles {
+            let file = url.lastPathComponent
+            let content = try String(contentsOf: url, encoding: .utf8)
             let hasAWSKey = content.range(of: "AKIA[0-9A-Z]{16}", options: .regularExpression) != nil
             XCTAssertFalse(hasAWSKey, "File \(file) appears to contain a hardcoded AWS key")
         }
     }
 
     func testNoHardcodedGitHubTokens() throws {
-        let sourceDir = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis"
-        let swiftFiles = try FileManager.default.contentsOfDirectory(atPath: sourceDir)
-            .filter { $0.hasSuffix(".swift") }
-
-        for file in swiftFiles {
-            let path = (sourceDir as NSString).appendingPathComponent(file)
-            let content = try String(contentsOfFile: path, encoding: .utf8)
+        for url in AITestSupport.appSourceFiles {
+            let file = url.lastPathComponent
+            let content = try String(contentsOf: url, encoding: .utf8)
             let hasGHToken = content.range(of: "ghp_[A-Za-z0-9]{36}", options: .regularExpression) != nil
             XCTAssertFalse(hasGHToken, "File \(file) appears to contain a hardcoded GitHub PAT")
         }
@@ -530,31 +519,24 @@ final class ComprehensiveSecurityTests: XCTestCase {
 
     // MARK: - Keychain Usage Verification
 
-    func testAIBackendManagerUsesKeychainForAPIKeys() throws {
-        let path = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIBackendManager.swift"
-        let content = try String(contentsOfFile: path, encoding: .utf8)
-
-        // Verify Keychain methods are implemented
-        XCTAssertTrue(content.contains("saveToKeychain"), "AIBackendManager must use saveToKeychain")
-        XCTAssertTrue(content.contains("loadFromKeychain"), "AIBackendManager must use loadFromKeychain")
-        XCTAssertTrue(content.contains("deleteFromKeychain"), "AIBackendManager must use deleteFromKeychain")
-
-        // Verify Security framework imports
-        XCTAssertTrue(content.contains("import Security"), "AIBackendManager must import Security framework")
-
-        // Verify Keychain constants are used
-        XCTAssertTrue(content.contains("kSecClass"), "AIBackendManager must use Keychain API constants")
-        XCTAssertTrue(content.contains("SecItemAdd"), "AIBackendManager must use SecItemAdd")
-        XCTAssertTrue(content.contains("SecItemCopyMatching"), "AIBackendManager must use SecItemCopyMatching")
+    /// AI keys live in the Keychain (NovaAIKit), never in UserDefaults or source.
+    @MainActor
+    func testAIKeysUseKeychainForAPIKeys() throws {
+        XCTAssertTrue(AppAI.shared.keys.store is NovaAIKeychain, "the app's AI keys must use the Keychain store")
+        XCTAssertEqual(AppAI.shared.configuration.keychainService(for: .openAI), "com.jkoch.urlanalysis.openai")
+        for url in AITestSupport.appSourceFiles {
+            let content = try String(contentsOf: url, encoding: .utf8)
+            XCTAssertNil(content.range(of: #"UserDefaults[^\n]*set\([^\n]*(APIKey|_Key")"#, options: .regularExpression),
+                         "\(url.lastPathComponent) writes a key to UserDefaults")
+        }
     }
 
+    /// The old plaintext UserDefaults keys are migrated (see AIKitSecurityTests for the runtime check).
     func testAPIKeysMigratedFromUserDefaults() throws {
-        let path = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIBackendManager.swift"
-        let content = try String(contentsOfFile: path, encoding: .utf8)
-
-        // Verify migration function exists
-        XCTAssertTrue(content.contains("migrateAPIKeysFromUserDefaults"),
-                       "Must have UserDefaults-to-Keychain migration")
+        let appAI = AITestSupport.appSourceFiles.first { $0.lastPathComponent == "AppAI.swift" }
+        let content = try String(contentsOf: try XCTUnwrap(appAI), encoding: .utf8)
+        XCTAssertTrue(content.contains("migrateFromLegacyAIBackendManager"), "Must migrate legacy UserDefaults keys")
+        XCTAssertTrue(content.contains("deleteObsoleteLegacyItems"), "Must delete removed backends' secrets")
     }
 
     // MARK: - URL Sanitization (No Script Injection)
@@ -654,8 +636,8 @@ final class ComprehensiveSecurityTests: XCTestCase {
     }
 
     func testNovaAPIServerSourceBindsLoopback() throws {
-        let path = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis/NovaAPIServer.swift"
-        let content = try String(contentsOfFile: path, encoding: .utf8)
+        let url = try XCTUnwrap(AITestSupport.appSourceFiles.first { $0.lastPathComponent == "NovaAPIServer.swift" })
+        let content = try String(contentsOf: url, encoding: .utf8)
         XCTAssertTrue(content.contains("127.0.0.1"),
                        "NovaAPIServer must bind to 127.0.0.1 loopback only")
         XCTAssertFalse(content.contains("0.0.0.0"),
@@ -819,29 +801,27 @@ final class IntegrationTests: XCTestCase {
     // MARK: - AI Backend Configuration
 
     func testAIBackendEnumAllCases() {
-        let allBackends = AIBackendManager.AIBackend.allCases
-        XCTAssertGreaterThanOrEqual(allBackends.count, 10)
+        XCTAssertEqual(NovaAIBackend.allCases.count, 9)
     }
 
     func testAIBackendEnumCodable() throws {
-        for backend in AIBackendManager.AIBackend.allCases {
+        for backend in NovaAIBackend.allCases {
             let data = try JSONEncoder().encode(backend)
-            let decoded = try JSONDecoder().decode(AIBackendManager.AIBackend.self, from: data)
+            let decoded = try JSONDecoder().decode(NovaAIBackend.self, from: data)
             XCTAssertEqual(decoded, backend)
         }
     }
 
     func testAIBackendDescriptionsNotEmpty() {
-        for backend in AIBackendManager.AIBackend.allCases {
-            XCTAssertFalse(backend.description.isEmpty,
-                           "\(backend.rawValue) should have a non-empty description")
+        for backend in NovaAIBackend.allCases {
+            XCTAssertFalse(backend.displayName.isEmpty, "\(backend.rawValue) should have a display name")
+            XCTAssertFalse(backend.summary.isEmpty, "\(backend.rawValue) should have a summary")
         }
     }
 
-    func testAIBackendSetupInstructionsNotEmpty() {
-        for backend in AIBackendManager.AIBackend.allCases {
-            XCTAssertFalse(backend.setupInstructions.isEmpty,
-                           "\(backend.rawValue) should have setup instructions")
+    func testAIBackendDefaultURLsNotEmpty() {
+        for backend in NovaAIBackend.allCases where backend != .auto {
+            XCTAssertFalse(backend.defaultURL.isEmpty, "\(backend.rawValue) should have a default URL")
         }
     }
 
@@ -1165,20 +1145,17 @@ final class FrameTests: XCTestCase {
     // MARK: - AIBackend Manager Singleton
 
     @MainActor
-    func testAIBackendManagerSingletonExists() {
-        let manager = AIBackendManager.shared
-        XCTAssertNotNil(manager)
-        // Verify default backend
-        XCTAssertNotNil(manager.activeBackend)
+    func testAppAISingletonExists() {
+        let ai = AppAI.shared
+        XCTAssertTrue(ai === AppAI.shared)
+        XCTAssertTrue(NovaAIBackend.selectable.contains(ai.settings.backend))
     }
 
     @MainActor
-    func testAIBackendManagerKeychainServiceName() throws {
-        // The keychain service name should be a reverse-DNS identifier
-        let path = "/Volumes/Data/xcode/URL-Analysis/URL-Analysis/AIBackendManager.swift"
-        let content = try String(contentsOfFile: path, encoding: .utf8)
-        XCTAssertTrue(content.contains("com.jordankoch.URLAnalysis"),
-                       "Keychain service name should use reverse-DNS format")
+    func testAppAIKeychainServiceName() throws {
+        // Keychain services are reverse-DNS: com.jkoch.urlanalysis.<backend>; the old one is migrated from.
+        XCTAssertEqual(AppAI.shared.configuration.keychainService(for: .openRouter), "com.jkoch.urlanalysis.openrouter")
+        XCTAssertEqual(AppAI.legacyKeychainService, "com.jordankoch.URLAnalysis")
     }
 
     // MARK: - All Device Presets Load

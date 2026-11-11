@@ -2,8 +2,9 @@
 //  AIURLAnalyzer.swift
 //  URL Analysis
 //
-//  AI-powered URL and performance analysis
-//  Supports Ollama, MLX Toolkit, and TinyLLM by Jason Cox
+//  AI-powered URL and performance analysis via NovaAIKit (AppAI.shared).
+//  Every feature has a built-in (non-AI) result that is used when AI is off, unreachable, or its reply fails
+//  validation (URLAnalysisAIValidators). `lastSource` says where the latest value came from.
 //  Author: Jordan Koch
 //  Date: 2025-01-17
 //
@@ -13,6 +14,7 @@
 
 import Foundation
 import SwiftUI
+import NovaAIKit
 
 /// AI-powered URL analysis manager
 @MainActor
@@ -31,19 +33,52 @@ class AIURLAnalyzer: ObservableObject {
     @Published var trendAnalysis: TrendAnalysisResult?
     @Published var regressionReport: RegressionReport?
 
-    private let aiBackend = AIBackendManager.shared
+    /// Where the most recent result came from ("AI · Ollama (qwen3:8b)" / "Built-in").
+    @Published var lastSource: NovaAISource?
+    /// Per-feature source labels, keyed by feature name ("insights", "security", …).
+    @Published var sources: [String: NovaAISource] = [:]
+
+    private let ai: NovaAI
+
+    init(ai: NovaAI? = nil) {
+        self.ai = ai ?? AppAI.shared
+    }
+
+    /// Runs one AI request with the never-throwing NovaAIKit contract and records its source.
+    private func run<Value: Sendable>(_ feature: String, _ request: NovaAIRequest,
+                                      validate: @escaping @Sendable (String) throws -> Value,
+                                      fallback: Value) async -> Value {
+        isAnalyzing = true
+        defer { isAnalyzing = false }
+        let result = await ai.generate(request, validate: validate, fallback: { fallback })
+        record(feature, result.source)
+        return result.value
+    }
+
+    /// True when the last result for `feature` fell back because AI is off or unreachable (not a rejected reply):
+    /// the remaining items of a batch then use the built-in result straight away instead of waiting on timeouts.
+    private func stopAfterFallback(_ feature: String) -> Bool {
+        guard case .fallback(let reason)? = sources[feature] else { return false }
+        if case .validationFailed = reason { return false }
+        return true
+    }
+
+    private func record(_ feature: String, _ source: NovaAISource) {
+        sources[feature] = source
+        lastSource = source
+        switch source {
+        case .ai: lastError = nil
+        case .fallback(.disabled): lastError = nil
+        case .fallback(.unavailable(let why)): lastError = why
+        case .fallback(.validationFailed(let why)): lastError = "AI reply rejected: \(why)"
+        }
+    }
 
     // MARK: - Feature 1: AI Performance Insights
 
     /// Generate natural language performance insights
     func analyzePerformance(monitor: NetworkMonitor, score: Int, vitals: WebVitals?) async -> String {
-        guard aiBackend.activeBackend != nil else {
-            return generateBasicPerformanceInsight(monitor: monitor, score: score)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
+        let fallback = generateBasicPerformanceInsight(monitor: monitor, score: score)
         let context = buildPerformanceContext(monitor: monitor, score: score, vitals: vitals)
 
         let prompt = """
@@ -56,22 +91,14 @@ class AIURLAnalyzer: ObservableObject {
         Provide a clear, actionable summary focusing on the biggest issues.
         """
 
-        do {
-            let insights = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a web performance expert. Provide concise, actionable insights.",
-                temperature: 0.4,
-                maxTokens: 300
-            )
-
-            await MainActor.run {
-                self.performanceInsights = insights
-            }
-
-            return insights
-        } catch {
-            return generateBasicPerformanceInsight(monitor: monitor, score: score)
-        }
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a web performance expert. Provide concise, actionable insights. Only use the numbers given.",
+                                    temperature: 0.4, maxTokens: 300)
+        let insights = await run("insights", request,
+                                 validate: { try URLAnalysisAIValidators.insight($0, source: context) },
+                                 fallback: fallback)
+        performanceInsights = insights
+        return insights
     }
 
     private func buildPerformanceContext(monitor: NetworkMonitor, score: Int, vitals: WebVitals?) -> String {
@@ -113,7 +140,7 @@ class AIURLAnalyzer: ObservableObject {
         return context
     }
 
-    private func generateBasicPerformanceInsight(monitor: NetworkMonitor, score: Int) -> String {
+    func generateBasicPerformanceInsight(monitor: NetworkMonitor, score: Int) -> String {
         if score >= 90 {
             return "Excellent performance! Page loads quickly with minimal overhead."
         } else if score >= 70 {
@@ -129,13 +156,8 @@ class AIURLAnalyzer: ObservableObject {
 
     /// Analyze URL for security threats
     func analyzeURLSecurity(url: URL, resources: [NetworkResource]) async -> SecurityAnalysisResult {
-        guard aiBackend.activeBackend != nil else {
-            return performBasicSecurityCheck(url: url, resources: resources)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
+        let basic = performBasicSecurityCheck(url: url, resources: resources)
+        let floor = basic.riskLevel
         let context = buildSecurityContext(url: url, resources: resources)
 
         let prompt = """
@@ -155,26 +177,14 @@ class AIURLAnalyzer: ObservableObject {
         }
         """
 
-        do {
-            let response = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a cybersecurity expert analyzing URLs for threats.",
-                temperature: 0.3,
-                maxTokens: 500
-            )
-
-            // Parse JSON response
-            if let result = parseSecurityResponse(response) {
-                await MainActor.run {
-                    self.securityAnalysis = result
-                }
-                return result
-            }
-        } catch {
-            lastError = error.localizedDescription
-        }
-
-        return performBasicSecurityCheck(url: url, resources: resources)
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a cybersecurity expert analyzing URLs for threats. Reply with JSON only.",
+                                    temperature: 0.3, maxTokens: 500, format: .json)
+        let result = await run("security", request,
+                               validate: { try URLAnalysisAIValidators.security($0, floor: floor) },
+                               fallback: basic)
+        securityAnalysis = result
+        return result
     }
 
     private func buildSecurityContext(url: URL, resources: [NetworkResource]) -> String {
@@ -192,7 +202,7 @@ class AIURLAnalyzer: ObservableObject {
         """
     }
 
-    private func performBasicSecurityCheck(url: URL, resources: [NetworkResource]) -> SecurityAnalysisResult {
+    func performBasicSecurityCheck(url: URL, resources: [NetworkResource]) -> SecurityAnalysisResult {
         var threats: [String] = []
         var riskLevel: SecurityRiskLevel = .safe
 
@@ -232,13 +242,6 @@ class AIURLAnalyzer: ObservableObject {
 
     /// Generate detailed optimization advice with implementation examples
     func generateOptimizationCoaching(suggestions: [OptimizationSuggestion], resources: [NetworkResource]) async -> [AIOptimizationAdvice] {
-        guard aiBackend.activeBackend != nil else {
-            return generateBasicOptimizationAdvice(suggestions: suggestions)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
         var aiAdvice: [AIOptimizationAdvice] = []
 
         // Process top 5 suggestions
@@ -265,52 +268,37 @@ class AIURLAnalyzer: ObservableObject {
             IMPACT: [expected improvement]
             """
 
-            do {
-                let advice = try await aiBackend.generate(
-                    prompt: prompt,
-                    systemPrompt: "You are a web performance optimization expert. Provide practical, implementable advice.",
-                    temperature: 0.4,
-                    maxTokens: 400
-                )
+            let request = NovaAIRequest(prompt: prompt,
+                                        system: "You are a web performance optimization expert. Provide practical, implementable advice.",
+                                        temperature: 0.4, maxTokens: 400)
+            let advice = await run("coach", request, validate: { try URLAnalysisAIValidators.advice($0) },
+                                   fallback: Self.basicAdvice(for: suggestion))
+            aiAdvice.append(AIOptimizationAdvice(
+                suggestion: suggestion,
+                aiAdvice: advice,
+                implementationExample: extractCodeExample(from: advice)
+            ))
+            if stopAfterFallback("coach") { break }
+        }
 
-                aiAdvice.append(AIOptimizationAdvice(
-                    suggestion: suggestion,
-                    aiAdvice: advice,
-                    implementationExample: extractCodeExample(from: advice)
-                ))
-            } catch {
-                continue
+        if aiAdvice.count < min(5, suggestions.count) {
+            aiAdvice += suggestions.prefix(5).dropFirst(aiAdvice.count).map {
+                AIOptimizationAdvice(suggestion: $0, aiAdvice: Self.basicAdvice(for: $0), implementationExample: nil)
             }
         }
-
-        await MainActor.run {
-            self.optimizationAdvice = aiAdvice
-        }
-
+        optimizationAdvice = aiAdvice
         return aiAdvice
     }
 
-    private func generateBasicOptimizationAdvice(suggestions: [OptimizationSuggestion]) -> [AIOptimizationAdvice] {
-        return suggestions.prefix(5).map { suggestion in
-            let basicAdvice = "Priority: \(suggestion.impact.rawValue) impact, \(suggestion.difficulty.rawValue) difficulty. \(suggestion.description)"
-            return AIOptimizationAdvice(
-                suggestion: suggestion,
-                aiAdvice: basicAdvice,
-                implementationExample: nil
-            )
-        }
+    static func basicAdvice(for suggestion: OptimizationSuggestion) -> String {
+        "Priority: \(suggestion.impact.rawValue) impact, \(suggestion.difficulty.rawValue) difficulty. \(suggestion.description)"
     }
 
     // MARK: - Feature 4: AI Technology Stack Detection
 
     /// Detect frameworks, CMS, and libraries from network traffic
     func detectTechnologyStack(url: URL, resources: [NetworkResource]) async -> TechnologyStack {
-        guard aiBackend.activeBackend != nil else {
-            return performBasicTechDetection(resources: resources)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
+        let basic = performBasicTechDetection(resources: resources)
 
         // Collect clues from URLs, headers, and patterns
         let clues = extractTechnologyClues(from: resources)
@@ -335,25 +323,12 @@ class AIURLAnalyzer: ObservableObject {
         }
         """
 
-        do {
-            let response = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a web technology expert. Identify technologies from network patterns.",
-                temperature: 0.2,
-                maxTokens: 400
-            )
-
-            if let stack = parseTechnologyStack(response) {
-                await MainActor.run {
-                    self.technologyStack = stack
-                }
-                return stack
-            }
-        } catch {
-            lastError = error.localizedDescription
-        }
-
-        return performBasicTechDetection(resources: resources)
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a web technology expert. Identify technologies from network patterns. Reply with JSON only.",
+                                    temperature: 0.2, maxTokens: 400, format: .json)
+        let stack = await run("techstack", request, validate: { try URLAnalysisAIValidators.techStack($0) }, fallback: basic)
+        technologyStack = stack
+        return stack
     }
 
     private func extractTechnologyClues(from resources: [NetworkResource]) -> String {
@@ -398,7 +373,7 @@ class AIURLAnalyzer: ObservableObject {
         return clues.isEmpty ? "No obvious technology indicators found" : clues.prefix(20).joined(separator: "\n")
     }
 
-    private func performBasicTechDetection(resources: [NetworkResource]) -> TechnologyStack {
+    func performBasicTechDetection(resources: [NetworkResource]) -> TechnologyStack {
         var frontend: String? = nil
         var analytics: [String] = []
         var cdn: String? = nil
@@ -436,13 +411,7 @@ class AIURLAnalyzer: ObservableObject {
 
     /// Analyze trackers and privacy implications
     func analyzePrivacyImpact(resources: [NetworkResource]) async -> PrivacyAnalysis {
-        guard aiBackend.activeBackend != nil else {
-            return performBasicPrivacyAnalysis(resources: resources)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
+        let basic = performBasicPrivacyAnalysis(resources: resources)
         let trackers = identifyTrackers(from: resources)
         let thirdPartyDomains = Set(resources.compactMap { URL(string: $0.url)?.host }).count
 
@@ -471,25 +440,14 @@ class AIURLAnalyzer: ObservableObject {
         }
         """
 
-        do {
-            let response = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a privacy expert. Explain tracker implications clearly.",
-                temperature: 0.3,
-                maxTokens: 500
-            )
-
-            if let analysis = parsePrivacyAnalysis(response) {
-                await MainActor.run {
-                    self.privacyAnalysis = analysis
-                }
-                return analysis
-            }
-        } catch {
-            lastError = error.localizedDescription
-        }
-
-        return performBasicPrivacyAnalysis(resources: resources)
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a privacy expert. Explain tracker implications clearly. Reply with JSON only.",
+                                    temperature: 0.3, maxTokens: 500, format: .json)
+        let analysis = await run("privacy", request,
+                                 validate: { try URLAnalysisAIValidators.privacy($0, trackers: trackers) },
+                                 fallback: basic)
+        privacyAnalysis = analysis
+        return analysis
     }
 
     private func identifyTrackers(from resources: [NetworkResource]) -> [String] {
@@ -519,7 +477,7 @@ class AIURLAnalyzer: ObservableObject {
         return trackers
     }
 
-    private func performBasicPrivacyAnalysis(resources: [NetworkResource]) -> PrivacyAnalysis {
+    func performBasicPrivacyAnalysis(resources: [NetworkResource]) -> PrivacyAnalysis {
         let trackers = identifyTrackers(from: resources)
         let trackerCount = trackers.count
 
@@ -559,13 +517,6 @@ class AIURLAnalyzer: ObservableObject {
 
     /// Answer questions about the loaded URL and its performance
     func askQuestion(_ question: String, context: URLAnalysisContext) async -> String {
-        guard aiBackend.activeBackend != nil else {
-            return "AI backend not available. Please configure Ollama, TinyLLM (by Jason Cox), or MLX in Settings."
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
         let contextData = buildQAContext(context: context)
 
         let prompt = """
@@ -579,18 +530,24 @@ class AIURLAnalyzer: ObservableObject {
         Provide a clear, specific answer based on the data above.
         """
 
-        do {
-            let answer = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a web performance expert answering questions about this page's analysis.",
-                temperature: 0.5,
-                maxTokens: 400
-            )
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a web performance expert answering questions about this page's analysis.",
+                                    temperature: 0.5, maxTokens: 400)
+        let answer = await run("qa", request, validate: { try URLAnalysisAIValidators.answer($0) }, fallback: "")
+        if !answer.isEmpty { return answer }
+        return Self.builtInAnswer(source: sources["qa"], contextData: contextData)
+    }
 
-            return answer
-        } catch {
-            return "Error generating answer: \(error.localizedDescription)"
+    /// The Q&A fallback: says why AI didn't answer and shows the measured data instead.
+    static func builtInAnswer(source: NovaAISource?, contextData: String) -> String {
+        let why: String
+        switch source {
+        case .fallback(.disabled)?: why = "AI is turned off (Settings > AI)."
+        case .fallback(.unavailable(let reason))?: why = "AI is unavailable: \(reason)"
+        case .fallback(.validationFailed(let reason))?: why = "The AI reply was rejected: \(reason)"
+        default: why = "AI is unavailable."
         }
+        return "\(why)\n\nBuilt-in analysis of this page:\n\(contextData)"
     }
 
     private func buildQAContext(context: URLAnalysisContext) -> String {
@@ -621,60 +578,6 @@ class AIURLAnalyzer: ObservableObject {
         return nil
     }
 
-    private func parseSecurityResponse(_ response: String) -> SecurityAnalysisResult? {
-        // Try to parse JSON from response
-        guard let jsonData = response.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
-        let riskLevelStr = json["riskLevel"] as? String ?? "low"
-        let riskLevel = SecurityRiskLevel(rawValue: riskLevelStr) ?? .low
-        let threats = json["threats"] as? [String] ?? []
-        let explanation = json["explanation"] as? String ?? ""
-        let recommendations = json["recommendations"] as? [String] ?? []
-
-        return SecurityAnalysisResult(
-            riskLevel: riskLevel,
-            threats: threats,
-            explanation: explanation,
-            recommendations: recommendations
-        )
-    }
-
-    private func parseTechnologyStack(_ response: String) -> TechnologyStack? {
-        guard let jsonData = response.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
-        return TechnologyStack(
-            frontend: json["frontend"] as? String,
-            backend: json["backend"] as? String,
-            cms: json["cms"] as? String,
-            analytics: json["analytics"] as? [String] ?? [],
-            cdn: json["cdn"] as? String,
-            libraries: json["libraries"] as? [String] ?? [],
-            hosting: json["hosting"] as? String
-        )
-    }
-
-    private func parsePrivacyAnalysis(_ response: String) -> PrivacyAnalysis? {
-        guard let jsonData = response.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
-        return PrivacyAnalysis(
-            privacyScore: json["privacyScore"] as? Int ?? 50,
-            trackerCount: 0,
-            trackers: [],
-            dataCollected: json["dataCollected"] as? [String] ?? [],
-            risks: json["risks"] as? [String] ?? [],
-            recommendations: json["recommendations"] as? [String] ?? []
-        )
-    }
-
     private func formatBytes(_ bytes: Int64) -> String {
         let formatter = ByteCountFormatter()
         formatter.countStyle = .file
@@ -684,22 +587,16 @@ class AIURLAnalyzer: ObservableObject {
     // MARK: - Feature 7: AI Code Generation for Fixes
 
     /// Generate production-ready code to fix performance issues
+    @discardableResult
     func generateCodeFixes(
         suggestions: [OptimizationSuggestion],
         techStack: TechnologyStack?,
         resources: [NetworkResource]
     ) async -> [CodeFix] {
-        guard aiBackend.activeBackend != nil else {
-            return generateGenericCodeFixes(suggestions: suggestions)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
         var fixes: [CodeFix] = []
 
         // Generate code for top 5 suggestions
-        for suggestion in suggestions.prefix(5) {
+        for (index, suggestion) in suggestions.prefix(5).enumerated() {
             let framework = techStack?.frontend ?? "vanilla JavaScript"
 
             let prompt = """
@@ -726,94 +623,58 @@ class AIURLAnalyzer: ObservableObject {
             }
             """
 
-            do {
-                let response = try await aiBackend.generate(
-                    prompt: prompt,
-                    systemPrompt: "You are an expert web performance engineer who writes production-ready optimization code. Always return valid JSON.",
-                    temperature: 0.3,
-                    maxTokens: 800
-                )
-
-                if let fix = parseCodeFix(from: response, suggestion: suggestion) {
-                    fixes.append(fix)
-                }
-            } catch {
-                lastError = error.localizedDescription
+            let title = suggestion.title
+            let request = NovaAIRequest(prompt: prompt,
+                                        system: "You are an expert web performance engineer who writes production-ready optimization code. Always return valid JSON.",
+                                        temperature: 0.3, maxTokens: 800, format: .json)
+            let fix: CodeFix? = await run("codefix", request,
+                                          validate: { try URLAnalysisAIValidators.codeFix($0, defaultTitle: title) },
+                                          fallback: Self.genericCodeFix(for: suggestion))
+            if let fix { fixes.append(fix) }
+            if stopAfterFallback("codefix") {
+                fixes += suggestions.prefix(5).dropFirst(index + 1).compactMap(Self.genericCodeFix(for:))
+                break
             }
         }
 
-        await MainActor.run {
-            self.generatedCode = fixes
-        }
-
+        generatedCode = fixes
         return fixes
     }
 
-    private func parseCodeFix(from response: String, suggestion: OptimizationSuggestion) -> CodeFix? {
-        // Try to parse JSON response
-        let jsonString = response.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        guard let jsonData = jsonString.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
+    /// Built-in code template for a suggestion (nil when there is no generic fix for its category).
+    static func genericCodeFix(for suggestion: OptimizationSuggestion) -> CodeFix? {
+        guard suggestion.category == .images else { return nil }
         return CodeFix(
-            title: json["title"] as? String ?? suggestion.title,
-            description: json["description"] as? String ?? "",
-            code: json["code"] as? String ?? "",
-            language: json["language"] as? String ?? "javascript",
-            framework: json["framework"] as? String,
-            estimatedImpact: json["estimatedImpact"] as? String ?? ""
+            title: "Lazy Load Images",
+            description: "Defer loading of below-the-fold images to improve initial page load",
+            code: """
+            // Lazy load images
+            document.querySelectorAll('img[data-src]').forEach(img => {
+              const observer = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting) {
+                  img.src = img.dataset.src;
+                  observer.disconnect();
+                }
+              });
+              observer.observe(img);
+            });
+            """,
+            language: "javascript",
+            framework: nil,
+            estimatedImpact: "Reduce initial load by ~30%"
         )
-    }
-
-    private func generateGenericCodeFixes(suggestions: [OptimizationSuggestion]) -> [CodeFix] {
-        // Fallback: Generate generic code templates
-        var fixes: [CodeFix] = []
-
-        for suggestion in suggestions.prefix(5) {
-            if suggestion.category == .images {
-                fixes.append(CodeFix(
-                    title: "Lazy Load Images",
-                    description: "Defer loading of below-the-fold images to improve initial page load",
-                    code: """
-                    // Lazy load images
-                    document.querySelectorAll('img[data-src]').forEach(img => {
-                      const observer = new IntersectionObserver(entries => {
-                        if (entries[0].isIntersecting) {
-                          img.src = img.dataset.src;
-                          observer.disconnect();
-                        }
-                      });
-                      observer.observe(img);
-                    });
-                    """,
-                    language: "javascript",
-                    framework: nil,
-                    estimatedImpact: "Reduce initial load by ~30%"
-                ))
-            }
-        }
-
-        return fixes
     }
 
     // MARK: - Feature 8: Performance Time Machine
 
     /// Simulate performance impact of hypothetical changes
+    @discardableResult
     func simulateWhatIf(
         scenario: WhatIfScenarioType,
         currentSession: NetworkMonitor,
         historicalData: [PersistentSession]
     ) async -> WhatIfScenario {
-        guard aiBackend.activeBackend != nil else {
-            return simulateBasicWhatIf(scenario: scenario, session: currentSession)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
+        let basic = simulateBasicWhatIf(scenario: scenario, session: currentSession)
         let scenarioDescription = describeScenario(scenario, session: currentSession)
         let affectedResources = identifyAffectedResources(scenario: scenario, session: currentSession)
 
@@ -851,25 +712,14 @@ class AIURLAnalyzer: ObservableObject {
         }
         """
 
-        do {
-            let response = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a web performance expert who accurately predicts optimization impact. Always return valid JSON.",
-                temperature: 0.4,
-                maxTokens: 500
-            )
-
-            if let scenario = parseWhatIfScenario(from: response, originalScenario: scenarioDescription) {
-                await MainActor.run {
-                    self.whatIfResults.append(scenario)
-                }
-                return scenario
-            }
-        } catch {
-            lastError = error.localizedDescription
-        }
-
-        return simulateBasicWhatIf(scenario: scenario, session: currentSession)
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a web performance expert who accurately predicts optimization impact. Always return valid JSON.",
+                                    temperature: 0.4, maxTokens: 500, format: .json)
+        let result = await run("whatif", request,
+                               validate: { try URLAnalysisAIValidators.whatIf($0, scenario: scenarioDescription) },
+                               fallback: basic)
+        whatIfResults.append(result)
+        return result
     }
 
     private func describeScenario(_ scenario: WhatIfScenarioType, session: NetworkMonitor) -> String {
@@ -906,31 +756,14 @@ class AIURLAnalyzer: ObservableObject {
         }
     }
 
-    private func parseWhatIfScenario(from response: String, originalScenario: String) -> WhatIfScenario? {
-        guard let jsonData = response.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
-        return WhatIfScenario(
-            scenario: originalScenario,
-            predictedScore: json["predictedScore"] as? Double ?? 0,
-            predictedLCP: json["predictedLCP"] as? String ?? "N/A",
-            sizeSavings: json["sizeSavings"] as? String ?? "Unknown",
-            timeSavings: json["timeSavings"] as? String ?? "Unknown",
-            confidence: json["confidence"] as? String ?? "Low",
-            explanation: json["explanation"] as? String ?? ""
-        )
-    }
-
-    private func simulateBasicWhatIf(scenario: WhatIfScenarioType, session: NetworkMonitor) -> WhatIfScenario {
+    func simulateBasicWhatIf(scenario: WhatIfScenarioType, session: NetworkMonitor) -> WhatIfScenario {
         let affected = identifyAffectedResources(scenario: scenario, session: session)
         let sizeSavings = affected.reduce(0) { $0 + $1.responseSize }
         let estimatedTimeSavings = Double(sizeSavings) / 1_000_000.0 * 0.5 // Rough estimate
 
         return WhatIfScenario(
             scenario: describeScenario(scenario, session: session),
-            predictedScore: Double(session.performanceScore?.overall ?? 50) + 10,
+            predictedScore: min(100, Double(session.performanceScore?.overall ?? 50) + 10),
             predictedLCP: "Estimated improvement",
             sizeSavings: formatBytes(sizeSavings),
             timeSavings: String(format: "~%.1fs", estimatedTimeSavings),
@@ -942,18 +775,17 @@ class AIURLAnalyzer: ObservableObject {
     // MARK: - Feature 9: AI Trend Analysis & Predictions
 
     /// Analyze performance trends and make predictions
+    @discardableResult
     func analyzeTrends(sessions: [PersistentSession], forURL: String) async -> TrendAnalysisResult {
-        guard aiBackend.activeBackend != nil, sessions.count >= 5 else {
-            return generateBasicTrendAnalysis(sessions: sessions)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
+        let basic = generateBasicTrendAnalysis(sessions: sessions)
         // Calculate statistics
         let scores = sessions.compactMap { $0.overallScore }
         let loadTimes = sessions.map { $0.duration }
-        let sizes = sessions.map { $0.totalSize }
+        guard sessions.count >= 5, scores.count >= 2, let firstSession = sessions.first, let lastSession = sessions.last else {
+            sources["trends"] = .fallback(.unavailable("needs at least 5 sessions"))
+            trendAnalysis = basic
+            return basic
+        }
 
         let scoreMean = scores.isEmpty ? 0 : scores.reduce(0, +) / Double(scores.count)
         let scoreStd = calculateStdDev(scores)
@@ -961,7 +793,7 @@ class AIURLAnalyzer: ObservableObject {
         let prompt = """
         Analyze these performance trends and make predictions:
 
-        Historical Data (\(sessions.count) sessions over \(daysBetween(sessions.first!.timestamp, sessions.last!.timestamp)) days):
+        Historical Data (\(sessions.count) sessions over \(daysBetween(firstSession.timestamp, lastSession.timestamp)) days):
 
         \(sessions.prefix(20).map { session in
             "- Date: \(session.formattedTimestamp), Score: \(session.overallScore ?? 0), Load Time: \(String(format: "%.2f", session.duration))s, Size: \(formatBytes(session.totalSize))"
@@ -970,7 +802,7 @@ class AIURLAnalyzer: ObservableObject {
         Statistical Summary:
         - Score: mean=\(String(format: "%.1f", scoreMean)), std=\(String(format: "%.1f", scoreStd))
         - Load Time: mean=\(String(format: "%.2f", loadTimes.reduce(0, +) / Double(loadTimes.count)))s
-        - Trend: \(scores.first! < scores.last! ? "Improving" : "Degrading")
+        - Trend: \(scores[0] < scores[scores.count - 1] ? "Improving" : "Degrading")
 
         Tasks:
         1. Identify overall performance trend
@@ -995,83 +827,26 @@ class AIURLAnalyzer: ObservableObject {
         }
         """
 
-        do {
-            let response = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a data scientist specializing in web performance forecasting. Always return valid JSON.",
-                temperature: 0.3,
-                maxTokens: 800
-            )
-
-            if let result = parseTrendAnalysis(from: response) {
-                await MainActor.run {
-                    self.trendAnalysis = result
-                }
-                return result
-            }
-        } catch {
-            lastError = error.localizedDescription
-        }
-
-        return generateBasicTrendAnalysis(sessions: sessions)
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a data scientist specializing in web performance forecasting. Always return valid JSON.",
+                                    temperature: 0.3, maxTokens: 800, format: .json)
+        let result = await run("trends", request, validate: { try URLAnalysisAIValidators.trend($0) }, fallback: basic)
+        trendAnalysis = result
+        return result
     }
 
-    private func parseTrendAnalysis(from response: String) -> TrendAnalysisResult? {
-        guard let jsonData = response.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
-        let predictions = (json["predictions"] as? [[String: Any]])?.compactMap { dict -> TrendAnalysisResult.Prediction in
-            TrendAnalysisResult.Prediction(
-                metric: dict["metric"] as? String ?? "",
-                forecast: dict["forecast"] as? String ?? "",
-                confidence: dict["confidence"] as? String ?? "Low",
-                trend: dict["trend"] as? String ?? "Stable"
-            )
-        } ?? []
-
-        let anomalies = (json["anomalies"] as? [[String: Any]])?.compactMap { dict -> TrendAnalysisResult.Anomaly? in
-            let formatter = ISO8601DateFormatter()
-            guard let dateString = dict["date"] as? String,
-                  let date = formatter.date(from: dateString) else {
-                return nil
-            }
-            return TrendAnalysisResult.Anomaly(
-                date: date,
-                metric: dict["metric"] as? String ?? "",
-                deviation: dict["deviation"] as? String ?? "",
-                possibleCauses: dict["possibleCauses"] as? [String] ?? []
-            )
-        } ?? []
-
-        let patterns = (json["patterns"] as? [[String: Any]])?.compactMap { dict -> TrendAnalysisResult.Pattern in
-            TrendAnalysisResult.Pattern(
-                description: dict["description"] as? String ?? "",
-                frequency: dict["frequency"] as? String ?? "",
-                impact: dict["impact"] as? String ?? ""
-            )
-        } ?? []
-
-        return TrendAnalysisResult(
-            summary: json["summary"] as? String ?? "",
-            predictions: predictions,
-            anomalies: anomalies,
-            patterns: patterns,
-            recommendation: json["recommendation"] as? String ?? ""
-        )
-    }
-
-    private func generateBasicTrendAnalysis(sessions: [PersistentSession]) -> TrendAnalysisResult {
+    func generateBasicTrendAnalysis(sessions: [PersistentSession]) -> TrendAnalysisResult {
         let scores = sessions.compactMap { $0.overallScore }
-        let trend = scores.count >= 2 && scores.first! < scores.last! ? "Improving" : "Stable"
+        let trend = scores.count >= 2 && scores[0] < scores[scores.count - 1] ? "Improving" : "Stable"
 
         return TrendAnalysisResult(
             summary: "Performance is \(trend.lowercased()) over the last \(sessions.count) sessions.",
             predictions: [],
             anomalies: [],
             patterns: [],
-            recommendation: "Need at least 5 sessions for detailed trend analysis. AI backend unavailable."
+            recommendation: sessions.count < 5
+                ? "Need at least 5 sessions for detailed trend analysis."
+                : "Built-in trend summary (AI analysis unavailable)."
         )
     }
 
@@ -1091,18 +866,12 @@ class AIURLAnalyzer: ObservableObject {
     // MARK: - Feature 10: AI Regression Detection & Root Cause
 
     /// Detect performance regressions and identify root causes
+    @discardableResult
     func detectRegression(
         currentSession: NetworkMonitor,
         historicalSessions: [PersistentSession],
         baseline: PersistentSession? = nil
     ) async -> RegressionReport {
-        guard aiBackend.activeBackend != nil else {
-            return generateBasicRegression(current: currentSession, baseline: baseline)
-        }
-
-        isAnalyzing = true
-        defer { isAnalyzing = false }
-
         // Calculate baseline (median of last 30 days or use provided)
         let baselineSession: PersistentSession
         if let provided = baseline {
@@ -1110,8 +879,15 @@ class AIURLAnalyzer: ObservableObject {
         } else {
             let recent = historicalSessions.prefix(30)
             let sortedByScore = recent.sorted { ($0.overallScore ?? 0) < ($1.overallScore ?? 0) }
+            guard !sortedByScore.isEmpty else {
+                let basic = generateBasicRegression(current: currentSession, baseline: nil)
+                sources["regression"] = .fallback(.unavailable("no baseline"))
+                regressionReport = basic
+                return basic
+            }
             baselineSession = sortedByScore[sortedByScore.count / 2]
         }
+        let basic = generateBasicRegression(current: currentSession, baseline: baselineSession)
 
         let currentScore = currentSession.performanceScore?.overall ?? 0
         let baselineScore = baselineSession.overallScore ?? 0
@@ -1152,73 +928,15 @@ class AIURLAnalyzer: ObservableObject {
         }
         """
 
-        do {
-            let response = try await aiBackend.generate(
-                prompt: prompt,
-                systemPrompt: "You are a senior performance engineer who debugs regressions. Always return valid JSON.",
-                temperature: 0.3,
-                maxTokens: 700
-            )
-
-            if let report = parseRegressionReport(from: response) {
-                await MainActor.run {
-                    self.regressionReport = report
-                }
-                return report
-            }
-        } catch {
-            lastError = error.localizedDescription
-        }
-
-        return generateBasicRegression(current: currentSession, baseline: baseline)
+        let request = NovaAIRequest(prompt: prompt,
+                                    system: "You are a senior performance engineer who debugs regressions. Always return valid JSON.",
+                                    temperature: 0.3, maxTokens: 700, format: .json)
+        let report = await run("regression", request, validate: { try URLAnalysisAIValidators.regression($0) }, fallback: basic)
+        regressionReport = report
+        return report
     }
 
-    private func parseRegressionReport(from response: String) -> RegressionReport? {
-        guard let jsonData = response.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            return nil
-        }
-
-        let hasRegression = json["hasRegression"] as? Bool ?? false
-        let severityString = json["severity"] as? String ?? "none"
-        let severity: RegressionReport.Severity = {
-            switch severityString {
-            case "critical": return .critical
-            case "warning": return .warning
-            case "minor": return .minor
-            default: return .none
-            }
-        }()
-
-        let metrics = (json["affectedMetrics"] as? [[String: Any]])?.map { dict -> RegressionReport.MetricRegression in
-            RegressionReport.MetricRegression(
-                metric: dict["metric"] as? String ?? "",
-                baseline: dict["baseline"] as? String ?? "",
-                current: dict["current"] as? String ?? "",
-                change: dict["change"] as? String ?? "",
-                severity: dict["severity"] as? String ?? ""
-            )
-        } ?? []
-
-        let causes = (json["rootCauses"] as? [[String: Any]])?.map { dict -> RegressionReport.RootCause in
-            RegressionReport.RootCause(
-                cause: dict["cause"] as? String ?? "",
-                evidence: dict["evidence"] as? [String] ?? [],
-                confidence: dict["confidence"] as? String ?? "Low"
-            )
-        } ?? []
-
-        return RegressionReport(
-            hasRegression: hasRegression,
-            severity: severity,
-            affectedMetrics: metrics,
-            rootCauses: causes,
-            recommendations: json["recommendations"] as? [String] ?? [],
-            timelineEstimate: json["timelineEstimate"] as? String
-        )
-    }
-
-    private func generateBasicRegression(current: NetworkMonitor, baseline: PersistentSession?) -> RegressionReport {
+    func generateBasicRegression(current: NetworkMonitor, baseline: PersistentSession?) -> RegressionReport {
         guard let baseline = baseline else {
             return RegressionReport(
                 hasRegression: false,
@@ -1249,7 +967,7 @@ class AIURLAnalyzer: ObservableObject {
                 )
             ],
             rootCauses: [],
-            recommendations: ["AI analysis unavailable - enable AI backend for detailed root cause analysis"],
+            recommendations: ["Built-in comparison (AI analysis unavailable) - enable AI in Settings > AI for root cause analysis"],
             timelineEstimate: nil
         )
     }

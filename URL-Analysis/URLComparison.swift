@@ -205,7 +205,7 @@ struct ComparisonDetailView: View {
                     ComparisonRow(title: "Requests", values: sessions.map { "\($0.monitor.resources.count)" })
                     ComparisonRow(title: "Total Size", values: sessions.map { formatSize($0.monitor.totalSize) })
 
-                    if let firstScore = sessions.first?.monitor.performanceScore {
+                    if sessions.first?.monitor.performanceScore != nil {
                         ComparisonRow(title: "Score", values: sessions.map {
                             $0.monitor.performanceScore.map { "\($0.overall)" } ?? "-"
                         })

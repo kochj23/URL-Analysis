@@ -77,7 +77,6 @@ class SessionHistoryManager: ObservableObject {
         var loadedSessions: [PersistentSession] = []
 
         for metadata in sessionIndex.sessions {
-            let pattern = "*-\(metadata.id.uuidString).json"
             let files = try FileManager.default.contentsOfDirectory(at: storageURL, includingPropertiesForKeys: nil)
                 .filter { $0.lastPathComponent.contains(metadata.id.uuidString) }
 

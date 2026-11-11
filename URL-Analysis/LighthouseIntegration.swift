@@ -77,6 +77,7 @@ class LighthouseManager: ObservableObject {
     }
 
     /// Run Lighthouse analysis
+    @discardableResult
     func runLighthouse(
         url: String,
         device: DeviceProfile? = nil,

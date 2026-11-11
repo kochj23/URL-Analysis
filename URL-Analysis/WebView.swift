@@ -116,8 +116,6 @@ struct WebView: NSViewRepresentable {
                 }
 
                 // Extract timing data
-                let startTime = data["startTime"] as? Double ?? 0
-                let duration = data["duration"] as? Double ?? 0
                 let transferSize = data["transferSize"] as? Int64 ?? 0
                 let domainLookupStart = data["domainLookupStart"] as? Double ?? 0
                 let domainLookupEnd = data["domainLookupEnd"] as? Double ?? 0

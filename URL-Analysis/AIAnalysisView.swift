@@ -6,10 +6,12 @@
 //  Author: Jordan Koch
 //  Date: 2025-01-17
 //
-//  Features powered by: Ollama, MLX Toolkit, and TinyLLM by Jason Cox
+//  Features powered by NovaAIKit (Ollama, MLX, TinyLLM by Jason Cox, TinyChat, OpenWebUI, Nova Gateway,
+//  OpenRouter, OpenAI). Every feature falls back to the built-in analysis when AI is off or unavailable.
 //
 
 import SwiftUI
+import NovaAIKit
 
 struct AIAnalysisView: View {
     @ObservedObject var analyzer: AIURLAnalyzer
@@ -78,12 +80,8 @@ struct AIAnalysisView: View {
                     .font(.headline)
 
                 HStack(spacing: 8) {
-                    Circle()
-                        .fill(Color.green)
-                        .frame(width: 8, height: 8)
-                    Text("AI: \(AIBackendManager.shared.activeBackend.rawValue)")
+                    NovaAIStatusIndicator(ai: AppAI.shared)
                         .font(.caption)
-                        .foregroundColor(.green)
 
                     if analyzer.isAnalyzing {
                         ProgressView()
@@ -97,8 +95,8 @@ struct AIAnalysisView: View {
 
             Spacer()
 
-            Button("⚙️ AI Settings") {
-                openAISettings()
+            SettingsLink {
+                Text("⚙️ AI Settings")
             }
             .buttonStyle(.borderless)
 
@@ -114,9 +112,11 @@ struct AIAnalysisView: View {
                     .foregroundColor(.orange)
             }
 
-            Text("Using: \(AIBackendManager.shared.activeBackend.rawValue)")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            if let source = analyzer.lastSource {
+                Text("Last result: \(source.label)")
+                    .font(.caption)
+                    .foregroundColor(source.isAI ? .green : .secondary)
+            }
         }
         .padding()
         .background(Color(nsColor: .controlBackgroundColor))
@@ -130,10 +130,7 @@ struct AIAnalysisView: View {
                 .font(.title2)
                 .bold()
 
-            // Debug info
-            Text("Insights length: \(analyzer.performanceInsights.count) chars")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            sourceBadge("insights")
 
             if analyzer.isAnalyzing {
                 VStack {
@@ -181,6 +178,7 @@ struct AIAnalysisView: View {
             Text("🔒 Security Analysis")
                 .font(.title2)
                 .bold()
+            sourceBadge("security")
 
             if let security = analyzer.securityAnalysis {
                 VStack(alignment: .leading, spacing: 12) {
@@ -262,6 +260,7 @@ struct AIAnalysisView: View {
             Text("🚀 AI Optimization Coach")
                 .font(.title2)
                 .bold()
+            sourceBadge("coach")
 
             if !analyzer.optimizationAdvice.isEmpty {
                 ForEach(analyzer.optimizationAdvice) { advice in
@@ -335,6 +334,7 @@ struct AIAnalysisView: View {
             Text("🔧 Technology Stack")
                 .font(.title2)
                 .bold()
+            sourceBadge("techstack")
 
             if let stack = analyzer.technologyStack {
                 VStack(alignment: .leading, spacing: 12) {
@@ -381,6 +381,7 @@ struct AIAnalysisView: View {
             Text("🛡️ Privacy Impact")
                 .font(.title2)
                 .bold()
+            sourceBadge("privacy")
 
             if let privacy = analyzer.privacyAnalysis {
                 VStack(alignment: .leading, spacing: 12) {
@@ -492,6 +493,7 @@ struct AIAnalysisView: View {
             Text("💬 Ask AI About This Page")
                 .font(.title2)
                 .bold()
+            sourceBadge("qa")
 
             // Example questions
             if answer.isEmpty && !isAsking {
@@ -563,6 +565,16 @@ struct AIAnalysisView: View {
     }
 
     // MARK: - Helper Views
+
+    /// Where this feature's current result came from ("AI · Ollama (model)" or "Built-in").
+    @ViewBuilder
+    private func sourceBadge(_ feature: String) -> some View {
+        if let source = analyzer.sources[feature] {
+            Label(source.label, systemImage: source.isAI ? "sparkles" : "gearshape")
+                .font(.caption)
+                .foregroundColor(source.isAI ? .green : .secondary)
+        }
+    }
 
     private func techItem(label: String, value: String, icon: String) -> some View {
         HStack {
@@ -659,19 +671,6 @@ struct AIAnalysisView: View {
 
     // MARK: - Actions
 
-    private func openAISettings() {
-        let settingsView = AIBackendSelectionView()
-        let hostingController = NSHostingController(rootView: settingsView)
-        hostingController.title = "AI Backend Settings"
-
-        let window = NSWindow(contentViewController: hostingController)
-        window.title = "AI Backend Settings"
-        window.styleMask = [.titled, .closable, .resizable]
-        window.setContentSize(NSSize(width: 600, height: 700))
-        window.center()
-        window.makeKeyAndOrderFront(nil)
-    }
-
     private func runFullAnalysis() {
         guard let url = URL(string: currentURL) else {
             print("❌ AI Analysis: Invalid URL: \(currentURL)")
@@ -680,7 +679,7 @@ struct AIAnalysisView: View {
 
         print("🤖 AI Analysis: Starting full analysis for \(url.absoluteString)")
         print("🤖 Resources loaded: \(monitor.resources.count)")
-        print("🤖 Backend: \(AIBackendManager.shared.activeBackend.rawValue ?? "None")")
+        print("🤖 AI: \(AppAI.shared.status.label)")
 
         Task {
             print("🤖 Running parallel AI analyses...")

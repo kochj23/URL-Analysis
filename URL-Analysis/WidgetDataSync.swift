@@ -117,7 +117,7 @@ class WidgetDataSyncManager: ObservableObject {
         let entries = sessions.prefix(10).map { createWidgetEntry(from: $0) }
 
         let stats = calculateStatistics(from: Array(entries))
-        let backendStatus = getCurrentBackendStatus()
+        let backendStatus = currentBackendStatus()
 
         let data = WidgetAnalysisData(
             lastUpdated: Date(),
@@ -132,7 +132,7 @@ class WidgetDataSyncManager: ObservableObject {
 
     /// Update backend status in widget
     func syncBackendStatus() {
-        let status = getCurrentBackendStatus()
+        let status = currentBackendStatus()
 
         let currentData = loadWidgetData() ?? createEmptyData()
 
@@ -212,12 +212,13 @@ class WidgetDataSyncManager: ObservableObject {
         )
     }
 
-    private func getCurrentBackendStatus() -> WidgetAnalysisData.BackendStatus {
-        let manager = AIBackendManager.shared
+    func currentBackendStatus() -> WidgetAnalysisData.BackendStatus {
+        let ai = AppAI.shared
+        let status = ai.status
         return WidgetAnalysisData.BackendStatus(
-            isAvailable: true,
-            activeBackend: manager.activeBackend.rawValue,
-            lastChecked: Date()
+            isAvailable: ai.isEnabled && status.isReachable,
+            activeBackend: ai.isEnabled ? (status.activeBackend?.displayName ?? "Built-in") : "AI off",
+            lastChecked: status.updatedAt ?? Date()
         )
     }
 
@@ -225,7 +226,7 @@ class WidgetDataSyncManager: ObservableObject {
         WidgetAnalysisData(
             lastUpdated: Date(),
             recentAnalyses: [],
-            backendStatus: getCurrentBackendStatus(),
+            backendStatus: currentBackendStatus(),
             statistics: WidgetAnalysisData.AnalysisStatistics(
                 totalAnalyses: 0,
                 averageScore: 0,

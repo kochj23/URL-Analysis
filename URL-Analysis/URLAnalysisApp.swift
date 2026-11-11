@@ -8,6 +8,7 @@
 
 import SwiftUI
 import AppKit
+import NovaAIKit
 
 @main
 struct URLAnalysisApp: App {
@@ -28,6 +29,11 @@ struct URLAnalysisApp: App {
         .windowStyle(.hiddenTitleBar)
         .commands {
             CommandGroup(replacing: .newItem) {}
+        }
+
+        Settings {
+            NovaAISettingsView(ai: AppAI.shared, footer: AppAI.settingsFooter)
+                .frame(minWidth: 520, minHeight: 560)
         }
     }
 }

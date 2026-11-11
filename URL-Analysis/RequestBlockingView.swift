@@ -24,7 +24,7 @@ struct RequestBlockingView: View {
 
                 Toggle("Enabled", isOn: $blockingManager.rules.isEnabled)
                     .toggleStyle(.switch)
-                    .onChange(of: blockingManager.rules.isEnabled) { _ in
+                    .onChange(of: blockingManager.rules.isEnabled) {
                         // Requires page reload to take effect
                     }
             }

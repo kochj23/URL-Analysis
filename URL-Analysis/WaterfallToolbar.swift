@@ -24,7 +24,7 @@ struct WaterfallToolbar: View {
                 TextField("Filter URL", text: $searchText)
                     .textFieldStyle(.plain)
                     .font(.system(size: 12))
-                    .onChange(of: searchText) { newValue in
+                    .onChange(of: searchText) { _, newValue in
                         networkMonitor.filter.searchText = newValue
                     }
 
